@@ -7,6 +7,8 @@
 package view.codingwolves;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -57,8 +59,10 @@ public class Main extends Application {
 		HBox hboxT = addHBoxT();
 		VBox vboxT = addVBoxT(hboxT);
 		TextFlow textFlow = addTextFlowC(result);
+		HBox hboxB = addHBoxB();
 		border.setTop(vboxT);
 		border.setCenter(textFlow);
+		border.setBottom(hboxB);
 		
 		Scene mainScene = new Scene(border, 1000, 700);
 		stage.setScene(mainScene);
@@ -85,15 +89,19 @@ public class Main extends Application {
 		andButton.setFont(Font.font("SansSerif", FontWeight.BLACK, 12));
 		andButton.setMnemonicParsing(true);
 		andButton.setToggleGroup(searchTypes);
+		andButton.setOnAction(onAction);
+		andButton.setSelected(true);
 		
 		RadioButton orButton = new RadioButton("Any _of the Search Terms");
 		orButton.setFont(Font.font("SansSerif", FontWeight.BLACK, 12));
 		orButton.setMnemonicParsing(true);
+		orButton.setOnAction(onAction);
 		orButton.setToggleGroup(searchTypes);
 		
 		RadioButton phraseButton = new RadioButton("Exact _Phrase");
 		phraseButton.setFont(Font.font("SansSerif", FontWeight.BLACK, 12));
 		phraseButton.setMnemonicParsing(true);
+		phraseButton.setOnAction(onAction);
 		phraseButton.setToggleGroup(searchTypes);
 		
 		hbL2.getChildren().addAll(andButton, orButton, phraseButton);
@@ -118,6 +126,7 @@ public class Main extends Application {
 		
 		TextField textField = new TextField();
 		search.setText("Search");
+		search.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		search.setPrefSize(100, 20);
 		textField.setPromptText("Enter a partial phrase or the full phrase found in the indexed files.");
 		textField.setPrefSize(500, 20);
@@ -127,6 +136,11 @@ public class Main extends Application {
 		hbox.setPadding(new Insets(20, 0, 0, 0));
 		return hbox;
 	}
+	/**
+	 * 
+	 * @param result
+	 * @return
+	 */
 	private TextFlow addTextFlowC(String result)
 	{
 		TextFlow textFlow = new TextFlow();
@@ -134,4 +148,39 @@ public class Main extends Application {
 		Text searchResult = new Text(result);
 		return textFlow;
 	}
+	/**
+	 * Make the HBox layout for the bottom of the interface
+	 * @return
+	 */
+	private HBox addHBoxB()
+	{
+		HBox hboxB = new HBox();
+		
+		maintenance.setText("Maintenace");
+		maintenance.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		maintenance.setPrefSize(100, 20);
+		
+		Label howManyFiles = new Label("Number of files Indexed: ");
+		howManyFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		
+		about.setText("About");
+		about.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		about.setPrefSize(100, 20);
+		
+		hboxB.getChildren().addAll(maintenance, howManyFiles, about);
+		hboxB.setAlignment(Pos.CENTER);
+		hboxB.setSpacing(300);
+		hboxB.setPadding(new Insets(10, 0, 10, 0));
+		return hboxB;
+	}
+	//Will select the radio button that is chosen using the Mnemonic key
+	EventHandler<ActionEvent> onAction = new EventHandler<ActionEvent>()
+	{
+	    @Override
+	    public void handle(ActionEvent e)
+	    {
+	        RadioButton button = (RadioButton)e.getSource();
+	        button.setSelected(true);
+	    }
+	};
 }
