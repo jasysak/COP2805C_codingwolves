@@ -29,3 +29,15 @@ hs_err_pid*
 *.pdf
 *.ppt
 
+# JAS added -- ignore IDE etc. files
+.classpath
+.project
+.idea
+bin
+build
+nbproject
+nbactions.xml
+build.xml
+manifest.mf
+target
+*.iml
