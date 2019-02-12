@@ -1,4 +1,4 @@
-package com.codewolves;
+package com.example.codewolves;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
