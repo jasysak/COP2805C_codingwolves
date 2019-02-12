@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,27 +22,23 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-
 /**
  * @author David Alvarez
  *
  */
-public class Main extends Application {
+public class Main extends Application{
 	private final String iconPath = "/monitor.png";
 	private final Button search = new Button();
 	private final Button maintenance = new Button();
 	private final Button about = new Button();
-	static final String FILE_ENCODING = "UTF8";
-	static final String LAST_DIRECTORY = "LastvisitedDir";
-	public static String result;
+	static String result;
+	static int numOfFilesIndexed = 0;
 	/**
 	 * @param args
 	 */
@@ -53,7 +50,7 @@ public class Main extends Application {
 	 * 
 	 */
 	@Override
-    public void start(Stage stage) 
+    public void start(Stage primaryStage) 
 	{
 		BorderPane border = new BorderPane();
 		HBox hboxT = addHBoxT();
@@ -65,10 +62,21 @@ public class Main extends Application {
 		border.setBottom(hboxB);
 		
 		Scene mainScene = new Scene(border, 1000, 700);
-		stage.setScene(mainScene);
-		stage.setTitle("SearchEngine");
-		stage.getIcons().add(new Image(iconPath));
-		stage.show();
+		primaryStage.setScene(mainScene);
+		primaryStage.setTitle("SearchEngine");
+		primaryStage.getIcons().add(new Image(iconPath));
+		primaryStage.show();
+		
+		maintenance.setOnAction(new EventHandler<ActionEvent>()
+		{
+		    public void handle(ActionEvent e) {
+		    	Stage maintStage = new Stage();
+		    	MaintenanceWindow maint = new MaintenanceWindow();
+				maint.start(maintStage);
+				maintStage.show();
+				maintStage.isAlwaysOnTop();
+		    }
+		});
 	}
 	/**
 	 * Make the VBox layout for the top of interface and embed HBox into it
@@ -159,15 +167,17 @@ public class Main extends Application {
 		maintenance.setText("Maintenace");
 		maintenance.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		maintenance.setPrefSize(100, 20);
+		maintenance.setOnAction(onAction);
 		
-		Label howManyFiles = new Label("Number of files Indexed: ");
-		howManyFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		String s1 = "Number of Files Indexed: " + Integer.toString(numOfFilesIndexed);
+		Label numOfFiles = new Label(s1);
+		numOfFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		
 		about.setText("About");
 		about.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		about.setPrefSize(100, 20);
 		
-		hboxB.getChildren().addAll(maintenance, howManyFiles, about);
+		hboxB.getChildren().addAll(maintenance, numOfFiles, about);
 		hboxB.setAlignment(Pos.CENTER);
 		hboxB.setSpacing(300);
 		hboxB.setPadding(new Insets(10, 0, 10, 0));
