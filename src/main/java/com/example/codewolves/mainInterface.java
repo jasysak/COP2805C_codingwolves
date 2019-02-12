@@ -2,6 +2,6 @@
 // Placeholder file
 //
 //
-package com.codewolves;
+package com.example.codewolves;
 
 // Insert JavaFX UI code below
