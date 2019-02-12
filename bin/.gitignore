@@ -25,4 +25,6 @@ hs_err_pid*
 # JAS added PDF and PPT to ignore
 *.pdf
 *.ppt
+/.classpath
+/.project
 /target/
