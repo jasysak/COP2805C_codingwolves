@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -83,7 +81,7 @@ public class Main extends Application{
 	 * @param hbox
 	 * @return	vbox layout
 	 */
-	private VBox addVBoxT(HBox hbox)
+	private VBox addVBoxT(HBox hboxT)
 	{
 		VBox vbox = new VBox();
 		HBox hbL2 = new HBox();
@@ -113,9 +111,9 @@ public class Main extends Application{
 		phraseButton.setToggleGroup(searchTypes);
 		
 		hbL2.getChildren().addAll(andButton, orButton, phraseButton);
-		vbox.getChildren().addAll(title, hbox, hbL2);
+		vbox.getChildren().addAll(title, hboxT, hbL2);
 		vbox.setAlignment(Pos.CENTER);
-		hbox.setAlignment(Pos.CENTER);
+		hboxT.setAlignment(Pos.CENTER);
 		hbL2.setAlignment(Pos.CENTER);
 		hbL2.setPadding(new Insets(10, 0, 10, 0));
 		hbL2.setSpacing(20);
@@ -127,7 +125,7 @@ public class Main extends Application{
 	 */
 	private HBox addHBoxT()
 	{
-		HBox hbox = new HBox();
+		HBox hboxT = new HBox();
 		
 		Label label1 = new Label("Search Terms: ");
 		label1.setFont(Font.font("SansSerif", FontWeight.BOLD, 15));
@@ -139,10 +137,10 @@ public class Main extends Application{
 		textField.setPromptText("Enter a partial phrase or the full phrase found in the indexed files.");
 		textField.setPrefSize(500, 20);
 		
-		hbox.getChildren().addAll(label1, textField, search);
-		hbox.setSpacing(30);
-		hbox.setPadding(new Insets(20, 0, 0, 0));
-		return hbox;
+		hboxT.getChildren().addAll(label1, textField, search);
+		hboxT.setSpacing(30);
+		hboxT.setPadding(new Insets(20, 0, 0, 0));
+		return hboxT;
 	}
 	/**
 	 * 
@@ -183,7 +181,7 @@ public class Main extends Application{
 		hboxB.setPadding(new Insets(10, 0, 10, 0));
 		return hboxB;
 	}
-	//Will select the radio button that is chosen using the Mnemonic key
+	//Will select the radio button that is chosen when using the Mnemonic key
 	EventHandler<ActionEvent> onAction = new EventHandler<ActionEvent>()
 	{
 	    @Override
