@@ -27,8 +27,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 /**
- * @author David Alvarez
- *
+ * @author David Alvarez, 2/9/19
+ * @version 1.0
  */
 public class Main extends Application{
 	private final String iconPath = "/monitor.png";
