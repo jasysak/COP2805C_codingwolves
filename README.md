@@ -10,13 +10,13 @@ Group Information
 
 Members: (list alphabetically)
 
-1.
+1. David Alvarez
 
-2.
+2. Erin Hochstetler
 
-3.
+3. Jason Sysak
 
-4.
+4. Reubin George
 
 
 For the initial phase (project 3), each team member will separately develop their own version of the UI. Once complete, a code review meeting will be scheduled where the team will select either one or some combination of multiple members' code to determine the Phase 3 submitted version. This version will be then merged into the master branch prior to the Project 3 due date (Feb. 19).
