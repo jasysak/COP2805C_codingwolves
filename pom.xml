@@ -3,6 +3,7 @@
   <groupId>cop2805Project3</groupId>
   <artifactId>SearchEngine</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
@@ -15,10 +16,23 @@
   		<version>11</version>
   	</dependency>
   	<dependency>
-  		<groupId>org.openjfx</groupId>
-  		<artifactId>javafx-fxml</artifactId>
-  		<version>11</version>
-  	</dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics </artifactId>
+        <version>11</version>
+        <classifier>win</classifier>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics </artifactId>
+        <version>11</version>
+        <classifier>linux</classifier>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics </artifactId>
+        <version>11</version>
+        <classifier>mac</classifier>
+    </dependency>
   	<dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
