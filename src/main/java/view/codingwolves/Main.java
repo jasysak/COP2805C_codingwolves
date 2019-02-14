@@ -2,9 +2,10 @@
  * The purpose of this class is to make the interface for the main window of the Search Engine project. This interface
  * will allow the user to search for files, go to an administrator window and look at information about the application
  * and who made it.
- * Written by David Alvarez, 2/9/19
  */
 package view.codingwolves;
+
+import javax.naming.OperationNotSupportedException;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -26,27 +27,23 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 /**
  * @author David Alvarez, 2/9/19
  * @version 1.0
  */
 public class Main extends Application{
 	private final String iconPath = "/monitor.png";
-	private final Button search = new Button();
-	private final Button maintenance = new Button();
-	private final Button about = new Button();
+	private final Button searchBtn = new Button();
+	private final Button maintenanceBtn = new Button();
+	private final Button aboutBtn = new Button();
 	static String result;
 	static int numOfFilesIndexed = 0;
-	/**
-	 * @param args
-	 */
+	
 	public static void main(String[] args) {
 		launch(args);
 
 	}
-	/**
-	 * 
-	 */
 	@Override
     public void start(Stage primaryStage) 
 	{
@@ -64,8 +61,24 @@ public class Main extends Application{
 		primaryStage.setTitle("SearchEngine");
 		primaryStage.getIcons().add(new Image(iconPath));
 		primaryStage.show();
-		
-		maintenance.setOnAction(new EventHandler<ActionEvent>()
+
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	        @Override
+	        public void handle(WindowEvent event) {
+	            System.exit(0);
+	        }
+		});
+		searchBtn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				try {
+					searchIndexedFiles();
+				} catch (OperationNotSupportedException e1) {
+					System.out.println(e1);
+				}
+			}
+		});
+		maintenanceBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 		    public void handle(ActionEvent e) {
 		    	Stage maintStage = new Stage();
@@ -75,11 +88,22 @@ public class Main extends Application{
 				maintStage.isAlwaysOnTop();
 		    }
 		});
+		
+		aboutBtn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				try {
+					aboutInformation();
+				} catch (OperationNotSupportedException e1) {
+					System.out.println(e1);
+				}
+			}
+		});
 	}
 	/**
 	 * Make the VBox layout for the top of interface and embed HBox into it
 	 * @param hbox
-	 * @return	vbox layout
+	 * @return	vbox layout for the top of the interface
 	 */
 	private VBox addVBoxT(HBox hboxT)
 	{
@@ -121,7 +145,7 @@ public class Main extends Application{
 	}
 	/**
 	 * Make the HBox layout for the top of interface
-	 * @return	hbox layout
+	 * @return	hbox layout for the top of the interface
 	 */
 	private HBox addHBoxT()
 	{
@@ -131,21 +155,21 @@ public class Main extends Application{
 		label1.setFont(Font.font("SansSerif", FontWeight.BOLD, 15));
 		
 		TextField textField = new TextField();
-		search.setText("Search");
-		search.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
-		search.setPrefSize(100, 20);
-		textField.setPromptText("Enter a partial phrase or the full phrase found in the indexed files.");
+		searchBtn.setText("Search");
+		searchBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		searchBtn.setPrefSize(100, 20);
+		textField.setPromptText("Enter a word or phrase to search for");
 		textField.setPrefSize(500, 20);
 		
-		hboxT.getChildren().addAll(label1, textField, search);
+		hboxT.getChildren().addAll(label1, textField, searchBtn);
 		hboxT.setSpacing(30);
 		hboxT.setPadding(new Insets(20, 0, 0, 0));
 		return hboxT;
 	}
 	/**
-	 * 
-	 * @param result
-	 * @return
+	 * Will make the TextFlow layout that will contain the results of the search
+	 * @param result The result of the search request
+	 * @return the TextFlow layout for the center of the interface
 	 */
 	private TextFlow addTextFlowC(String result)
 	{
@@ -156,26 +180,26 @@ public class Main extends Application{
 	}
 	/**
 	 * Make the HBox layout for the bottom of the interface
-	 * @return
+	 * @return the hbox for the bottom of the interface
 	 */
 	private HBox addHBoxB()
 	{
 		HBox hboxB = new HBox();
 		
-		maintenance.setText("Maintenace");
-		maintenance.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
-		maintenance.setPrefSize(100, 20);
-		maintenance.setOnAction(onAction);
+		maintenanceBtn.setText("Maintenace");
+		maintenanceBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		maintenanceBtn.setPrefSize(100, 20);
+		maintenanceBtn.setOnAction(onAction);
 		
 		String s1 = "Number of Files Indexed: " + Integer.toString(numOfFilesIndexed);
 		Label numOfFiles = new Label(s1);
 		numOfFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		
-		about.setText("About");
-		about.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
-		about.setPrefSize(100, 20);
+		aboutBtn.setText("About");
+		aboutBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		aboutBtn.setPrefSize(100, 20);
 		
-		hboxB.getChildren().addAll(maintenance, numOfFiles, about);
+		hboxB.getChildren().addAll(maintenanceBtn, numOfFiles, aboutBtn);
 		hboxB.setAlignment(Pos.CENTER);
 		hboxB.setSpacing(300);
 		hboxB.setPadding(new Insets(10, 0, 10, 0));
@@ -191,4 +215,20 @@ public class Main extends Application{
 	        button.setSelected(true);
 	    }
 	};
+	/**
+	 * Stub method to test search button EventHandler
+	 * @throws OperationNotSupportedException
+	 */
+	private void searchIndexedFiles() throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException("Function not yet Implemented");
+	}
+	/**
+	 * Stub method to test about button EventHandler
+	 * @throws OperationNotSupportedException
+	 */
+	private void aboutInformation()	throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException("Function not yet Implemented");
+	}
 }

@@ -5,7 +5,11 @@
  */
 package view.codingwolves;
 
+import javax.naming.OperationNotSupportedException;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,14 +27,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * @author David Alvarez
+ * @author David Alvarez, 2/12/19
  *
  */
 class MaintenanceWindow extends Application {
 	private final String iconPath = "/monitor.png";
-	private final Button addFile = new Button();
-	private final Button updateIndexFiles = new Button();
-	private final Button removeSelectedFiles = new Button();
+	private final Button addFileBtn = new Button();
+	private final Button updateIndexedFilesBtn = new Button();
+	private final Button removeSelectedFilesBtn = new Button();
 	static int numOfFilesIndexed = 0;
 	final static String VERSION_NUMBER = "1.0";
 	
@@ -51,10 +55,41 @@ class MaintenanceWindow extends Application {
 		secondaryStage.setTitle("Maintenance");
 		secondaryStage.getIcons().add(new Image(iconPath));
 		secondaryStage.setScene(scene);
+		
+		addFileBtn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				try {
+					addFile();
+				} catch (OperationNotSupportedException e1) {
+					System.out.println(e1);
+				}
+			}
+		});
+		updateIndexedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				try {
+					updateIndexedFiles();
+				} catch (OperationNotSupportedException e1) {
+					System.out.println(e1);
+				}
+			}
+		});
+		removeSelectedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				try {
+					removeSelectedFiles();
+				} catch (OperationNotSupportedException e1) {
+					System.out.println(e1);
+				}
+			}
+		});
 	}
 	/**
 	 * This will make the table that will hold the files indexed and the status of those files
-	 * @return The TableView
+	 * @return The TableView for the center of the interface
 	 */
 	private TableView addTableView()
 	{
@@ -71,7 +106,7 @@ class MaintenanceWindow extends Application {
 	}
 	/**
 	 * This will make the HBox for the top of the Interface
-	 * @return The HBox
+	 * @return The HBox for the top of the interface
 	 */
 	private HBox addHBoxT()
 	{
@@ -87,25 +122,25 @@ class MaintenanceWindow extends Application {
 	}
 	/**
 	 * This will make the first HBox in the bottom interface
-	 * @return The HBox
+	 * @return The first layer HBox in the bottom of the interface
 	 */
 	private HBox addHBoxBL1()
 	{
 		HBox hboxL1 = new HBox();
 		
-		addFile.setText("Add File");
-		addFile.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
-		addFile.setPrefSize(100, 20);
+		addFileBtn.setText("Add File");
+		addFileBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		addFileBtn.setPrefSize(100, 20);
 		
-		updateIndexFiles.setText("Update Indexed Files");
-		updateIndexFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
-		updateIndexFiles.setPrefSize(150, 20);
+		updateIndexedFilesBtn.setText("Update Indexed Files");
+		updateIndexedFilesBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		updateIndexedFilesBtn.setPrefSize(150, 20);
 		
-		removeSelectedFiles.setText("Remove Selected Files");
-		removeSelectedFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
-		removeSelectedFiles.setPrefSize(150, 20);
+		removeSelectedFilesBtn.setText("Remove Selected Files");
+		removeSelectedFilesBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		removeSelectedFilesBtn.setPrefSize(150, 20);
 		
-		hboxL1.getChildren().addAll(addFile, updateIndexFiles, removeSelectedFiles);
+		hboxL1.getChildren().addAll(addFileBtn, updateIndexedFilesBtn, removeSelectedFilesBtn);
 		hboxL1.setAlignment(Pos.CENTER);
 		hboxL1.setSpacing(100);
 		hboxL1.setPadding(new Insets(10, 0, 10, 0));
@@ -113,7 +148,7 @@ class MaintenanceWindow extends Application {
 	}
 	/**
 	 * This will make the contents of the second HBox in the bottom interface
-	 * @return The HBox
+	 * @return The second layer HBox in the bottom of the interface
 	 */
 	private HBox addHboxBL2()
 	{
@@ -132,5 +167,29 @@ class MaintenanceWindow extends Application {
 		hboxL2.setSpacing(350);
 		hboxL2.setPadding(new Insets(10, 0, 10, 0));
 		return hboxL2;
+	}
+	/**
+	 * Stub method to test addFile button EventHandler
+	 * @throws OperationNotSupportedException
+	 */
+	private void addFile() throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException("Function not yet Implemented");
+	}
+	/**
+	 * Stub method to test updateIndexedFiles button EventHandler
+	 * @throws OperationNotSupportedException
+	 */
+	private void updateIndexedFiles() throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException("Function not yet Implemented");
+	}
+	/**
+	 * Stub method to test removeSelectedFiles button EventHandler
+	 * @throws OperationNotSupportedException
+	 */
+	private void removeSelectedFiles() throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException("Function not yet Implemented");
 	}
 }
