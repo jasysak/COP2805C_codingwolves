@@ -1,11 +1,5 @@
-// 
-// Placeholder file
-//
-//
 package com.example.codewolves;
 
-
-// Insert JavaFX UI code below
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +8,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.AnchorPane;
@@ -28,14 +21,14 @@ import javafx.stage.Stage;
  */
  
  
-public class mainInterface extends Application {
+public class adminInterface extends Application {
     
  
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(mainInterface.class, args);
+        launch(adminInterface.class, args);
     }
     
     @Override
@@ -57,7 +50,7 @@ public class mainInterface extends Application {
         
         Scene scene = new Scene(border);
         stage.setScene(scene);
-        stage.setTitle("Search Engine Sample User Interface");
+        stage.setTitle("Search Engine Sample Admin Interface");
         stage.show();
     }
  
@@ -75,7 +68,7 @@ public class mainInterface extends Application {
  
         Label label01 = new Label("Search Terms:");
  
-        TextField textField01 = new TextField ();
+        TextField textField01 = new TextField();
         
         Button buttonSearch = new Button("Search");
         buttonSearch.setPrefSize(80, 20);
@@ -124,13 +117,16 @@ public class mainInterface extends Application {
  
         AnchorPane anchorpane = new AnchorPane();
         
-        Button buttonAdmin = new Button("Admin. View");
+        Button buttonEdit = new Button("Edit Item");
+        Button buttonDelete = new Button("Delete Item");
+        Button buttonSave = new Button("Save to Disk");
+        Button buttonAdmin = new Button("User View");
         Button buttonExit = new Button("Exit");
  
         HBox hb = new HBox();
         hb.setPadding(new Insets(10, 10, 10, 10));
         hb.setSpacing(10);
-        hb.getChildren().addAll(buttonAdmin, buttonExit);
+        hb.getChildren().addAll(buttonEdit, buttonDelete, buttonSave, buttonAdmin, buttonExit);
  
         anchorpane.getChildren().addAll(hb);
         
