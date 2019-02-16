@@ -6,7 +6,8 @@ public class SearchEngineTest {
 
 	@Test
 	public void test() {
-		return success;
+		String success = "success";
+		System.out.println(success);
 	}
 
 }
