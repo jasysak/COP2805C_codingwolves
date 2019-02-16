@@ -55,6 +55,7 @@ class MaintenanceWindow extends Application {
 		secondaryStage.setTitle("Maintenance");
 		secondaryStage.getIcons().add(new Image(iconPath));
 		secondaryStage.setScene(scene);
+		secondaryStage.setResizable(false);
 		
 		addFileBtn.setOnAction(new EventHandler<ActionEvent>()
 		{

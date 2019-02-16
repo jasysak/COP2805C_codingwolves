@@ -61,6 +61,7 @@ public class Main extends Application{
 		primaryStage.setTitle("SearchEngine");
 		primaryStage.getIcons().add(new Image(iconPath));
 		primaryStage.show();
+		primaryStage.setResizable(false);
 
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 	        @Override
