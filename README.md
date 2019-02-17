@@ -24,6 +24,9 @@ For subsequent phases, the overall functionality will be broken into logical pie
 This is the Java EE version of the project that currently incorporates SpringBoot and Webjar for BootStrap and jQuery.
 To run this program, on your console/terminal of the IDE do the following:
 1) $ mvn clean
-2) $ mvn jetty:run
+2) Ensure that there are no web containers like Tomcat, GlassFish, Wildfly, etc. running in the background.
+3) This application uses port 8080, ensure that no other application is using this port
+4) $ mvn jetty:run
+5) Open your desired web browser and go to http://localhost:8080/Wolfster
 
 Future iterations of this project will include a runnable war file with embedded jetty server. 
