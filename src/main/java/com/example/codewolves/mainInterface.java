@@ -10,8 +10,6 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.ListView;
@@ -50,7 +48,7 @@ public class mainInterface extends Application {
         border.setTop(hbox);
         
 // Add a list view for center region  
-        ListView listview = addListView();
+        ListView<String> listview = addListView();
         border.setCenter(listview);
         AnchorPane anchorpane = addAnchorPane();
         border.setBottom(anchorpane);
@@ -102,7 +100,7 @@ public class mainInterface extends Application {
  * 
  * 
  */
-    private ListView addListView() {
+    private ListView<String> addListView() {
     	
     	ListView<String> list = new ListView<>();
         ObservableList<String> items = FXCollections.observableArrayList (
