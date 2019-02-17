@@ -25,3 +25,5 @@ This is the Java EE version of the project that currently incorporates SpringBoo
 To run this program, on your console/terminal of the IDE do the following:
 1) $ mvn clean
 2) $ mvn jetty:run
+
+Future iterations of this project will include a runnable war file with embedded jetty server. 
