@@ -37,6 +37,7 @@ public class Main extends Application{
 	private final Button searchBtn = new Button();
 	private final Button maintenanceBtn = new Button();
 	private final Button aboutBtn = new Button();
+	private TextField searchField;
 	static String result;
 	static int numOfFilesIndexed = 0;
 	
@@ -155,14 +156,14 @@ public class Main extends Application{
 		Label label1 = new Label("Search Terms: ");
 		label1.setFont(Font.font("SansSerif", FontWeight.BOLD, 15));
 		
-		TextField textField = new TextField();
+		this.searchField = new TextField();
+		this.searchField.setPromptText("Enter a word or phrase to search for");
+		this.searchField.setPrefSize(500, 20);
 		searchBtn.setText("Search");
 		searchBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		searchBtn.setPrefSize(100, 20);
-		textField.setPromptText("Enter a word or phrase to search for");
-		textField.setPrefSize(500, 20);
 		
-		hboxT.getChildren().addAll(label1, textField, searchBtn);
+		hboxT.getChildren().addAll(label1, this.searchField, searchBtn);
 		hboxT.setSpacing(30);
 		hboxT.setPadding(new Insets(20, 0, 0, 0));
 		return hboxT;
