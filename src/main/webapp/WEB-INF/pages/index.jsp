@@ -1,26 +1,38 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Reubin George
+  Date: 2/15/2019
+  Time: 1:55 PM
+  To change this template use File | Settings | File Templates.
+--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<!--------CUSTOM PAGE WEBJAR SPRING---------->
+<spring:url value="/resources/css/index-style.css" var="indexstyle" />
+<spring:url value="/resources/js/index-JS.js" var="indexjs" />
+<spring:url value="/resources/images/wolf.svg" var ="wolfimage" />
+<!--------BOOTSTRAP WEBJAR SPRING------------>
+<spring:url value="/webjars/bootstrap/4.1.3/js/bootstrap.min.js" var="bootstrapminjs" />
+<spring:url value="/webjars/popper.js/1.14.3/umd/popper.min.js" var="popperminjs" />
+<spring:url value="/webjars/jquery/3.3.1/jquery.min.js" var="jqueryminjs" />
+<spring:url value="/webjars/bootstrap/4.1.3/css/bootstrap.css" var="bootstrapcss" />
+<!--------FONTAWESOME WEBJAR SPRING---------->
+<spring:url value="/webjars/font-awesome/5.7.1/css/all.min.css" var="fontawesome" />
+<!--------DROPZONE WEBJAR SPRING------------->
+<spring:url value="/webjars/dropzone/5.5.0/dist/min/dropzone.min.js" var="dropzonejs" />
 
 <!doctype html>
 <html lang="en">
 <head>
-    <!--------CUSTOM PAGE WEBJAR SPRING---------->
-    <spring:url value="/resources/css/index-style.css" var="indexstyle" />
-    <spring:url value="/resources/js/index-JS.js" var="indexjs" />
-    <spring:url value="/resources/images/wolf.svg" var ="wolfimage" />
-    <!--------BOOTSTRAP WEBJAR SPRING------------>
-    <spring:url value="/webjars/bootstrap/4.1.3/js/bootstrap.min.js" var="bootstrapminjs" />
-    <spring:url value="/webjars/popper.js/1.14.3/umd/popper.min.js" var="popperminjs" />
-    <spring:url value="/webjars/jquery/3.3.1/jquery.min.js" var="jqueryminjs" />
-    <spring:url value="/webjars/bootstrap/4.1.3/css/bootstrap.css" var="bootstrapcss" />
-    <!--------FONTAWESOME WEBJAR SPRING---------->
-    <spring:url value="/webjars/font-awesome/5.7.1/css/all.min.css" var="fontawesome" />
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0,
          maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Search Engine</title>
+    <link rel="icon" href="${wolfimage}"/>
     <!--------BOOTSTRAP-------------->
     <link href="${bootstrapcss}" rel="stylesheet" />
     <script src="${jqueryminjs}"></script>
@@ -28,10 +40,11 @@
     <script src="${bootstrapminjs}"></script>
     <!----------FONT AWESOME---------->
     <link href="${fontawesome}" rel="stylesheet" />
+    <!----------DROPZONE-------------->
+    <script src="${dropzonejs}"></script>
     <!--------CUSTOM PAGE ------------>
     <link href="${indexstyle}" rel="stylesheet" />
     <script src="${indexjs}"></script>
-
 </head>
 <body>
 <div class="image-wrapper">
@@ -85,6 +98,8 @@
         </form>
     </div>
 </div>
+
+
 <div id="adminModal" class="modal fade">
     <div class="modal-dialog">
         <form method="post" id="admin_form" enctype="multipart/form-data">
@@ -96,7 +111,7 @@
                     <h5 class="modal-title" style="display: block;">Admin Panel</h5>
                 </div>
                 <div class="modal-body">
-
+                    <div class="dropzone" id="my-awesome-dropzone"></div>
                 </div>
                 <div class="modal-footer" style="display: block;">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
