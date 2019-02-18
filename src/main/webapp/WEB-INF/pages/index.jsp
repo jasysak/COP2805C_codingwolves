@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<!--------CUSTOM PAGE WEBJAR SPRING---------->
+<!---CUSTOM PAGE STATIC RESOURCES SPRING----->
 <spring:url value="/resources/css/index-style.css" var="indexstyle" />
 <spring:url value="/resources/js/index-JS.js" var="indexjs" />
 <spring:url value="/resources/images/wolf.svg" var ="wolfimage" />
@@ -21,7 +21,7 @@
 <!--------FONTAWESOME WEBJAR SPRING---------->
 <spring:url value="/webjars/font-awesome/5.7.1/css/all.min.css" var="fontawesome" />
 <!--------DROPZONE WEBJAR SPRING------------->
-<spring:url value="/webjars/dropzone/5.5.0/dist/min/dropzone.min.js" var="dropzonejs" />
+<spring:url value="/webjars/dropzone/4.3.0/dist/min/dropzone.min.js" var="dropzonejs" />
 
 <!doctype html>
 <html lang="en">
@@ -31,7 +31,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0,
          maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Search Engine</title>
+    <title>Wolfster</title>
     <link rel="icon" href="${wolfimage}"/>
     <!--------BOOTSTRAP-------------->
     <link href="${bootstrapcss}" rel="stylesheet" />
@@ -102,31 +102,33 @@
 
 <div id="adminModal" class="modal fade">
     <div class="modal-dialog">
-        <form method="post" id="admin_form" enctype="multipart/form-data">
-            <div class="modal-content">
-                <div class="modal-header" style="display: block;">
-                    <button type="button" class="close" data-dismiss="modal">
-                        &times;
-                    </button>
-                    <h5 class="modal-title" style="display: block;">Admin Panel</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="dropzone" id="my-awesome-dropzone"></div>
-                </div>
-                <div class="modal-footer" style="display: block;">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
-                            style="float: right;">Close</button>
-                    <button type="button" class="btn btn-outline-warning" style="float: right;">
-                        Rebuild
-                    </button>
-                    <button type="button" class="btn btn-outline-primary" style="text-align: center;">
-                        Add Files
-                    </button>
-                    <button type="button" class="btn btn-outline-danger" style="float: left;">
-                        Reset
-                    </button>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header" style="display: block;">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h5 class="modal-title" style="display: block;">Admin Panel</h5>
             </div>
-        </form>
+            <div class="modal-body">
+                <form method="post" id="my-awesome-dropzone" class="dropzone" action="/"
+                      enctype="multipart/form-data"></form>
+            </div>
+            <div class="modal-footer" style="display: block;">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+                        style="float: right;">Close</button>
+                <button type="button" class="btn btn-outline-warning" style="float: right;">
+                    Rebuild
+                </button>
+                <button type="button" class="btn btn-outline-primary" style="text-align: center;">
+                    Add Files
+                </button>
+                <button type="button" class="btn btn-outline-danger" style="float: left;">
+                    Reset
+                </button>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
