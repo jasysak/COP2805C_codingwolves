@@ -1,12 +1,5 @@
-// 
-// Placeholder file
-//
-//
-package com.example.codingwolves;
-
-
 /**
- * @author Jason Sysak
+ * @author Jason Sysak 2/19/19
  * @version 0.0.1
  * 
  * A basic user and admin UI window for COP 2805C Project 3
@@ -15,6 +8,9 @@ package com.example.codingwolves;
  * The UI is for discussion and demonstration only. It is not
  * functional at this time.
  */
+package com.example.codingwolves;
+
+import javax.naming.OperationNotSupportedException;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -33,8 +29,10 @@ import javafx.stage.WindowEvent;
   
 public class mainInterface extends Application {
     
+	// Add some buttons
 	private final Button buttonAdmin = new Button("Admin. View");
     private final Button buttonExit = new Button("Exit");
+    private final Button buttonSearch = new Button("Search");
  
     /**
      * @param args the command line arguments
@@ -47,35 +45,28 @@ public class mainInterface extends Application {
     public void start(Stage primaryStage) 
     {
  
- 
-// Use a BorderPane as the root for scene 
-    	
+    	// Use a BorderPane as the root for scene     	
         BorderPane border = new BorderPane();
         
-// add HBox at top area for text entry, radio buttons
-        
+        // add HBox at top area for text entry, radio buttons
         HBox hbox = addHBox();
         border.setTop(hbox);
         
-// Add a ListView for center region for listing of search items
-
+        // Add a ListView for center region for listing of search items
         ListView<String> listview = addListView();
         border.setCenter(listview);
         
-// Add an anchor pane at the bottom for 
-        
+        // Add an anchor pane at the bottom for Admin & Exit buttons        
         AnchorPane anchorpane = addAnchorPane();
         border.setBottom(anchorpane);
  
-// Setup and draw the scene
-        
+        // Setup and draw the scene
         Scene scene = new Scene(border, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Search Engine Sample User Interface");
         primaryStage.show();
         
-// Event handlers
-        
+        // Event handlers
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 	        @Override
 	        public void handle(WindowEvent event) {
@@ -100,6 +91,21 @@ public class mainInterface extends Application {
         	}
         });
         
+        /* For Search button - no functionality, so will throw exception
+         * Credit to D. Alvarez for this code
+         */
+        buttonSearch.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	public void handle(ActionEvent event) {
+	            try {
+	            	searchIndexedFiles();
+	            }
+	            catch (OperationNotSupportedException e1) {
+	            	System.out.println(e1);
+	            }
+        	}
+        });
+            
     } // end primaryStage scene
  
 /*
@@ -117,7 +123,6 @@ public class mainInterface extends Application {
  
         TextField textField01 = new TextField ();
         
-        Button buttonSearch = new Button("Search");
         buttonSearch.setPrefSize(80, 20);
         
         final ToggleGroup buttonGroup = new ToggleGroup();
@@ -144,7 +149,7 @@ public class mainInterface extends Application {
     private ListView<String> addListView() {
     	
     	ListView<String> list = new ListView<>();
-    	// dummy ObservableList - will be populated with database items
+    	// dummy ObservableList - will be populated with database items TBD
         ObservableList<String> items = FXCollections.observableArrayList (
             "Item 1", "Item 2", "Item 3", "Item 4");
         list.setItems(items);
@@ -155,7 +160,6 @@ public class mainInterface extends Application {
         
     } // end addListView method
     
- 
 /*
  * Creates an anchor pane for additional UI elements -
  * Switch to Admin. View and Exit buttons
@@ -164,8 +168,6 @@ public class mainInterface extends Application {
  
         AnchorPane anchorpane = new AnchorPane();
         
-        
- 
         HBox hb = new HBox();
         hb.setPadding(new Insets(10, 10, 10, 10));
         hb.setSpacing(10);
@@ -179,5 +181,15 @@ public class mainInterface extends Application {
         return anchorpane;
         
     } // end addAnchorPane method
+
+/**
+ *  Method stub for search function -- by D. Alvarez
+ * @throws OperationNotSupportedException
+ */
+    
+    private void searchIndexedFiles() throws OperationNotSupportedException
+	{
+		throw new OperationNotSupportedException("Function not yet Implemented");
+	}
     
 } // end class mainInterface

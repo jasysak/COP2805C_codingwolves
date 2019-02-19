@@ -1,4 +1,4 @@
-package com.example.codewolves;
+package com.example.codingwolves;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

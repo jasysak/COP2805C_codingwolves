@@ -1,11 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.codewolves</groupId>
+  <groupId>com.example.codingwolves</groupId>
   <artifactId>searchEngine</artifactId>
   <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>COP2805C codingwolves Search Engine</name>
-  <url>https://github.com/profwpollock/COP-2805C-2019</url>
   <description>A simple search engine coded in Java</description>
   <inceptionYear>2019</inceptionYear>
 
