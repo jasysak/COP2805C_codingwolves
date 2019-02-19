@@ -1,4 +1,4 @@
-package com.example.codewolves;
+package com.example.codingwolves;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -30,7 +30,7 @@ public class adminInterface extends Application {
     }
     
     @Override
-    public void start(Stage stage) {
+    public void start(Stage maintStage) {
  
  
 // Use a border pane as the root for scene
@@ -47,9 +47,9 @@ public class adminInterface extends Application {
         border.setBottom(anchorpane);
         
         Scene scene = new Scene(border);
-        stage.setScene(scene);
-        stage.setTitle("Search Engine Sample Admin Interface");
-        stage.show();
+        maintStage.setScene(scene);
+        maintStage.setTitle("Search Engine Sample Admin Interface");
+        maintStage.show();
     }
  
 /*
