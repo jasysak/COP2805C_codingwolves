@@ -188,9 +188,9 @@ public class Main extends Application{
 	{
 		HBox hboxB = new HBox();
 		
-		maintenanceBtn.setText("Maintenace");
+		maintenanceBtn.setText("Maintenance");
 		maintenanceBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
-		maintenanceBtn.setPrefSize(100, 20);
+		maintenanceBtn.setPrefSize(120, 20);
 		maintenanceBtn.setOnAction(onAction);
 		
 		String s1 = "Number of Files Indexed: " + Integer.toString(numOfFilesIndexed);
@@ -203,7 +203,7 @@ public class Main extends Application{
 		
 		hboxB.getChildren().addAll(maintenanceBtn, numOfFiles, aboutBtn);
 		hboxB.setAlignment(Pos.CENTER);
-		hboxB.setSpacing(300);
+		hboxB.setSpacing(260);
 		hboxB.setPadding(new Insets(10, 0, 10, 0));
 		return hboxB;
 	}
