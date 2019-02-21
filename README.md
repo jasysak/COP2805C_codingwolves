@@ -1,5 +1,5 @@
-# COP2805C_Proj3_codingwolves
-For development of COP2805C project 3 and beyond. 
+# COP2805C_codingwolves
+For development of COP2805C Search Engine group project and beyond. 
 
 The overall goal of the project is to develop a standalone Java application to simulate a "Google Search" using a local database of searchable items (files). The database may be stored as plaintext, XML, JSON, or as an SQL database (TBD). 
 
