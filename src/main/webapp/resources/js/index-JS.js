@@ -37,8 +37,8 @@ $(document).ready(function () {
                         There is no way to retrieve this without creating security issues.*/
                         ParsedData:lines //insert sanitized array containing strings
                     });
-                    $('.container').append('<nav class="navbar navbar-expand-lg navbar-light bg-light">' +
-                        '<p class="navbar-brand">' +individualFile.name+'</p>'+
+                    $('.container').append('<nav class="navbar navbar-light" style="background-color: #e3f2fd;">' +
+                        '<p class="navbar-brand" style="width: 75%;">' +individualFile.name+'</p>'+
                         '<button class="btn btn-outline-danger" type="button" id ="'+individualFile.name+'" style="float: right;">' +
                         'Delete' + '</button>' + '</nav>');
                 };
