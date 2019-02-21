@@ -24,7 +24,7 @@ img{
 }
 .container{
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-top: 10px;
 }
 .navbar{

@@ -54,8 +54,8 @@ $(document).on('click','#searchbtn',function(){
     $('#searchModal').modal('show');
 });
 $(document).on('click','#reset',function(){
-    alert(parsedData["Data"][0]["FileName"]);
-   console.log(JSON.stringify(parsedData));
+    //console.log(JSON.stringify(parsedData));
+    $('.container').empty();
 });
 $(document).on('click','#adminbtn',function(){
     $('#adminModal').modal('show');

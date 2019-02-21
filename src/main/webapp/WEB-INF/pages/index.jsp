@@ -128,7 +128,8 @@
                 <div class="modal-footer" style="display: flow-root;">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
                         style="float: right;">Close</button>
-                    <button type="button" class="btn btn-outline-info" style="position: relative;left: 50%;transform: translateX(-125%);">
+                    <button type="button" class="btn btn-outline-info" id="upload"
+                            style="position: relative;left: 50%;transform: translateX(-125%);">
                     Upload
                     </button>
                     <button type="button" id ="reset" class="btn btn-outline-danger" style="float: left;">
