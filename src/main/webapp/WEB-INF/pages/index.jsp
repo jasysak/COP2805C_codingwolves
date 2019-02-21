@@ -22,7 +22,8 @@
 <spring:url value="/webjars/font-awesome/5.7.1/css/all.min.css" var="fontawesome" />
 <!--------DROPZONE WEBJAR SPRING------------->
 <spring:url value="/webjars/dropzone/4.3.0/dist/min/dropzone.min.js" var="dropzonejs" />
-
+<!--------CRYPTOJS WEBJAR SPRING------------->
+<spring:url value="/webjars/crypto-js/3.1.9-1/crypto-js.js" var="cryptojs" />
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,6 +43,8 @@
     <link href="${fontawesome}" rel="stylesheet" />
     <!----------DROPZONE-------------->
     <script src="${dropzonejs}"></script>
+    <!--------CRYPTO JS--------------->
+    <script src="${cryptojs}"></script>
     <!--------CUSTOM PAGE ------------>
     <link href="${indexstyle}" rel="stylesheet" />
     <script src="${indexjs}"></script>
@@ -110,8 +113,19 @@
                 <h5 class="modal-title" style="display: block;">Admin Panel</h5>
             </div>
             <div class="modal-body">
-                <form method="post" id="my-awesome-dropzone" class="dropzone" action="/"
-                      enctype="multipart/form-data"></form>
+                <!--<input type="file" /> -->
+                <form method="post" id="fileUpload" class="fileUpload" action="/"
+                      enctype="multipart/form-data">
+                    <div class="input-group">
+                        <div class = "custom-file">
+                            <input type="file" class="custom-file-input" id="fileSelector" multiple>
+                            <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Upload</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer" style="display: block;">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
@@ -122,7 +136,7 @@
                 <button type="button" class="btn btn-outline-primary" style="text-align: center;">
                     Add Files
                 </button>
-                <button type="button" class="btn btn-outline-danger" style="float: left;">
+                <button type="button" id ="reset" class="btn btn-outline-danger" style="float: left;">
                     Reset
                 </button>
             </div>

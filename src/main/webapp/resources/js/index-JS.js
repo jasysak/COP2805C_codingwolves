@@ -1,94 +1,65 @@
-/*Dropzone.autoDiscover = false;*/
+var parsedData = {
+    Code:'Failed',
+    FilesProcessed: 0,
+    FilesParsed: 0,
+    Data :[]
+};
+
 $(document).ready(function () {
     $('.custom-select').change(function () {
         $('#width_tmp_option').html($('.custom-select option:selected').text());
         $(this).width($('#width_tmp_select').width());
     });
 
-
+    inputFiles = document.querySelector('input[type="file"]');
+    inputFiles.addEventListener('change',function(evt){
+        files = evt.target.files;//all the files that have been uploaded
+        var filesSkipped = 0; //keep track of files that
+        for (var iteration = 0, file ; file = files[iteration];iteration++) {
+            if (!file.type.match('text.*')) {
+                filesSkipped++; //if the file format is not a txt then skip the for loop
+                continue; //go to next iteration
+            }
+            reader = new FileReader(); //declare a reader object from FileReader API
+            reader.onload = (function (individualFile) {
+                return function (e) {
+                    lines = e.target.result.toString().replace(/\W/g, ' ').split(/\s+/).map(function (line) {
+                        return validateArray(line.split(',')).toString().toLowerCase();
+                    });
+                    checkSum = CryptoJS.MD5(e.target.result).toString(); //checksum using Crypto JS package
+                    parsedData["Code"]='OK'; //at least one file has been processed
+                    parsedData["FilesProcessed"] = iteration;
+                    parsedData["FilesParsed"] = iteration-filesSkipped;
+                    parsedData["Data"].push({
+                        FileName: individualFile.name, //name of the file we are uploading
+                        CheckSum: checkSum, //MD5 hash
+                        Path: "FakeWebPath", /*Path of the file in local system.
+                        There is no way to retrieve this without creating security issues.*/
+                        ParsedData:lines //insert sanitized array containing strings
+                    });
+                };
+            })(file);
+            reader.readAsText(file); //read the next file
+        }
+        }, false);
 });
 $(document).on('click','#searchbtn',function(){
     $('#searchModal').modal('show');
 });
+$(document).on('click','#reset',function(){
+   console.log(JSON.stringify(parsedData));
+});
 $(document).on('click','#adminbtn',function(){
     $('#adminModal').modal('show');
 });
-$(function(){
-    Dropzone.options.myAwesomeDropzone = {
-        maxFilesize: 5,
-        addRemoveLinks: true,
-        dictResponseError: 'Server not Configured',
-        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
-        init:function(){
-            var self = this;
-            // config
-            self.options.addRemoveLinks = true;
-            self.options.dictRemoveFile = "Delete";
-            //New file added
-            self.on("addedfile", function (file) {
-                console.log('new file added ', file);
-            });
-            // Send file starts
-            self.on("sending", function (file) {
-                console.log('upload started', file);
-                $('.meter').show();
-            });
 
-            // File upload Progress
-            self.on("totaluploadprogress", function (progress) {
-                console.log("progress ", progress);
-                $('.roller').width(progress + '%');
-            });
-
-            self.on("queuecomplete", function (progress) {
-                $('.meter').delay(999).slideUp(999);
-            });
-
-            // On removing file
-            self.on("removedfile", function (file) {
-                console.log(file);
-            });
-        }
-    };
-});
-
-
-/*$(function(){
-    Dropzone.options.myAwesomeDropzone = {
-        maxFilesize: 5,
-        addRemoveLinks: true,
-        url:'/',
-        dictResponseError: 'Server not Configured',
-        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
-        init:function(){
-            var self = this;
-            // config
-            self.options.addRemoveLinks = true;
-            self.options.dictRemoveFile = "Delete";
-            //New file added
-            self.on("addedfile", function (file) {
-                console.log('new file added ', file);
-            });
-            // Send file starts
-            self.on("sending", function (file) {
-                console.log('upload started', file);
-                $('.meter').show();
-            });
-
-            // File upload Progress
-            self.on("totaluploadprogress", function (progress) {
-                console.log("progress ", progress);
-                $('.roller').width(progress + '%');
-            });
-
-            self.on("queuecomplete", function (progress) {
-                $('.meter').delay(999).slideUp(999);
-            });
-
-            // On removing file
-            self.on("removedfile", function (file) {
-                console.log(file);
-            });
-        }
-    };
-});*/
+/**
+ *
+ * @returns {*} array without null, undefined, whitespace or NaN
+ * @param rawArray An uncorrected array
+ * @example validateArray (["1","hello", 3, null, "", undefined])
+ *
+ */
+function validateArray (rawArray){
+    return rawArray.filter(Boolean);
+}
