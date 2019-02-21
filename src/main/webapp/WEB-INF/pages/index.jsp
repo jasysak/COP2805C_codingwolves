@@ -106,40 +106,36 @@
 <div id="adminModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="display: block;">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;
-                </button>
-                <h5 class="modal-title" style="display: block;">Admin Panel</h5>
-            </div>
-            <div class="modal-body">
-                <!--<input type="file" /> -->
-                <form method="post" id="fileUpload" class="fileUpload" action="/"
-                      enctype="multipart/form-data">
+            <form method="post" id="fileUpload" class="fileUpload" action="/"
+                  enctype="multipart/form-data">
+                <div class="modal-header" style="display: block;">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" style="display: block;">Admin Panel</h5>
+                </div>
+                <div class="modal-body">
                     <div class="input-group">
                         <div class = "custom-file">
                             <input type="file" class="custom-file-input" id="fileSelector" multiple>
                             <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
                         </div>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="submit">Upload</button>
-                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer" style="display: block;">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+                    <div class="container">
+
+                    </div>
+                </div>
+                <div class="modal-footer" style="display: flow-root;">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
                         style="float: right;">Close</button>
-                <button type="button" class="btn btn-outline-warning" style="float: right;">
-                    Rebuild
-                </button>
-                <button type="button" class="btn btn-outline-primary" style="text-align: center;">
-                    Add Files
-                </button>
-                <button type="button" id ="reset" class="btn btn-outline-danger" style="float: left;">
+                    <button type="button" class="btn btn-outline-info" style="position: relative;left: 50%;transform: translateX(-125%);">
+                    Upload
+                    </button>
+                    <button type="button" id ="reset" class="btn btn-outline-danger" style="float: left;">
                     Reset
-                </button>
-            </div>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

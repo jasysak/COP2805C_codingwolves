@@ -37,16 +37,24 @@ $(document).ready(function () {
                         There is no way to retrieve this without creating security issues.*/
                         ParsedData:lines //insert sanitized array containing strings
                     });
+                    $('.container').append('<nav class="navbar navbar-expand-lg navbar-light bg-light">' +
+                        '<p class="navbar-brand">' +individualFile.name+'</p>'+
+                        '<button class="btn btn-outline-danger" type="button" id ="'+individualFile.name+'" style="float: right;">' +
+                        'Delete' + '</button>' + '</nav>');
                 };
+
             })(file);
+
             reader.readAsText(file); //read the next file
         }
-        }, false);
+
+        },false);
 });
 $(document).on('click','#searchbtn',function(){
     $('#searchModal').modal('show');
 });
 $(document).on('click','#reset',function(){
+    alert(parsedData["Data"][0]["FileName"]);
    console.log(JSON.stringify(parsedData));
 });
 $(document).on('click','#adminbtn',function(){
