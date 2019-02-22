@@ -16,11 +16,15 @@ public class FilePosition implements Comparable<FilePosition>{
 
 	final long fileID;
 	final int position;
-	//final String FileHash;
+	//final String fileHash;
 	
 	@Override
 	public int compareTo(FilePosition o) {
 		// TODO Auto-generated method stub
+		// 
+		// 
+		//
+		
 		return 0;
 	}
 	
@@ -32,9 +36,9 @@ public class FilePosition implements Comparable<FilePosition>{
 	}
 
 	/*
-	 * public FilePosition(String FileHash, int position) {
+	 * public FilePosition(String fileHash, int position) {
 		// TODO Auto-generated constructor stub
-		this.FileHash = FileHash;
+		this.fileHash = fileHash;
 		this.position = position;
 	* }
 	*/
