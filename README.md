@@ -21,6 +21,6 @@ Members: (list alphabetically)
 
 For the initial phase (project 3), each team member will separately develop their own version of the UI. Once complete, a code review meeting will be scheduled where the team will select either one or some combination of multiple members' code to determine the Project 3 submitted version. This version will be then merged into the master branch prior to the Project 3 due date (Feb. 19).
 
-For subsequent phases, the overall functionality will be broken into logical pieces and assigned to team members for completion. [Do we want to do pair programming? How about code review procedures? How do we decide when code is "done" and ready to merged into master branch?]
+For subsequent phases, the overall functionality will be broken into logical pieces and assigned to team members for completion. Pair programming may be considered in cases where it may be applicable (less coding tasks than team members, or complex code where two heads are better than one, etc). Generally code review will be "by committee" on an as-needed basis and code acceptance in to-be-determined team meetings also "by committee".
 
 [Work In Progess]

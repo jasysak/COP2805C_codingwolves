@@ -102,7 +102,7 @@ public class MaintenanceWindow extends Application {
 	{
 		HBox hbox = new HBox();
 		
-		Text title = new Text("Search Engine - Index Maitenance");
+		Text title = new Text("Search Engine - Index Maintenance");
 		title.setFont(Font.font("SansSerif", FontWeight.BOLD, 30));
 		
 		hbox.getChildren().add(title);
