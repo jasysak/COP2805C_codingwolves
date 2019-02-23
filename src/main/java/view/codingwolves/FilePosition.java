@@ -15,7 +15,7 @@ package view.codingwolves;
 public class FilePosition implements Comparable<FilePosition>{
 
 	final long fileID;
-	final int position;
+	final int wordposition;
 	//final String fileHash;
 	
 	@Override
@@ -30,9 +30,9 @@ public class FilePosition implements Comparable<FilePosition>{
 	
 	// constructor
 	
-	public FilePosition(long fileID, int position) {
+	public FilePosition(long fileID, int wordposition) {
 		this.fileID = fileID;
-		this.position = position;
+		this.wordposition = wordposition;
 	}
 
 	/*
@@ -42,6 +42,8 @@ public class FilePosition implements Comparable<FilePosition>{
 		this.position = position;
 	* }
 	*/
-	
-
+	@Override
+	public String toString() {
+	    return "fileID = " + this.fileID + " position = " + this.wordposition;
+	}
 }

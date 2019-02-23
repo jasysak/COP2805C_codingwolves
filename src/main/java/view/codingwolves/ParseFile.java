@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -39,7 +40,7 @@ public class ParseFile {
 	 * @throws NoSuchAlgorithmException 
 	 * @throws IOException 
 	 */
-	/*
+	 /*
 	 *  This is the basic inverted index model: Map<Word_In_File, SortedSet<FileID, WordPosition>>
 	 *  where <FileID, WordPosition> will be an object of type FilePosition - see FilePosition.class
 	 *  So an example for the word "The" may be: 
@@ -81,33 +82,46 @@ public class ParseFile {
 		// word to lowercase and strip special chars	
 			String word = s.next().toLowerCase();
 			word = word.replaceAll("[^a-zA-Z0-9]", "");
-			// if no length, it wasn't a valid word to begin with
+			// if no length after replace, it wasn't a valid word to begin with
 			if (word.length() == 0)
 				continue;
 			// add to ArrayList
 			list.add(word);
-			// create a new fileposition object "fp" that contains the fileID (long), word position (int)
+			// create a new fileposition object "fp" that contains the fileID (long), current word position (int)
 			FilePosition fp = new FilePosition(fileID, position);
 			// if the mainIndex does not contain "word" then we add it
 			if (!mainIndex.containsKey(word)) {
-				// having some trouble here...code may need work
-				TreeSet<FilePosition> ts = new TreeSet<FilePosition>();
-				ts.add(fp);
-				mainIndex.put(word, ts);
+				// this code seems to work. Adds new fp if word doesn't exist yet in mainIndex
+				SortedSet<FilePosition> newWordPosition = new TreeSet<FilePosition>();
+				newWordPosition.add(fp);
+				mainIndex.put(word, newWordPosition);
+				System.out.println(word + " at " + fp.toString() + " ADDED");
 			}
 			// if the mainIndex already contains word, then we add only the fp object
 			// at the existingWordPosition
-			// this may not be working as expected...
+			// this is not working as expected...
 			else {
-				Set existingWordPosition = mainIndex.get(word);
+				SortedSet<FilePosition> existingWordPosition = new TreeSet<FilePosition>();
+				existingWordPosition = mainIndex.get(word);
 				existingWordPosition.add(fp);
+				System.out.println(fp.fileID);
+				System.out.println(fp.wordposition);
+				mainIndex.put(word, existingWordPosition);		
+				Iterator<FilePosition> it = existingWordPosition.iterator();
+			     while(it.hasNext()){
+			        System.out.println(it.next());
+			     }
+				//System.out.println(existingWordPosition.toString());
+				// NOTE for above: there is a lot of duplicated code. This is not
+			    // done yet and will be re-factored once it works as intended...
 			}
 			++position;
 		} // end while loop
 		s.close();
 		
 		// Print the map using Apache commons collection MapUtils	
-		MapUtils.verbosePrint(System.out, "Inverted Index", mainIndex);
+		//MapUtils.verbosePrint(System.out, "Inverted Index", mainIndex);
+		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 		
 		// create & print json formatted string from ArrayList(list)
 		String json = new Gson().toJson(list);
@@ -115,10 +129,10 @@ public class ParseFile {
 		
 		// now create the "full" json object and pretty print with gson
 		JsonObject value = Json.createObjectBuilder()
-				.add("checksum", checksum)
 				.add("filename", filename)
-				.add("Parsed Data", json)
+				.add("checksum", checksum)
 				.add("path", filepath)
+				.add("Parsed Data", json)
 				.build();
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json_obj = gson.toJson(value);
