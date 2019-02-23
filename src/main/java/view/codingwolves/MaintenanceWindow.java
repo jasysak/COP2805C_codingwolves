@@ -7,6 +7,7 @@ package view.codingwolves;
 
 import javax.naming.OperationNotSupportedException;
 
+import controller.codingwolves.FileIndex;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,7 +31,7 @@ import javafx.stage.Stage;
  * @author David Alvarez, 2/12/19
  *
  */
-class MaintenanceWindow extends Application {
+public class MaintenanceWindow extends Application {
 	private final String iconPath = "/monitor.png";
 	private final Button addFileBtn = new Button();
 	private final Button updateIndexedFilesBtn = new Button();
@@ -60,31 +61,19 @@ class MaintenanceWindow extends Application {
 		addFileBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				try {
-					addFile();
-				} catch (OperationNotSupportedException e1) {
-					System.out.println(e1);
-				}
+				FileIndex.addFileToIndex();
 			}
 		});
 		updateIndexedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				try {
-					updateIndexedFiles();
-				} catch (OperationNotSupportedException e1) {
-					System.out.println(e1);
-				}
+				
 			}
 		});
 		removeSelectedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				try {
-					removeSelectedFiles();
-				} catch (OperationNotSupportedException e1) {
-					System.out.println(e1);
-				}
+				
 			}
 		});
 	}
