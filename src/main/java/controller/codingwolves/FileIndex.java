@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import model.codingwolves.FileModel;
 
 /**
- * @author David
+ * @author David Alvarez, 2/24/19
  *
  */
 public class FileIndex {

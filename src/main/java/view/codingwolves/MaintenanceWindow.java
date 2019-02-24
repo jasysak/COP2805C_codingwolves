@@ -28,6 +28,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.codingwolves.Files;
 
 /**
  * @author David Alvarez, 2/12/19
@@ -40,17 +41,19 @@ public class MaintenanceWindow extends Application {
 	private final Button removeSelectedFilesBtn = new Button();
 	public static final Label numOfFilesIndexed = new Label ("0");
 	final static String VERSION_NUMBER = "1.0";
+	public static TableView<Files> table = new TableView<Files>();
+	public static TableColumn<Files, String> fileNameCol;
+	public static TableColumn<Files, String> statusCol;
 	
 	@Override
     public void start(Stage secondaryStage) 
 	{
 		BorderPane border = new BorderPane();
-		TableView indexTable = addTableView();
 		HBox hboxT = addHBoxT();
 		HBox hboxBL1 = addHBoxBL1();
 		HBox hboxBL2 = addHboxBL2();
 		VBox vboxB = new VBox(hboxBL1, hboxBL2);
-		border.setCenter(indexTable);
+		border.setCenter(addTableView());
 		border.setTop(hboxT);
 		border.setBottom(vboxB);
 		
@@ -83,14 +86,12 @@ public class MaintenanceWindow extends Application {
 	 * This will make the table that will hold the files indexed and the status of those files
 	 * @return The TableView for the center of the interface
 	 */
-	private TableView addTableView()
-	{
-		TableView table = new TableView();
-		
+	private TableView<Files> addTableView()
+	{	
 		table.setEditable(false);
-		TableColumn fileNameCol = new TableColumn("File Name");
+		fileNameCol = new TableColumn<Files, String>("File Name");
 		fileNameCol.setPrefWidth(400);
-		TableColumn statusCol = new TableColumn("Status");
+		statusCol = new TableColumn<Files, String>("Status");
 		statusCol.setPrefWidth(400);
 		
 		table.getColumns().addAll(fileNameCol, statusCol);
