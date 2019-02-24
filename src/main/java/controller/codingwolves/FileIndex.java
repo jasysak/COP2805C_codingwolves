@@ -4,15 +4,20 @@
 package controller.codingwolves;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.codingwolves.FileModel;
 
 /**
  * @author David
  *
  */
 public class FileIndex {
+	static FileModel model = new FileModel();
+	static String fileName;
 	
 	public static void addFileToIndex() {
 		FileChooser fileChooser = new FileChooser();
@@ -22,7 +27,20 @@ public class FileIndex {
 			new FileChooser.ExtensionFilter("Text Files", "*.txt"),
 			new FileChooser.ExtensionFilter("HTML Files", "*.html")
 		);
-		File file = fileChooser.showOpenDialog(new Stage());
+		File selectedFile = fileChooser.showOpenDialog(new Stage());
+		if (selectedFile != null) {
+			try {
+				fileName = selectedFile.getCanonicalPath();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		model.addFile(fileName);
 	}
-
+	public static void updateFilesInIndex()	{
+		
+	}
+	public static void removeFilesFromIndex() {
+		
+	}
 }

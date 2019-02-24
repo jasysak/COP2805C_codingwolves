@@ -39,7 +39,7 @@ public class Main extends Application{
 	private final Button aboutBtn = new Button();
 	private TextField searchField;
 	static String result;
-	static int numOfFilesIndexed = 0;
+	public static Label numOfFilesIndexed;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -187,21 +187,25 @@ public class Main extends Application{
 	private HBox addHBoxB()
 	{
 		HBox hboxB = new HBox();
+		HBox hboxL2 = new HBox();
 		
 		maintenanceBtn.setText("Maintenance");
 		maintenanceBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		maintenanceBtn.setPrefSize(120, 20);
 		maintenanceBtn.setOnAction(onAction);
 		
-		String s1 = "Number of Files Indexed: " + Integer.toString(numOfFilesIndexed);
-		Label numOfFiles = new Label(s1);
+		Label numOfFiles = new Label("Number of Files Indexed:");
 		numOfFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		numOfFilesIndexed = new Label("0");
+		numOfFilesIndexed.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		
 		aboutBtn.setText("About");
 		aboutBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		aboutBtn.setPrefSize(100, 20);
 		
-		hboxB.getChildren().addAll(maintenanceBtn, numOfFiles, aboutBtn);
+		hboxL2.getChildren().addAll(numOfFiles, numOfFilesIndexed);
+		hboxL2.setSpacing(5);
+		hboxB.getChildren().addAll(maintenanceBtn, hboxL2, aboutBtn);
 		hboxB.setAlignment(Pos.CENTER);
 		hboxB.setSpacing(260);
 		hboxB.setPadding(new Insets(10, 0, 10, 0));

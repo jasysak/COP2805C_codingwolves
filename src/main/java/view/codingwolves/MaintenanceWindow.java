@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -36,7 +38,7 @@ public class MaintenanceWindow extends Application {
 	private final Button addFileBtn = new Button();
 	private final Button updateIndexedFilesBtn = new Button();
 	private final Button removeSelectedFilesBtn = new Button();
-	static int numOfFilesIndexed = 0;
+	public static final Label numOfFilesIndexed = new Label ("0");
 	final static String VERSION_NUMBER = "1.0";
 	
 	@Override
@@ -143,19 +145,26 @@ public class MaintenanceWindow extends Application {
 	private HBox addHboxBL2()
 	{
 		HBox hboxL2 = new HBox();
+		GridPane grid =  new GridPane();
+		HBox hboxL3 = new HBox();
 		
-		String s1 = "Number of Files Indexed: " + numOfFilesIndexed;
-		Label numOfFiles = new Label(s1);
+		Label numOfFiles = new Label("Number of Files Indexed:");
 		numOfFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		numOfFilesIndexed.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		
 		String s2 = "Search Engine version " + VERSION_NUMBER;
 		Label seVersion = new Label(s2);
 		seVersion.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		
-		hboxL2.getChildren().addAll(numOfFiles, seVersion);
+		hboxL2.getChildren().addAll(numOfFiles, grid);
 		hboxL2.setAlignment(Pos.CENTER);
 		hboxL2.setSpacing(350);
 		hboxL2.setPadding(new Insets(10, 0, 10, 0));
+		hboxL3.getChildren().addAll(numOfFiles, numOfFilesIndexed);
+		hboxL3.setSpacing(5);
+		grid.add(hboxL3, 0, 0);
+		grid.add(seVersion, 5, 0);
+		grid.setHgap(70);
 		return hboxL2;
 	}
 	/**
