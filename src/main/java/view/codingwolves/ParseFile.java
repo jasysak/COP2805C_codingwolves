@@ -103,15 +103,17 @@ public class ParseFile {
 			else {
 				SortedSet<FilePosition> existingWordPosition = new TreeSet<FilePosition>();
 				existingWordPosition = mainIndex.get(word);
+				System.out.println("Before ADD \n" + existingWordPosition.toString());
 				existingWordPosition.add(fp);
-				System.out.println(fp.fileID);
-				System.out.println(fp.wordposition);
+				System.out.println("After ADD \n" + existingWordPosition.toString());
+				//System.out.println(fp.fileID);
+				//System.out.println(fp.wordposition);
 				mainIndex.put(word, existingWordPosition);		
 				Iterator<FilePosition> it = existingWordPosition.iterator();
 			     while(it.hasNext()){
 			        System.out.println(it.next());
 			     }
-				//System.out.println(existingWordPosition.toString());
+				
 				// NOTE for above: there is a lot of duplicated code. This is not
 			    // done yet and will be re-factored once it works as intended...
 			}
