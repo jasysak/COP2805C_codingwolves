@@ -170,8 +170,24 @@ public class ParseFile {
 		return list; // temporary return of list for JSON building
 		
 	} // end addToIndex
-		
-		
+	
+	// A few stub methods we will probably need
+	
+	static void removeDocumentFromIndex () {
+		// TODO stub method
+		// called when document is to be entirely removed from mainIndex
+		// may also need to remove it from disk storage too! 
+	}
+	
+	static void updateIndex() {
+		// TODO stub method
+		// called when "Update Index" button is pressed from Maintenance window
+	}
+	
+	static void loadIndexFromStorage () {
+		// TODO stub method
+		// called at startup to access disk storage of index and load it into memory/mainIndex Map
+	}
 	
 	
 	/*
