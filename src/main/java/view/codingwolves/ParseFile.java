@@ -149,8 +149,8 @@ public class ParseFile {
 				// Set, but it is only printing the first fp added to it. Which leads me to believe
 				// again that the above code is not adding the last fp object to the Set
 				Iterator<FilePosition> it = existingWordPosition.iterator();
-			     while(it.hasNext()){
-			        System.out.println(it.next());
+			    while(it.hasNext()){
+			     		System.out.println(it.next());
 			     }
 				 // On further thought, could the problem simply be the iterator is not
 			     // properly iterating through all fp objects in the Set? (that is, they
