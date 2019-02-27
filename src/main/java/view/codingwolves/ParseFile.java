@@ -19,6 +19,7 @@ package view.codingwolves;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -100,6 +101,17 @@ public class ParseFile {
 		String json_obj = gson.toJson(value);
 		System.out.println("\nJSON Data: ");
 		System.out.println(json_obj);
+		
+		// write to test file
+		try {
+			FileWriter writer = new FileWriter("./testfile.json");
+			writer.write(json_obj);
+			writer.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 			
 	} // end main
 	
@@ -146,7 +158,7 @@ public class ParseFile {
 				SortedSet<FilePosition> existingWordPosition = mainIndex.get(word);
 				existingWordPosition.add(fp);
 				// some output to verify:
-				System.out.print("KEY = " + word + ": ");
+				System.out.print("KEY = " + String.format(("%-15s"), word) + ": ");
 				Iterator<FilePosition> it = existingWordPosition.iterator();
 			    System.out.print("VALUES = ");
 				while(it.hasNext()){

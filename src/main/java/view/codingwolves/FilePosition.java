@@ -16,11 +16,20 @@ public class FilePosition implements Comparable<FilePosition>{
 
 	final long fileID;
 	final int wordposition;
-	//final String fileHash;
+	
+	// Object constructor
+	
+	public FilePosition(long fileID, int wordposition) {
+		this.fileID = fileID;
+		this.wordposition = wordposition;
+	}
+	
+	// Override methods
 	
 	@Override
 	public int compareTo(FilePosition o) {
-		// TODO Auto-generated method stub
+		if ( o == null )
+			throw new IllegalArgumentException( "Argument must not be null." );
 		if (this.fileID == o.fileID)
 			// this will return the position offset
 			// between the positions of matched word
@@ -35,21 +44,31 @@ public class FilePosition implements Comparable<FilePosition>{
 			// int for different files in the index.
 			return ((int)(this.fileID - o.fileID));
 	}
-	
-	// constructor
-	
-	public FilePosition(long fileID, int wordposition) {
-		this.fileID = fileID;
-		this.wordposition = wordposition;
-	}
 
-	/*
-	 * public FilePosition(String fileHash, int position) {
-		// TODO Auto-generated constructor stub
-		this.fileHash = fileHash;
-		this.position = position;
-	* }
-	*/
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+ 
+		// this instance check
+		if (this == o) {
+			return true;
+		}
+		//
+		// TODO work in progress
+		//
+		return false;
+		
+	}
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 37 * result + (int)fileID;
+		result = 37 * result + wordposition;
+		return result;
+	}
+	
 	@Override
 	public String toString() {
 	    return "fileID = " + this.fileID + " position = " + this.wordposition;
