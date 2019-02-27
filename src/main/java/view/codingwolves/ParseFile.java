@@ -25,6 +25,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -131,30 +132,20 @@ public class ParseFile {
 				SortedSet<FilePosition> newWordPosition = new TreeSet<FilePosition>();
 				newWordPosition.add(fp);
 				mainIndex.put(word, newWordPosition);
-				System.out.println(word + " at " + fp.toString() + " ADDED");
+				//System.out.println(word + " at " + fp.toString() + " ADDED");
 			}
 			// if the mainIndex already contains word, then we add only the fp object
 			// to an existingWordPosition Set
-			// this is not working as expected...
 			else {
-				// test contents of fp
-				System.out.println("File ID = " + fp.fileID);
-				System.out.println("position = " + fp.wordposition);
-				// Note: the above test confirms the correct fileID and position values
-				// but the lines below may not be adding this fp object to the existingWordPosition
-				// Set ??? I don't know why...yet
-				Set<FilePosition> existingWordPosition = mainIndex.get(word);
+				SortedSet<FilePosition> existingWordPosition = mainIndex.get(word);
 				existingWordPosition.add(fp);
-				// the following iterator should print the entire contents of existingWordPosition
-				// Set, but it is only printing the first fp added to it. Which leads me to believe
-				// again that the above code is not adding the last fp object to the Set
+				System.out.print("KEY = " + word + ": ");
 				Iterator<FilePosition> it = existingWordPosition.iterator();
-			    while(it.hasNext()){
-			     		System.out.println(it.next());
+			    System.out.print("VALUES = ");
+				while(it.hasNext()){
+			     		System.out.print(it.next() + ", ");
 			     }
-				 // On further thought, could the problem simply be the iterator is not
-			     // properly iterating through all fp objects in the Set? (that is, they
-			     // are there, just not being printed!?)
+			    System.out.println();
 			}
 			++position;
 		} // end while loop
@@ -164,8 +155,8 @@ public class ParseFile {
 		// note that only one fp object is printed from each set
 		// for each word in the mainIndex Map (due to suspected bug in the
 		// else/"add fp to existing word" code section above).
-		//MapUtils.verbosePrint(System.out, "Inverted Index", mainIndex);
-		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		MapUtils.verbosePrint(System.out, "Inverted Index", mainIndex);
+		//MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 		
 		return list; // temporary return of list for JSON building
 		

@@ -21,11 +21,13 @@ public class FilePosition implements Comparable<FilePosition>{
 	@Override
 	public int compareTo(FilePosition o) {
 		// TODO Auto-generated method stub
-		// 
-		// 
-		//
-		
-		return 0;
+		if (this.fileID == o.fileID)
+			// this will return position offset ((+)int)
+			// between position of matched word
+		    return (this.wordposition - o.wordposition);
+		else
+			// this will return 0 if same file
+			return ((int)(this.fileID - o.fileID));
 	}
 	
 	// constructor
@@ -46,4 +48,7 @@ public class FilePosition implements Comparable<FilePosition>{
 	public String toString() {
 	    return "fileID = " + this.fileID + " position = " + this.wordposition;
 	}
+	
+	
+	
 }
