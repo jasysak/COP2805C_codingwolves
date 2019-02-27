@@ -22,11 +22,17 @@ public class FilePosition implements Comparable<FilePosition>{
 	public int compareTo(FilePosition o) {
 		// TODO Auto-generated method stub
 		if (this.fileID == o.fileID)
-			// this will return position offset ((+)int)
-			// between position of matched word
+			// this will return the position offset
+			// between the positions of matched word
+			// in a set. That is, if the this.wordposition
+			// and o.wordposition are in fact different
+			// instances of the same word, the return
+			// value will be a positive, non-zero int
 		    return (this.wordposition - o.wordposition);
 		else
-			// this will return 0 if same file
+			// this will return the fileID offset between
+			// two different files. Also a positive, non-zero
+			// int for different files in the index.
 			return ((int)(this.fileID - o.fileID));
 	}
 	
