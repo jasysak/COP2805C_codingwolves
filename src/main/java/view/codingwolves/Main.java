@@ -33,6 +33,7 @@ import javafx.stage.WindowEvent;
  * @version 1.0
  */
 public class Main extends Application{
+	public static long nextFileID;
 	private final String iconPath = "/monitor.png";
 	private final Button searchBtn = new Button();
 	private final Button maintenanceBtn = new Button();

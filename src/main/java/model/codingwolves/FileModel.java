@@ -5,6 +5,7 @@ package model.codingwolves;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -19,26 +20,50 @@ import view.codingwolves.MaintenanceWindow;
  */
 public class FileModel {
 	private String fileName;
-	static List<String> listOfFiles = new ArrayList();
-	private final ObservableList<Files> data = FXCollections.observableArrayList();
+	//Using an observable list to be able to monitor when elements change
+	private final ObservableList<Files> files = FXCollections.observableArrayList();
 	
+	/**
+	 * This method will add a file to the list files with a unique file id,
+	 * the path, when it was lastModified, and the status of the file.
+	 * 
+	 * @param fileName The file to be added to the list
+	 */
 	public void addFile(String fileName) {
+		long fileId = Main.nextFileID;
+		Main.nextFileID += 1L;
 		File file = new File(fileName);
 		long fileLastModified = file.lastModified();
-		listOfFiles.add(fileName);
 		String fileStatus = "Indexed"; //This is just to test
-		data.add(new Files(fileName, fileStatus));
-		MaintenanceWindow.fileNameCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileName"));
-		MaintenanceWindow.statusCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileStatus"));
-		MaintenanceWindow.table.setItems(data);
+		files.add(new Files(fileId, fileName, fileLastModified, fileStatus));
 		
-		int numFiles = listOfFiles.size();
+		//Add full path name to the fileName column
+		MaintenanceWindow.fileNameCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileName"));
+		//Add the status of the file to the status column
+		MaintenanceWindow.statusCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileStatus"));
+		MaintenanceWindow.table.setItems(files);
+		
+		int numFiles = files.size();
 		String str = Integer.toString(numFiles);
 		Main.numOfFilesIndexed.setText(str);
 		MaintenanceWindow.numOfFilesIndexed.setText(str);
 	}
-	public void removeFile() {
-		
+	/**
+	 * This method will remove the specified file from the data list and
+	 * update the columns in the maintenance view.
+	 * 
+	 * @param fileId The identifier for the file to be removed
+	 */
+	public void removeFile(long fileId) {
+		//Loop will iterate through list and remove elements with the current fileId
+		for (Iterator<Files> iterator = files.iterator(); iterator.hasNext();)
+		{
+			Files currentFile = iterator.next();
+			if (currentFile.getFileId() == fileId)
+			{
+					iterator.remove();
+			}
+		}
 	}
 	public void updateFileLastModified() {
 		
