@@ -1,17 +1,26 @@
 /**
+ * @author Jason Sysak
+ * @version 1.0.0 
  * 
+ * Feb. 25, 2019
+ * 
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
+ *
+ * FilePosition.java (name subject to change)
+ * 
+ * Java class defining the FilePosition object to be used
+ * in the Inverted Index Map->Set value for each key "word"
+ *
  */
 package view.codingwolves;
 
-/**
- * @author jasysak
- * 
- * FilePosition object to use in Map<String, SortedSet<FilePosition>>
- * for the inverted index 
- * 
- * WORK IN PROGRESS
- *
- */
 public class FilePosition implements Comparable<FilePosition>{
 
 	final long fileID;

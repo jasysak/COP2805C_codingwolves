@@ -4,7 +4,7 @@
  * 
  * Feb. 25, 2019
  * 
- * For COP2805C Group Project -- Project #4
+ * For COP2805C Group Project
  * 
  * codingwolves team
  * Members:
@@ -13,6 +13,14 @@
  * Erin H.
  * Jason S.
  *
+ * ParseFile.java (name subject to change)
+ * 
+ * Java class for methods pertaining to inverted index construction,
+ * update, edit, file removal, etc. and the various index search
+ * functions (AND, OR, PHRASE).
+ *
+ * WORK IN PROGRESS
+ * 
  */
 package view.codingwolves;
 
@@ -199,6 +207,19 @@ public class ParseFile {
 		// called at startup to access disk storage of index and load it into memory/mainIndex Map
 	}
 	
+	// search functions - method stubs
+	
+	static void indexSearchAnd(String searchWords) {
+		// TODO stub method
+	}
+	
+	static void indexSearchOr(String searchWords) {
+		// TODO stub method
+	}
+	
+	static void indexSearchPhrase(String searchPhrase) {
+		// TODO stub method
+	}
 	
 	/*
 	 * Method getFileChecksum taken from 
