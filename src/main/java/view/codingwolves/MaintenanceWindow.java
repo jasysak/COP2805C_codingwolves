@@ -78,7 +78,7 @@ public class MaintenanceWindow extends Application {
 		removeSelectedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				
+				FileIndex.removeFilesFromIndex();
 			}
 		});
 	}

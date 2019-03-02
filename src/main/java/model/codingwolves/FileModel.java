@@ -21,7 +21,7 @@ import view.codingwolves.MaintenanceWindow;
 public class FileModel {
 	private String fileName;
 	//Using an observable list to be able to monitor when elements change
-	private final ObservableList<Files> files = FXCollections.observableArrayList();
+	private static final ObservableList<Files> files = FXCollections.observableArrayList();
 	
 	/**
 	 * This method will add a file to the list files with a unique file id,
@@ -64,6 +64,11 @@ public class FileModel {
 					iterator.remove();
 			}
 		}
+		
+		int numFiles = files.size();
+		String str = Integer.toString(numFiles);
+		Main.numOfFilesIndexed.setText(str);
+		MaintenanceWindow.numOfFilesIndexed.setText(str);
 	}
 	public void updateFileLastModified() {
 		
