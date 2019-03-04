@@ -9,96 +9,176 @@
     <name>Wolfster</name>
 
     <properties>
-        <jdk.version>10.0</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <spring.version>5.1.5.RELEASE</spring.version>
+        <jackson.version>2.9.8</jackson.version>
         <jstl.version>1.2</jstl.version>
+        <jcl.slf4j.version>1.7.26</jcl.slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <servletAPI.version>4.0.1</servletAPI.version>
+        <bootstrap.version>4.3.1</bootstrap.version>
+        <jquery.version>3.3.1</jquery.version>
+        <popperjs.version>1.14.7</popperjs.version>
+        <fontawesome.version>5.7.2</fontawesome.version>
+        <cryptojs.version>3.1.9</cryptojs.version>
+        <webjarslocator.version>0.36</webjarslocator.version>
+        <mavencompiler.version>3.8.0</mavencompiler.version>
+        <maveneclipse.version>2.10</maveneclipse.version>
+        <mavenwar.version>3.2.2</mavenwar.version>
+        <jetty.version>9.4.15.v20190215</jetty.version>
+        <springmongo.version>2.1.5.RELEASE</springmongo.version>
+        <junit.version>5.4.0</junit.version>
+        <embeddedmongo.version>2.2.0</embeddedmongo.version>
+        <mongojavadriver.version>3.10.1</mongojavadriver.version>
     </properties>
 
     <dependencies>
-
+        <!--SPRING  MVC-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
+        <!--JACKSON CORE FOR JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!--JACKSON BIND FOR JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!--JAVAX SERVLET-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>popper.js</artifactId>
-            <version>1.14.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.1.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.36</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>font-awesome</artifactId>
-            <version>5.7.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>dropzone</artifactId>
-            <version>4.3.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.4</version>
-        </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+            <version>${servletAPI.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${jcl.slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!--WEBJARS BOOTSTRAP-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+
+        <!--WEBJARS jQuery-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+
+        <!--WEBJARS POPPER-->
+        <dependency>
             <groupId>org.webjars.npm</groupId>
+            <artifactId>popper.js</artifactId>
+            <version>${popperjs.version}</version>
+        </dependency>
+
+        <!--WEBJARS LOCATOR FOR RESOURCE MAPPING-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>${webjarslocator.version}</version>
+        </dependency>
+
+        <!--WEBJARS FONT-AWESOME-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>${fontawesome.version}</version>
+        </dependency>
+
+        <!--WEBJARS CRYPTO JS-->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
             <artifactId>crypto-js</artifactId>
-            <version>3.1.9-1</version>
+            <version>${cryptojs.version}</version>
+        </dependency>
+
+        <!--jUNIT FOR TESTING-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!---EMBEDDED MONGO-->
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>${embeddedmongo.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--MongoDB JAVA DRIVER-->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongojavadriver.version}</version>
+        </dependency>
+
+        <!--SPRING DATA FOR MongoDB-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>2.1.5.RELEASE</version>
         </dependency>
 
     </dependencies>
 
     <build>
+
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.3</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.14.v20181114</version>
+                <version>${jetty.version}</version>
                 <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanIntervalSeconds>15</scanIntervalSeconds>
                     <webApp>
                         <contextPath>/Wolfster</contextPath>
                     </webApp>
@@ -108,16 +188,39 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.9</version>
+                <version>${maveneclipse.version}</version>
                 <configuration>
                     <downloadSources>true</downloadSources>
                     <downloadJavadocs>true</downloadJavadocs>
                     <wtpversion>2.0</wtpversion>
                     <wtpContextName>Wolfster</wtpContextName>
                 </configuration>
-
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${mavenwar.version}</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.1.0.Alpha5</version>
+                <configuration>
+                    <hostname>127.0.0.1</hostname>
+                    <port>9990</port>
+                    <username>admin</username>
+                    <password>admin</password>
+                    <name>spring4ajax.war</name>
+                </configuration>
+            </plugin> -->
+
         </plugins>
+
     </build>
 
 </project>

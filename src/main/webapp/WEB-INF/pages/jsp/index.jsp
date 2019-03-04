@@ -6,52 +6,49 @@
   To change this template use File | Settings | File Templates.
 --%>
 
+<%@page session="false"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!---CUSTOM PAGE STATIC RESOURCES SPRING----->
-<spring:url value="/resources/css/index-style.css" var="indexstyle" />
-<spring:url value="/resources/js/index-JS.js" var="indexjs" />
-<spring:url value="/resources/images/wolf.svg" var ="wolfimage" />
-<!--------BOOTSTRAP WEBJAR SPRING------------>
-<spring:url value="/webjars/bootstrap/4.1.3/js/bootstrap.min.js" var="bootstrapminjs" />
-<spring:url value="/webjars/popper.js/1.14.3/umd/popper.min.js" var="popperminjs" />
-<spring:url value="/webjars/jquery/3.3.1/jquery.min.js" var="jqueryminjs" />
-<spring:url value="/webjars/bootstrap/4.1.3/css/bootstrap.css" var="bootstrapcss" />
-<!--------FONTAWESOME WEBJAR SPRING---------->
-<spring:url value="/webjars/font-awesome/5.7.1/css/all.min.css" var="fontawesome" />
-<!--------DROPZONE WEBJAR SPRING------------->
-<spring:url value="/webjars/dropzone/4.3.0/dist/min/dropzone.min.js" var="dropzonejs" />
-<!--------CRYPTOJS WEBJAR SPRING------------->
-<spring:url value="/webjars/crypto-js/3.1.9-1/crypto-js.js" var="cryptojs" />
+<!---------SPRING DECLARATIONS------------------->
+<spring:url value="" var="" />
+<spring:url value="/webjars/bootstrap/4.3.1/css/bootstrap.css" var="bootstrapCSS" />
+<spring:url value="webjars/jquery/3.3.1/jquery.min.js" var="jqueryJS" />
+<spring:url value="/webjars/popper.js/1.14.3/umd/popper.min.js" var="popperJS" />
+<spring:url value="/webjars/bootstrap/4.3.1/js/bootstrap.min.js" var="bootstrapJS" />
+<spring:url value="/webjars/font-awesome/5.7.2/css/all.min.css" var="fontawesomeCSS" />
+<spring:url value="/webjars/crypto-js/3.1.9/crypto-js.js" var="cryptoJS" />
+<spring:url value="/resources/css/index-style.css" var="indexCSS" />
+<spring:url value="/resources/js/index-JS.js" var="indexJS" />
+<spring:url value="/resources/images/wolf.svg" var="wolfimage" />
+<spring:url value="/resources/js/index-JS.js" var="indexJS" />
 <!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0,
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0,
          maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Wolfster</title>
     <link rel="icon" href="${wolfimage}"/>
-    <!--------BOOTSTRAP-------------->
-    <link href="${bootstrapcss}" rel="stylesheet" />
-    <script src="${jqueryminjs}"></script>
-    <script src="${popperminjs}"></script>
-    <script src="${bootstrapminjs}"></script>
-    <!----------FONT AWESOME---------->
-    <link href="${fontawesome}" rel="stylesheet" />
-    <!----------DROPZONE-------------->
-    <script src="${dropzonejs}"></script>
-    <!--------CRYPTO JS--------------->
-    <script src="${cryptojs}"></script>
-    <!--------CUSTOM PAGE ------------>
-    <link href="${indexstyle}" rel="stylesheet" />
-    <script src="${indexjs}"></script>
+    <c:url var="home" value="/" scope="request" />
+    <!--------BOOTSTRAP---------->
+    <link href="${bootstrapCSS}" rel="stylesheet"/>
+    <script src="${jqueryJS}"></script>
+    <script src="${popperJS}"></script>
+    <script src="${bootstrapJS}"></script>
+    <!-------FONT AWESOME-------->
+    <link href="${fontawesomeCSS}" rel="stylesheet" />
+    <!------CRYPTO JS------------>
+    <script src="${cryptoJS}"></script>
+    <!-----CUSTOM PAGE----------->
+    <link rel="stylesheet" href="${indexCSS}" />
+    <script src="${indexJS}"></script>
 </head>
 <body>
 <div class="image-wrapper">
-    <img src="${wolfimage}" alt ="howling wolf">
+    <img src="${wolfimage}" alt="howling wolves" />
 </div>
 <div class="wrapper">
     <div class="input-group mb-3">
@@ -127,13 +124,13 @@
                 </div>
                 <div class="modal-footer" style="display: flow-root;">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
-                        style="float: right;">Close</button>
+                            style="float: right;">Close</button>
                     <button type="button" class="btn btn-outline-info" id="upload"
                             style="position: relative;left: 50%;transform: translateX(-125%);">
-                    Upload
+                        Upload
                     </button>
                     <button type="button" id ="reset" class="btn btn-outline-danger" style="float: left;">
-                    Reset
+                        Reset
                     </button>
                 </div>
             </form>
@@ -141,5 +138,8 @@
     </div>
 </div>
 
+<script>
+    /*
 
-
+*/
+</script>

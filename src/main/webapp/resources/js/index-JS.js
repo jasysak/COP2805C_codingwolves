@@ -26,6 +26,7 @@ $(document).ready(function () {
                     lines = e.target.result.toString().replace(/\W/g, ' ').split(/\s+/).map(function (line) {
                         return validateArray(line.split(',')).toString().toLowerCase();
                     });
+                    lines.push("##$@@");
                     checkSum = CryptoJS.MD5(e.target.result).toString(); //checksum using Crypto JS package
                     parsedData["Code"]='OK'; //at least one file has been processed
                     parsedData["FilesProcessed"] = iteration;
@@ -37,9 +38,11 @@ $(document).ready(function () {
                         There is no way to retrieve this without creating security issues.*/
                         ParsedData:lines //insert sanitized array containing strings
                     });
-                    $('.container').append('<nav class="navbar navbar-light" style="background-color: #e3f2fd;">' +
+                    $('.container').append('<nav class="navbar navbar-light" ' +
+                        'style="background-color: #e3f2fd;">' +
                         '<p class="navbar-brand" style="width: 75%;">' +individualFile.name+'</p>'+
-                        '<button class="btn btn-outline-danger" type="button" id ="'+individualFile.name+'" style="float: right;">' +
+                        '<button class="btn btn-outline-danger" type="button" ' +
+                        'id ="'+individualFile.name+'" style="float: right;">' +
                         'Delete' + '</button>' + '</nav>');
                 };
 
@@ -48,20 +51,48 @@ $(document).ready(function () {
             reader.readAsText(file); //read the next file
         }
 
-        },false);
+    },false);
 });
 $(document).on('click','#searchbtn',function(){
     $('#searchModal').modal('show');
 });
 $(document).on('click','#reset',function(){
-    //console.log(JSON.stringify(parsedData));
-    $('.container').empty();
+    console.log(JSON.stringify(parsedData));
 });
+
 $(document).on('click','#adminbtn',function(){
     $('#adminModal').modal('show');
 });
 
+$(document).on('click','#upload',function (event) {
+    var senderObject ={};
+    senderObject["code"]=parsedData["Code"];
+    senderObject["filesProcessed"] = parsedData["FilesProcessed"];
+    senderObject["filesParsed"]=parsedData["FilesParsed"];
+    senderObject["fileName"]= mergeArray(parsedData,"FileName");
+    senderObject["checkSum"]=mergeArray(parsedData,"CheckSum");
+    senderObject["path"]=mergeArray(parsedData,"Path");
+    senderObject["parsedData"]=mergeArray(parsedData,"ParsedData");
+    console.log(senderObject);
+    $.ajax({
+        type: 'POST',
+        contentType : "application/json",
+        url: "performMagic",
+        data: JSON.stringify(senderObject),
+        dataType: 'json',
+        success: function (data) {
+            console.log('hi',data);
+            delete senderObject;
+        },
+        error: function (e) {
+            console.log('error');
+        }
+
+    });
+
+});
 /**
+ * The function accepts an array and returns filtered data
  *
  * @returns {*} array without null, undefined, whitespace or NaN
  * @param rawArray An uncorrected array
@@ -70,4 +101,26 @@ $(document).on('click','#adminbtn',function(){
  */
 function validateArray (rawArray){
     return rawArray.filter(Boolean);
+}
+
+/**
+ * This function will accepted a complex nested object and flattened the object into an array.
+ *
+ * @param finalObject This is the object that needs to be flattened
+ * @param objectKey This is the key of the object that needs to be flattened
+ * @returns {Array} This returns the flattened array
+ */
+function mergeArray (finalObject, objectKey){
+    var returnedArray = [];
+    arrayLength = finalObject["Data"].length;
+    finalObject["Data"].forEach(function (fileData) {
+        if(!Array.isArray(fileData[objectKey])){
+            returnedArray.push(fileData[objectKey]);
+        }
+        else{
+            returnedArray = returnedArray.concat.apply(returnedArray,fileData[objectKey]);
+        }
+    });
+
+    return returnedArray;
 }
