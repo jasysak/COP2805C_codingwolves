@@ -9,7 +9,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.codingwolves.FileModel;
@@ -57,17 +61,36 @@ public class FileIndex {
 		}
 		model.addFile(fileName);
 	}
+	//Still a work in progress
 	public static void updateFilesInIndex()	{
+		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
 		for (Iterator<Files> iterator = FileModel.files.iterator(); iterator.hasNext();)
 		{
 			Files currentFile = iterator.next();
-			//String 
+			if (currentFile.getFileName() == selectedItem.getFileName() 
+					&& currentFile.getCheckSum() == selectedItem.getCheckSum())
+			{
+				
+			}
 		}
 	}
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
-		long fileId = selectedItem.getFileId();
-		MaintenanceWindow.table.getItems().remove(selectedItem);
-		model.removeFile(fileId);
+		String name = selectedItem.getFileName();
+		ImageView icon = new ImageView("/monitor.png");
+		icon.setFitWidth(48);
+		icon.setFitHeight(48);
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Delete File?");
+		alert.setContentText("Delete " + name + " ?");
+		alert.getDialogPane().setGraphic(icon);
+		alert.showAndWait();
+		
+		if (alert.getResult() == ButtonType.OK)
+		{
+			long fileId = selectedItem.getFileId();
+			MaintenanceWindow.table.getItems().remove(selectedItem);
+			model.removeFile(fileId);
+		}
 	}
 }
