@@ -5,6 +5,8 @@ package controller.codingwolves;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.List;
 
 import javafx.scene.control.TableView.TableViewSelectionModel;
@@ -31,7 +33,7 @@ public class FileIndex {
 	public static void phraseSearch() {
 		
 	}
-	public static void addFileToIndex() {
+	public static void addFileToIndex() throws NoSuchAlgorithmException, IOException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Choose a file to add to the Index");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -50,11 +52,17 @@ public class FileIndex {
 				e.printStackTrace();
 			}
 		}
-		//if (fileName)
+		if (model.fileExists(fileName)) {
+			return;
+		}
 		model.addFile(fileName);
 	}
 	public static void updateFilesInIndex()	{
-		
+		for (Iterator<Files> iterator = FileModel.files.iterator(); iterator.hasNext();)
+		{
+			Files currentFile = iterator.next();
+			//String 
+		}
 	}
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();

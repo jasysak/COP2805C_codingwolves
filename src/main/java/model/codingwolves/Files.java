@@ -14,12 +14,14 @@ public class Files {
 	private SimpleLongProperty fileId;
 	private SimpleStringProperty fileName;
 	private SimpleLongProperty fileLastModified;
+	private SimpleStringProperty checkSum;
 	private SimpleStringProperty fileStatus;
 	
-	public Files(long fileId, String fileName, long fileLastModified, String fileStatus) {
+	public Files(long fileId, String fileName, long fileLastModified, String checkSum, String fileStatus) {
 		this.fileId = new SimpleLongProperty(fileId);
 		this.fileName = new SimpleStringProperty(fileName);
 		this.fileLastModified = new SimpleLongProperty(fileLastModified);
+		this.checkSum = new SimpleStringProperty(checkSum);
 		this.fileStatus = new SimpleStringProperty(fileStatus);
 	}
 	public long getFileId() {
@@ -39,6 +41,12 @@ public class Files {
 	}
 	public void setLastModified(long lastmodified) {
 		fileLastModified.set(lastmodified);
+	}
+	public String getCheckSum() {
+		return checkSum.get();
+	}
+	public void setCheckSum(String checksum) {
+		checkSum.set(checksum);
 	}
 	public String getFileStatus() {
 		return fileStatus.get();

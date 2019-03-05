@@ -5,6 +5,9 @@
  */
 package view.codingwolves;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
 import javax.naming.OperationNotSupportedException;
 
 import controller.codingwolves.FileIndex;
@@ -66,7 +69,13 @@ public class MaintenanceWindow extends Application {
 		addFileBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				FileIndex.addFileToIndex();
+				try {
+					FileIndex.addFileToIndex();
+				} catch (NoSuchAlgorithmException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		updateIndexedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
@@ -167,29 +176,5 @@ public class MaintenanceWindow extends Application {
 		grid.add(seVersion, 5, 0);
 		grid.setHgap(70);
 		return hboxL2;
-	}
-	/**
-	 * Stub method to test addFile button EventHandler
-	 * @throws OperationNotSupportedException
-	 */
-	private void addFile() throws OperationNotSupportedException
-	{
-		throw new OperationNotSupportedException("Function not yet Implemented");
-	}
-	/**
-	 * Stub method to test updateIndexedFiles button EventHandler
-	 * @throws OperationNotSupportedException
-	 */
-	private void updateIndexedFiles() throws OperationNotSupportedException
-	{
-		throw new OperationNotSupportedException("Function not yet Implemented");
-	}
-	/**
-	 * Stub method to test removeSelectedFiles button EventHandler
-	 * @throws OperationNotSupportedException
-	 */
-	private void removeSelectedFiles() throws OperationNotSupportedException
-	{
-		throw new OperationNotSupportedException("Function not yet Implemented");
 	}
 }
