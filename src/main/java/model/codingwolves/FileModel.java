@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model.codingwolves;
 
 import java.io.File;
@@ -19,6 +16,8 @@ import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
 
 /**
+ * This class will be a model class with methods that will addFiles, removeFiles, and updateCheckSum
+ * 
  * @author David Alvarez, 2/23/19
  *
  */
@@ -80,6 +79,15 @@ public class FileModel {
 		Main.numOfFilesIndexed.setText(str);
 		MaintenanceWindow.numOfFilesIndexed.setText(str);
 	}
+	
+	/**
+	 * This method will accept a fileId and check if it matches with a file in the list
+	 * if it does it will then make a new checksum for that file.
+	 * 
+	 * @param fileId The file identifier
+	 * @throws NoSuchAlgorithmException
+	 * @throws IOException
+	 */
 	public void updateFileCheckSum(long fileId) throws NoSuchAlgorithmException, IOException {
 		for (Iterator<Files> iterat = files.iterator(); iterat.hasNext();)
 		{
@@ -92,6 +100,13 @@ public class FileModel {
 			}
 		}
 	}
+	/**
+	 * This method will accept a fileName and check if the file already exists in the
+	 * list.
+	 * 
+	 * @param fileName The file to be checked
+	 * @return Either true or false
+	 */
 	public boolean fileExists(String fileName) {
 		for(Iterator<Files> it = files.iterator(); it.hasNext();)
 		{

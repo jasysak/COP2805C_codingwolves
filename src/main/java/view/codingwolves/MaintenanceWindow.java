@@ -1,8 +1,3 @@
-/**
- * This class will make the Maintenance window of the Search Engine project. This window will allow the user
- * to view the files indexed, add files to the index, delete files from the index, and to update the index 
- * files if any there were any changes to the files.
- */
 package view.codingwolves;
 
 import java.io.IOException;
@@ -34,6 +29,10 @@ import javafx.stage.Stage;
 import model.codingwolves.Files;
 
 /**
+ * This class will make the Maintenance window of the Search Engine project. This window will allow the user
+ * to view the files indexed, add files to the index, delete files from the index, and to update the index 
+ * files if any there were any changes to the files.
+ * 
  * @author David Alvarez, 2/12/19
  *
  */

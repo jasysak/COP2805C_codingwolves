@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controller.codingwolves;
 
 import java.io.File;
@@ -21,6 +18,10 @@ import model.codingwolves.Files;
 import view.codingwolves.MaintenanceWindow;
 
 /**
+ * This class is the controller and will implement the classes in the model class as well as
+ * add files to the index, remove files from the index, update files in the index, AND search,
+ * OR search, PHRASE search, and to save index to file.
+ *
  * @author David Alvarez, 2/24/19
  *
  */
