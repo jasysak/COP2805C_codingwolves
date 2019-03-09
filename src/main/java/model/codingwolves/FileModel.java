@@ -2,13 +2,19 @@ package model.codingwolves;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -117,6 +123,34 @@ public class FileModel {
 			}
 		}
 		return false;
+	}
+	/**
+	 * This method will save the list of files to Json formatted file
+	 * 
+	 * @throws IOException If the file can't be written to
+	 */
+	public static void saveIndexToFile() throws IOException {
+		String userDir = System.getProperty("user.home");
+		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
+		if (!fileIndex.exists()) {
+			try {
+				fileIndex.createNewFile();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		for (Files f : files) {
+			try (Writer writer = new FileWriter(fileIndex).append("UTF8")) {
+			    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			    gson.toJson(files, writer);
+			}
+			catch (Exception e)
+		    {
+		      e.printStackTrace();
+		      Platform.exit();
+		    }
+		}
 	}
 	/*
 	 * Method getFileChecksum taken from 

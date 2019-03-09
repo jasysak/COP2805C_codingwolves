@@ -26,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.codingwolves.FileModel;
 import model.codingwolves.Files;
 
 /**
@@ -80,7 +81,12 @@ public class MaintenanceWindow extends Application {
 		updateIndexedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				
+				try {
+					FileModel.saveIndexToFile();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		removeSelectedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
