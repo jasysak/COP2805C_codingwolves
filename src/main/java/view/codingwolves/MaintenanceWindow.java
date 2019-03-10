@@ -81,12 +81,7 @@ public class MaintenanceWindow extends Application {
 		updateIndexedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				try {
-					FileModel.saveIndexToFile();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+
 			}
 		});
 		removeSelectedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
