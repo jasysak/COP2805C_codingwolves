@@ -129,7 +129,7 @@ public class FileModel {
 	 * 
 	 * @throws IOException If the file can't be written to
 	 */
-	public static void saveIndexToFile() throws IOException {
+	public void saveIndexToFile() throws IOException {
 		String userDir = System.getProperty("user.home");
 		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
 		if (!fileIndex.exists()) {
