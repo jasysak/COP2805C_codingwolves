@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -144,9 +145,13 @@ public class FileModel {
 		}
 			try (Writer writer = new FileWriter(fileIndex)) {
 			    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			    String json = gson.toJson(files);
-			    System.out.println(json);
-			    writer.write(json);
+			    JsonObject obj = new JsonObject();
+			    obj.addProperty("CurrentFileId", Main.nextFileID);
+			    String json1 = gson.toJson(obj);
+			    String json2 = gson.toJson(files);
+			    System.out.println(json2);
+			    writer.write(json1);
+			    writer.write(json2);
 			    writer.flush();
 			    writer.close();
 			}

@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
@@ -77,6 +78,9 @@ public class FileIndex {
 	//Still a work in progress
 	public static void updateFilesInIndex()	{
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
+		if (selectedItem == null) {
+			return;
+		}
 		for (Iterator<Files> iterator = FileModel.files.iterator(); iterator.hasNext();)
 		{
 			Files currentFile = iterator.next();
@@ -85,8 +89,11 @@ public class FileIndex {
 			{
 				MessageDigest md5Digest = MessageDigest.getInstance("MD5");
 				String fileCheckSum = model.getFileChecksum(md5Digest, file);
-				if (fileCheckSum != selectedItem.getCheckSum() && file.getName() == selectedItem.getFileName())
+				//&& file.getName() == selectedItem.getFileName()
+				if (selectedItem.getCheckSum() != fileCheckSum)
 				{
+					System.out.println(fileCheckSum);
+					System.out.println(selectedItem.getCheckSum());
 					long fileId = currentFile.getFileId();
 					model.updateFileCheckSum(fileId);
 					System.out.println("CheckSum Updated");
@@ -98,7 +105,7 @@ public class FileIndex {
 				Platform.exit();
 			}
 		}
-		model.saveIndexToFile();
+		//model.saveIndexToFile();
 	}
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
@@ -130,7 +137,11 @@ public class FileIndex {
 		{
 			JsonReader jsonReader = new JsonReader(new FileReader(fileIndex));
 			Gson gson = new Gson();
+			JsonObject js = gson.fromJson(jsonReader, JsonObject.class);
 			Files[] indexFiles = gson.fromJson(jsonReader, Files[].class);
+			jsonReader.close();
+			long currentFileId = js.get("CurrentFileId").getAsLong();
+			Main.nextFileID = currentFileId;
 			FileModel.files.addAll(indexFiles);
 			
 			//Add full path name to the fileName column
