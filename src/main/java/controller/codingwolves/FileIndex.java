@@ -89,14 +89,16 @@ public class FileIndex {
 			{
 				MessageDigest md5Digest = MessageDigest.getInstance("MD5");
 				String fileCheckSum = model.getFileChecksum(md5Digest, file);
-				//&& file.getName() == selectedItem.getFileName()
-				if (selectedItem.getCheckSum() != fileCheckSum)
+				if (selectedItem.getFileId() == currentFile.getFileId())
 				{
-					System.out.println(fileCheckSum);
-					System.out.println(selectedItem.getCheckSum());
-					long fileId = currentFile.getFileId();
-					model.updateFileCheckSum(fileId);
-					System.out.println("CheckSum Updated");
+					if (selectedItem.getCheckSum() != fileCheckSum 
+						&& currentFile.getFileName() == selectedItem.getFileName())
+					{
+						long fileId = currentFile.getFileId();
+						model.updateFileCheckSum(fileId);
+						//Just to test
+						System.out.println("CheckSum Updated");
+					}
 				}
 			}
 			catch(NoSuchAlgorithmException | IOException e) 
@@ -105,7 +107,7 @@ public class FileIndex {
 				Platform.exit();
 			}
 		}
-		//model.saveIndexToFile();
+		model.saveIndexToFile();
 	}
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
