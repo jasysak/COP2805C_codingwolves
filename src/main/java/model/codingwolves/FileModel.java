@@ -41,16 +41,22 @@ public class FileModel {
 	 * @throws NoSuchAlgorithmException 
 	 * @throws IOException 
 	 */
-	public void addFile(String fileName) throws NoSuchAlgorithmException, IOException {
+	public void addFile(String fileName) {
 		long fileId = Main.nextFileID;
 		Main.nextFileID += 1L;
 		File file = new File(fileName);
 		long fileLastModified = file.lastModified();
-		
-		MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-		String checkSum = getFileChecksum(md5Digest, file);
-		fileStatus = "Indexed"; //This is just to test
-		files.add(new Files(fileId, fileName, fileLastModified, checkSum, fileStatus));
+		try 
+		{
+			MessageDigest md5Digest = MessageDigest.getInstance("MD5");
+			String checkSum = getFileChecksum(md5Digest, file);
+			fileStatus = "Indexed"; //This is just to test
+			files.add(new Files(fileId, fileName, fileLastModified, checkSum, fileStatus));
+		}
+		catch(NoSuchAlgorithmException | IOException e) 
+		{
+			e.printStackTrace();
+		}
 		
 		MaintenanceWindow.table.setItems(files);
 		

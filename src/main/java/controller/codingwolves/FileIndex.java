@@ -50,7 +50,7 @@ public class FileIndex {
 	public static void phraseSearch() {
 		
 	}
-	public static void addFileToIndex() throws NoSuchAlgorithmException, IOException {
+	public static void addFileToIndex() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Choose a file to add to the Index");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -98,6 +98,18 @@ public class FileIndex {
 						model.updateFileCheckSum(fileId);
 						//Just to test
 						System.out.println("CheckSum Updated");
+					}
+					else if (selectedItem.getCheckSum() == fileCheckSum 
+							&& currentFile.getFileName() == selectedItem.getFileName())
+					{
+						ImageView icon = new ImageView("/monitor.png");
+						icon.setFitWidth(48);
+						icon.setFitHeight(48);
+						Alert noChange = new Alert(AlertType.INFORMATION);
+						noChange.setTitle("No Change Detected");
+						noChange.setContentText("No Change Detected.");
+						noChange.getDialogPane().setGraphic(icon);
+						noChange.showAndWait();
 					}
 				}
 			}

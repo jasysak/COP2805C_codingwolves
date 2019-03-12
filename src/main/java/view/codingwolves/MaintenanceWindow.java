@@ -69,15 +69,7 @@ public class MaintenanceWindow extends Application {
 		addFileBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-					try {
-						FileIndex.addFileToIndex();
-					} catch (NoSuchAlgorithmException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					FileIndex.addFileToIndex();
 			}
 		});
 		updateIndexedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
