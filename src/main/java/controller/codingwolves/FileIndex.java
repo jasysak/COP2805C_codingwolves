@@ -91,7 +91,7 @@ public class FileIndex {
 				String fileCheckSum = model.getFileChecksum(md5Digest, file);
 				if (selectedItem.getFileId() == currentFile.getFileId())
 				{
-					if (selectedItem.getCheckSum() != fileCheckSum 
+					if (!selectedItem.getCheckSum().equals(fileCheckSum) 
 						&& currentFile.getFileName() == selectedItem.getFileName())
 					{
 						long fileId = currentFile.getFileId();
@@ -99,7 +99,7 @@ public class FileIndex {
 						//Just to test
 						System.out.println("CheckSum Updated");
 					}
-					else if (selectedItem.getCheckSum() == fileCheckSum 
+					else if (selectedItem.getCheckSum().equals(fileCheckSum) 
 							&& currentFile.getFileName() == selectedItem.getFileName())
 					{
 						ImageView icon = new ImageView("/monitor.png");
@@ -110,6 +110,7 @@ public class FileIndex {
 						noChange.setContentText("No Change Detected.");
 						noChange.getDialogPane().setGraphic(icon);
 						noChange.showAndWait();
+						return;
 					}
 				}
 			}

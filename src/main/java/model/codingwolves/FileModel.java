@@ -155,7 +155,6 @@ public class FileModel {
 			    obj.addProperty("CurrentFileId", Main.nextFileID);
 			    String json1 = gson.toJson(obj);
 			    String json2 = gson.toJson(files);
-			    System.out.println(json2);
 			    writer.write(json1);
 			    writer.write(json2);
 			    writer.flush();
