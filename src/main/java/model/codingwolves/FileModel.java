@@ -28,7 +28,6 @@ import view.codingwolves.MaintenanceWindow;
  *
  */
 public class FileModel {
-	private String fileName;
 	static String fileStatus;
 	//Using an observable list to be able to monitor when elements change
 	public static final ObservableList<Files> files = FXCollections.observableArrayList();
@@ -52,10 +51,6 @@ public class FileModel {
 		fileStatus = "Indexed"; //This is just to test
 		files.add(new Files(fileId, fileName, fileLastModified, checkSum, fileStatus));
 		
-		//Add full path name to the fileName column
-		MaintenanceWindow.fileNameCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileName"));
-		//Add the status of the file to the status column
-		MaintenanceWindow.statusCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileStatus"));
 		MaintenanceWindow.table.setItems(files);
 		
 		int numFiles = files.size();
@@ -94,15 +89,22 @@ public class FileModel {
 	 * @throws NoSuchAlgorithmException
 	 * @throws IOException
 	 */
-	public void updateFileCheckSum(long fileId) throws NoSuchAlgorithmException, IOException {
+	public void updateFileCheckSum(long fileId) {
 		for (Iterator<Files> iterat = files.iterator(); iterat.hasNext();)
 		{
 			Files currentFile = iterat.next();
 			if (currentFile.getFileId() == fileId) {
-				MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-				File file = new File(currentFile.getFileName());
-				String checkSum = getFileChecksum(md5Digest, file);
-				currentFile.setCheckSum(checkSum);
+				try 
+				{
+					MessageDigest md5Digest = MessageDigest.getInstance("MD5");
+					File file = new File(currentFile.getFileName());
+					String checkSum = getFileChecksum(md5Digest, file);
+					currentFile.setCheckSum(checkSum);
+				}
+				catch(NoSuchAlgorithmException | IOException e) 
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -129,7 +131,7 @@ public class FileModel {
 	 * 
 	 * @throws IOException If the file can't be written to
 	 */
-	public void saveIndexToFile() throws IOException {
+	public void saveIndexToFile() {
 		String userDir = System.getProperty("user.home");
 		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
 		if (!fileIndex.exists()) {
@@ -140,24 +142,26 @@ public class FileModel {
 				e.printStackTrace();
 			}
 		}
-		for (Files f : files) {
-			try (Writer writer = new FileWriter(fileIndex).append("UTF8")) {
+			try (Writer writer = new FileWriter(fileIndex)) {
 			    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			    gson.toJson(files, writer);
+			    String json = gson.toJson(files);
+			    System.out.println(json);
+			    writer.write(json);
+			    writer.flush();
+			    writer.close();
 			}
 			catch (Exception e)
 		    {
 		      e.printStackTrace();
 		      Platform.exit();
 		    }
-		}
 	}
 	/*
 	 * Method getFileChecksum taken from 
 	 * https://howtodoinjava.com/java/io/how-to-generate-sha-or-md5-file-checksum-hash-in-java/
 	 * by L. Gupta
 	 */
-	private static String getFileChecksum(MessageDigest digest, File file) throws IOException
+	public String getFileChecksum(MessageDigest digest, File file) throws IOException
 	{
 	    //Get file input stream for reading the file content
 	    FileInputStream fis = new FileInputStream(file);

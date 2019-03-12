@@ -1,20 +1,31 @@
 package controller.codingwolves;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
+
 import javafx.scene.control.Alert.AlertType;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.codingwolves.FileModel;
 import model.codingwolves.Files;
+import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
 
 /**
@@ -61,6 +72,7 @@ public class FileIndex {
 			return;
 		}
 		model.addFile(fileName);
+		model.saveIndexToFile();
 	}
 	//Still a work in progress
 	public static void updateFilesInIndex()	{
@@ -68,15 +80,31 @@ public class FileIndex {
 		for (Iterator<Files> iterator = FileModel.files.iterator(); iterator.hasNext();)
 		{
 			Files currentFile = iterator.next();
-			if (currentFile.getFileName() == selectedItem.getFileName() 
-					&& currentFile.getCheckSum() == selectedItem.getCheckSum())
+			File file = new File(currentFile.getFileName());
+			try
 			{
-				
+				MessageDigest md5Digest = MessageDigest.getInstance("MD5");
+				String fileCheckSum = model.getFileChecksum(md5Digest, file);
+				if (fileCheckSum != selectedItem.getCheckSum() && file.getName() == selectedItem.getFileName())
+				{
+					long fileId = currentFile.getFileId();
+					model.updateFileCheckSum(fileId);
+					System.out.println("CheckSum Updated");
+				}
+			}
+			catch(NoSuchAlgorithmException | IOException e) 
+			{
+				e.printStackTrace();
+				Platform.exit();
 			}
 		}
+		model.saveIndexToFile();
 	}
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
+		if (selectedItem == null) {
+			return;
+		}
 		String name = selectedItem.getFileName();
 		ImageView icon = new ImageView("/monitor.png");
 		icon.setFitWidth(48);
@@ -92,6 +120,28 @@ public class FileIndex {
 			long fileId = selectedItem.getFileId();
 			MaintenanceWindow.table.getItems().remove(selectedItem);
 			model.removeFile(fileId);
+		}
+		model.saveIndexToFile();
+	}
+	public static void initializeIndex() {
+		String userDir = System.getProperty("user.home");
+		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
+		try 
+		{
+			JsonReader jsonReader = new JsonReader(new FileReader(fileIndex));
+			Gson gson = new Gson();
+			Files[] indexFiles = gson.fromJson(jsonReader, Files[].class);
+			FileModel.files.addAll(indexFiles);
+			
+			//Add full path name to the fileName column
+			MaintenanceWindow.fileNameCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileName"));
+			//Add the status of the file to the status column
+			MaintenanceWindow.statusCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileStatus"));
+			MaintenanceWindow.table.setItems(FileModel.files);
+		} 
+		catch (JsonIOException | JsonSyntaxException | IOException e) 
+		{
+			e.printStackTrace();
 		}
 	}
 }
