@@ -19,7 +19,7 @@
  * in the Inverted Index Map->Set value for each key "word"
  *
  */
-package controller.codingwolves;
+package model.codingwolves;
 
 public class FilePosition implements Comparable<FilePosition>{
 

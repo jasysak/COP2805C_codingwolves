@@ -12,3 +12,4 @@ target
 *.jar
 *.iml
 .settings
+*.json
