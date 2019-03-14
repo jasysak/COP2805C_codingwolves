@@ -1,13 +1,11 @@
 package controller.codingwolves;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
-import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -19,7 +17,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;

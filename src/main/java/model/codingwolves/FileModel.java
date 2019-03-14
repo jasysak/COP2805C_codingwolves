@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +16,6 @@ import com.google.gson.JsonObject;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.cell.PropertyValueFactory;
 import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
 
@@ -38,8 +35,6 @@ public class FileModel {
 	 * the path, when it was lastModified, and the status of the file.
 	 * 
 	 * @param fileName The file to be added to the list
-	 * @throws NoSuchAlgorithmException 
-	 * @throws IOException 
 	 */
 	public void addFile(String fileName) {
 		long fileId = Main.nextFileID;
@@ -93,8 +88,6 @@ public class FileModel {
 	 * if it does it will then make a new checksum for that file.
 	 * 
 	 * @param fileId The file identifier
-	 * @throws NoSuchAlgorithmException
-	 * @throws IOException
 	 */
 	public void updateFileCheckSum(long fileId) {
 		for (Iterator<Files> iterat = files.iterator(); iterat.hasNext();)
@@ -136,7 +129,6 @@ public class FileModel {
 	/**
 	 * This method will save the list of files to Json formatted file
 	 * 
-	 * @throws IOException If the file can't be written to
 	 */
 	public void saveIndexToFile() {
 		String userDir = System.getProperty("user.home");
