@@ -7,6 +7,7 @@ package view.codingwolves;
 
 import javax.naming.OperationNotSupportedException;
 
+import controller.codingwolves.FileIndex;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.codingwolves.FileModel;
 /**
  * @author David Alvarez, 2/9/19
  * @version 1.0
@@ -49,6 +51,7 @@ public class Main extends Application{
 	@Override
     public void start(Stage primaryStage) 
 	{
+		FileIndex.initializeIndex();
 		BorderPane border = new BorderPane();
 		HBox hboxT = addHBoxT();
 		VBox vboxT = addVBoxT(hboxT);
@@ -198,6 +201,9 @@ public class Main extends Application{
 		Label numOfFiles = new Label("Number of Files Indexed:");
 		numOfFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		numOfFilesIndexed = new Label("0");
+		int numFiles = FileModel.files.size();
+		String str = Integer.toString(numFiles);
+		numOfFilesIndexed.setText(str);
 		numOfFilesIndexed.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		
 		aboutBtn.setText("About");

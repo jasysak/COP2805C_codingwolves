@@ -1,17 +1,31 @@
 package controller.codingwolves;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
+
 import javafx.scene.control.Alert.AlertType;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.codingwolves.FileModel;
 import model.codingwolves.Files;
+import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
 import model.codingwolves.IndexModel;
 
@@ -19,12 +33,8 @@ import model.codingwolves.IndexModel;
  * This class is the controller and will implement the classes in the model class as well as
  * add files to the index, remove files from the index, update files in the index, AND search,
  * OR search, PHRASE search, and to save index to file.
- *
- * also contains methods pertaining to the inverted index: build,
- * update, edit, file removal, etc.
  * 
  * @author David Alvarez, 2/24/19
- * @author Jason Sysak 
  * 
  * For COP2805C Group Project
  * 
@@ -42,7 +52,6 @@ import model.codingwolves.IndexModel;
 public class FileIndex {
 	static FileModel model = new FileModel();
 	static String fileName;
-	static IndexModel mainIndex = new IndexModel();  	
 	
 	public static void andSearch() {
 		
@@ -53,7 +62,7 @@ public class FileIndex {
 	public static void phraseSearch() {
 		
 	}
-	public static void addFileToIndex() throws NoSuchAlgorithmException, IOException {
+	public static void addFileToIndex() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Choose a file to add to the Index");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -76,23 +85,60 @@ public class FileIndex {
 			return;
 		}
 		model.addFile(fileName);
-		IndexModel.addToIndex(fileName);
+		model.saveIndexToFile();
 	}
 	//Still a work in progress
 	public static void updateFilesInIndex()	{
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
+		if (selectedItem == null) {
+			return;
+		}
 		for (Iterator<Files> iterator = FileModel.files.iterator(); iterator.hasNext();)
 		{
 			Files currentFile = iterator.next();
-			if (currentFile.getFileName() == selectedItem.getFileName() 
-					&& currentFile.getCheckSum() == selectedItem.getCheckSum())
+			File file = new File(currentFile.getFileName());
+			try
 			{
-				
+				MessageDigest md5Digest = MessageDigest.getInstance("MD5");
+				String fileCheckSum = model.getFileChecksum(md5Digest, file);
+				if (selectedItem.getFileId() == currentFile.getFileId())
+				{
+					if (!selectedItem.getCheckSum().equals(fileCheckSum) 
+						&& currentFile.getFileName() == selectedItem.getFileName())
+					{
+						long fileId = currentFile.getFileId();
+						model.updateFileCheckSum(fileId);
+						//Just to test
+						System.out.println("CheckSum Updated");
+					}
+					else if (selectedItem.getCheckSum().equals(fileCheckSum) 
+							&& currentFile.getFileName() == selectedItem.getFileName())
+					{
+						ImageView icon = new ImageView("/monitor.png");
+						icon.setFitWidth(48);
+						icon.setFitHeight(48);
+						Alert noChange = new Alert(AlertType.INFORMATION);
+						noChange.setTitle("No Change Detected");
+						noChange.setContentText("No Change Detected.");
+						noChange.getDialogPane().setGraphic(icon);
+						noChange.showAndWait();
+						return;
+					}
+				}
+			}
+			catch(NoSuchAlgorithmException | IOException e) 
+			{
+				e.printStackTrace();
+				Platform.exit();
 			}
 		}
+		model.saveIndexToFile();
 	}
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
+		if (selectedItem == null) {
+			return;
+		}
 		String name = selectedItem.getFileName();
 		ImageView icon = new ImageView("/monitor.png");
 		icon.setFitWidth(48);
@@ -108,9 +154,32 @@ public class FileIndex {
 			long fileId = selectedItem.getFileId();
 			MaintenanceWindow.table.getItems().remove(selectedItem);
 			model.removeFile(fileId);
-			IndexModel.removeDocumentFromIndex(fileName);
+		}
+		model.saveIndexToFile();
+	}
+	public static void initializeIndex() {
+		String userDir = System.getProperty("user.home");
+		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
+		try 
+		{
+			JsonReader jsonReader = new JsonReader(new FileReader(fileIndex));
+			Gson gson = new Gson();
+			JsonObject js = gson.fromJson(jsonReader, JsonObject.class);
+			Files[] indexFiles = gson.fromJson(jsonReader, Files[].class);
+			jsonReader.close();
+			long currentFileId = js.get("CurrentFileId").getAsLong();
+			Main.nextFileID = currentFileId;
+			FileModel.files.addAll(indexFiles);
 			
+			//Add full path name to the fileName column
+			MaintenanceWindow.fileNameCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileName"));
+			//Add the status of the file to the status column
+			MaintenanceWindow.statusCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileStatus"));
+			MaintenanceWindow.table.setItems(FileModel.files);
+		} 
+		catch (JsonIOException | JsonSyntaxException | IOException e) 
+		{
+			e.printStackTrace();
 		}
 	}
-	
 }

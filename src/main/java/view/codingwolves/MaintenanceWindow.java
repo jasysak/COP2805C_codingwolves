@@ -45,8 +45,8 @@ public class MaintenanceWindow extends Application {
 	public static final Label numOfFilesIndexed = new Label ("0");
 	final static String VERSION_NUMBER = "1.0";
 	public static TableView<Files> table = new TableView<Files>();
-	public static TableColumn<Files, String> fileNameCol;
-	public static TableColumn<Files, String> statusCol;
+	public static TableColumn<Files, String> fileNameCol = new TableColumn<Files, String>("File Name");;
+	public static TableColumn<Files, String> statusCol = new TableColumn<Files, String>("Status");;
 	
 	@Override
     public void start(Stage secondaryStage) 
@@ -69,19 +69,13 @@ public class MaintenanceWindow extends Application {
 		addFileBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				try {
 					FileIndex.addFileToIndex();
-				} catch (NoSuchAlgorithmException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
 			}
 		});
 		updateIndexedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-
+				FileIndex.updateFilesInIndex();
 			}
 		});
 		removeSelectedFilesBtn.setOnAction(new EventHandler<ActionEvent>()
@@ -98,9 +92,9 @@ public class MaintenanceWindow extends Application {
 	private TableView<Files> addTableView()
 	{	
 		table.setEditable(false);
-		fileNameCol = new TableColumn<Files, String>("File Name");
+		//fileNameCol = new TableColumn<Files, String>("File Name");
 		fileNameCol.setPrefWidth(400);
-		statusCol = new TableColumn<Files, String>("Status");
+		//statusCol = new TableColumn<Files, String>("Status");
 		statusCol.setPrefWidth(400);
 		
 		table.getColumns().addAll(fileNameCol, statusCol);
@@ -160,6 +154,9 @@ public class MaintenanceWindow extends Application {
 		
 		Label numOfFiles = new Label("Number of Files Indexed:");
 		numOfFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
+		int numFiles = FileModel.files.size();
+		String str = Integer.toString(numFiles);
+		numOfFilesIndexed.setText(str);
 		numOfFilesIndexed.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		
 		String s2 = "Search Engine version " + VERSION_NUMBER;
