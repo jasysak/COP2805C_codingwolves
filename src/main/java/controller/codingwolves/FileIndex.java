@@ -25,7 +25,6 @@ import model.codingwolves.FileModel;
 import model.codingwolves.Files;
 import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
-import model.codingwolves.IndexModel;
 
 /**
  * This class is the controller and will implement the classes in the model class as well as

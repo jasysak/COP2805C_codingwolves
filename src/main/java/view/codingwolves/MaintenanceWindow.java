@@ -1,17 +1,11 @@
 package view.codingwolves;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.naming.OperationNotSupportedException;
-
 import controller.codingwolves.FileIndex;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
