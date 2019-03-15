@@ -12,4 +12,5 @@ target
 *.jar
 *.iml
 .settings
+/SearchEngine.json
 *.json
