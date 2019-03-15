@@ -10,8 +10,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.SortedSet;
@@ -21,6 +24,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.collections4.MapUtils;
 import com.google.gson.reflect.TypeToken;
+
+import javafx.application.Platform;
+import view.codingwolves.Main;
+
 import java.lang.reflect.Type;
 
 /**
@@ -30,13 +37,27 @@ import java.lang.reflect.Type;
 public class IndexModel {
 	
 	public static Map<String, SortedSet<FilePosition>> mainIndex = new HashMap<String, SortedSet<FilePosition>>();
+//	final static String indexFilename = System.getProperty("user.home") + File.pathSeparator + "invIndex.json";
+	final static String indexFilename = "invIndex.json";
 
-	public static void addToIndex(String filename) throws FileNotFoundException, IOException {
+	
+	public static void addToInvIndex(String filename) throws FileNotFoundException, IOException {
+	
 		
 		Scanner s = new Scanner(new File(filename));
 		
 		// placeholder fileID
 		long fileID = 0;
+		String userDir = System.getProperty("user.home");
+		File fileIndex = new File(userDir + File.separator + indexFilename);
+		if (!fileIndex.exists()) {
+			try {
+				fileIndex.createNewFile();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		// position will contain the current word position in the file as it's read
 		int position = 0;
@@ -77,16 +98,16 @@ public class IndexModel {
 		
 	} // end addToIndex
 	
-	public static void saveIndexToStorage (String iFilename) {
+	public static void saveIndexToStorage () {
 		// I left setPrettyPrinting so the JSON output is nicer to
 		// read. This can be removed whenever it's no longer needed.
-		Gson gson = new GsonBuilder().create();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json_obj = gson.toJson(mainIndex);
-		System.out.println("\nSaved JSON Data to " + iFilename + ":");
+		System.out.println("\nSaved JSON Data to " + indexFilename);
 		System.out.println(json_obj);
 			
 		try {
-			FileWriter writer = new FileWriter(iFilename);
+			FileWriter writer = new FileWriter(indexFilename);
 			writer.write(json_obj);
 			writer.close();
 		}
@@ -103,43 +124,50 @@ public class IndexModel {
 		
 	} // end removeDocumentFromIndex
 	
-	public void updateIndex() {
+	public void updateIndex() throws FileNotFoundException, IOException {
 		// TODO stub method
 		// called when "Update Index" button is pressed from Maintenance window
 		mainIndex.clear();	// dump all contents. *** N.B. if calling method has iterator
 							// make sure this clear() is not happening after each iteration!
-		
-		
+		Iterator<Files> it = FileModel.files.iterator();
+		while (it.hasNext()) {
+			System.out.println("Placeholder");
+			//addToInvIndex(Files.getFileName()); //
+		}
 	} // end updateIndex
 	
-/**	This is broken right now. Work in progress
- * 	public static void loadIndexFromStorage (String iFilename) {
+//	This is broken right now. Work in progress
+  	public static void loadIndexFromStorage () throws IOException {
 		// TODO stub method
 		// called at startup to access disk storage of index and load it into memory/mainIndex Map
 		mainIndex.clear(); 	// cleanup just in case
-		try (BufferedReader br = new BufferedReader(new FileReader(iFilename))) {
+		
+		try (FileReader reader = new FileReader(indexFilename)) {
 			Gson gson = new Gson();
-			Type mapType = new TypeToken<Map<String, SortedSet<FilePosition>>>(){}.getType();  
-			Map<String, SortedSet<FilePosition>> mainIndex = gson.fromJson(iFilename, mapType);
-			br.close();
+			//Type mapType = new TypeToken<Map<String, SortedSet<FilePosition>>>(){}.getType();  
+			mainIndex = gson.fromJson(indexFilename, Map.class);
+			reader.close();		
 		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		catch (Exception e)
+	    {
+	      e.printStackTrace();
+	      Platform.exit();
+	    }
 		
 		
 	} // end loadIndexFromStorage
-*/	
+  	
 	// main method added for TEST ONLY (this will be removed after bugs etc. are gone)
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-			
+		
+		
+
 		// placeholder filename 
 		String filename = "./src/main/resources/Test_Sample2.txt";
-		String indexFilename = "./src/main/resources/invIndex.json";
 			
-		addToIndex(filename);
-		saveIndexToStorage(indexFilename);
-		// loadIndexFromStorage(indexFilename);
+		addToInvIndex(filename);
+		saveIndexToStorage();
+		loadIndexFromStorage();
 		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 		
 		
