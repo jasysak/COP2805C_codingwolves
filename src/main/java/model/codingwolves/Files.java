@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model.codingwolves;
 
 import javafx.beans.property.SimpleLongProperty;
@@ -8,8 +5,20 @@ import javafx.beans.property.SimpleStringProperty;
 
 /**
  * @author David Alvarez, 2/24/19
+ * 
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
  *
+ * WORK IN PROGRESS
+ * 
  */
+
 public class Files {
 	private SimpleLongProperty fileId;
 	private SimpleStringProperty fileName;

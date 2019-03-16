@@ -24,7 +24,19 @@ import view.codingwolves.MaintenanceWindow;
  * 
  * @author David Alvarez, 2/23/19
  *
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
+ *
+ * WORK IN PROGRESS
+ * 
  */
+
 public class FileModel {
 	static String fileStatus;
 	//Using an observable list to be able to monitor when elements change

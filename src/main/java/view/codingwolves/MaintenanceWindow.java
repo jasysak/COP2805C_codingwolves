@@ -29,8 +29,18 @@ import model.codingwolves.Files;
  * files if any there were any changes to the files.
  * 
  * @author David Alvarez, 2/12/19
- *
+ * 
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
+ * 
  */
+
 public class MaintenanceWindow extends Application {
 	private final String iconPath = "/monitor.png";
 	private final Button addFileBtn = new Button();

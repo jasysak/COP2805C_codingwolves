@@ -1,8 +1,3 @@
-/**
- * The purpose of this class is to make the interface for the main window of the Search Engine project. This interface
- * will allow the user to search for files, go to an administrator window and look at information about the application
- * and who made it.
- */
 package view.codingwolves;
 
 import javax.naming.OperationNotSupportedException;
@@ -30,10 +25,26 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.codingwolves.FileModel;
+
 /**
+ * The purpose of this class is to make the interface for the main window of the Search Engine project. 
+ * This interface will allow the user to search for files, go to an administrator window and look at
+ * information about the application and who made it.
+ * 
  * @author David Alvarez, 2/9/19
  * @version 1.0
+ * 
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
+ * 
  */
+
 public class Main extends Application{
 	public static long nextFileID;
 	private final String iconPath = "/monitor.png";

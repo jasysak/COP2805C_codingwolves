@@ -1,17 +1,10 @@
-/**
- * 
- */
 package model.codingwolves;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,17 +16,28 @@ import java.util.TreeSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.collections4.MapUtils;
-import com.google.gson.reflect.TypeToken;
-
 import javafx.application.Platform;
-import view.codingwolves.Main;
-
-import java.lang.reflect.Type;
 
 /**
- * @author jay
+ * @author Jason Sysak
+ * 
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
  *
+ * WORK IN PROGRESS
+ * 
+ * This class contains vruious methods that add, remove, edit, and update
+ * the inverted index (II). The II will be stored in memory as a Map and will
+ * be saved to disk as JSON formatted text using GSON libraries.
+ * 
  */
+
 public class IndexModel {
 	
 	public static Map<String, SortedSet<FilePosition>> mainIndex = new HashMap<String, SortedSet<FilePosition>>();
@@ -103,8 +107,8 @@ public class IndexModel {
 		// read. This can be removed whenever it's no longer needed.
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json_obj = gson.toJson(mainIndex);
-		System.out.println("\nSaved JSON Data to " + indexFilename);
-		System.out.println(json_obj);
+		// System.out.println("\nSaved JSON Data to " + indexFilename);
+		// System.out.println(json_obj);
 			
 		try {
 			FileWriter writer = new FileWriter(indexFilename);

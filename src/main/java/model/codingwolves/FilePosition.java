@@ -1,3 +1,5 @@
+package model.codingwolves;
+
 /**
  * @author Jason Sysak
  * @version 1.0.0 
@@ -13,13 +15,12 @@
  * Erin H.
  * Jason S.
  *
- * FilePosition.java (name subject to change)
+ * FilePosition.java
  * 
  * Java class defining the FilePosition object to be used
- * in the Inverted Index Map->Set value for each key "word"
+ * in the Inverted Index Map->Set value for each key "word".
  *
  */
-package model.codingwolves;
 
 public class FilePosition implements Comparable<FilePosition>{
 
