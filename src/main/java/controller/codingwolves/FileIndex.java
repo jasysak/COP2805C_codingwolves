@@ -50,15 +50,31 @@ public class FileIndex {
 	static FileModel model = new FileModel();
 	static String fileName;
 	
+	/**
+	 * This method will search through all the current list of files indexed and search for the two words in the files
+	 * and show which files contain those words.
+	 * 
+	 */
 	public static void andSearch() {
 		
 	}
+	/**
+	 * 
+	 */
 	public static void orSearch() {
 		
 	}
+	/**
+	 * 
+	 */
 	public static void phraseSearch() {
 		
 	}
+	/**
+	 * This method will allow the user to choose a file using their operating systems file selector
+	 * and will then add the file selected to the observable list of files.
+	 * 
+	 */
 	public static void addFileToIndex() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Choose a file to add to the Index");
@@ -84,7 +100,11 @@ public class FileIndex {
 		model.addFile(fileName);
 		model.saveIndexToFile();
 	}
-	//Still a work in progress
+	/**
+	 * This method will update the current selected file from the GUI and compare the current checksum
+	 * to the checksum of the file in memory and if different update the current checksum.
+	 * 
+	 */
 	public static void updateFilesInIndex()	{
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
 		if (selectedItem == null) {
@@ -105,8 +125,6 @@ public class FileIndex {
 					{
 						long fileId = currentFile.getFileId();
 						model.updateFileCheckSum(fileId);
-						//Just to test
-						System.out.println("CheckSum Updated");
 					}
 					else if (selectedItem.getCheckSum().equals(fileCheckSum) 
 							&& currentFile.getFileName() == selectedItem.getFileName())
@@ -131,6 +149,11 @@ public class FileIndex {
 		}
 		model.saveIndexToFile();
 	}
+	/**
+	 * This method will get the current selected file and remove the file from the tableview and the observable list of
+	 * files then update the Json file.
+	 * 
+	 */
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
 		if (selectedItem == null) {
@@ -154,6 +177,9 @@ public class FileIndex {
 		}
 		model.saveIndexToFile();
 	}
+	/**
+	 * This method will initialize the index with the Json file 
+	 */
 	public static void initializeIndex() {
 		String userDir = System.getProperty("user.home");
 		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
@@ -165,6 +191,7 @@ public class FileIndex {
 			Files[] indexFiles = gson.fromJson(jsonReader, Files[].class);
 			jsonReader.close();
 			long currentFileId = js.get("CurrentFileId").getAsLong();
+			//Read the currentFileId from the file and initialize it to nextFileID so that a file id won't be reused
 			Main.nextFileID = currentFileId;
 			FileModel.files.addAll(indexFiles);
 			
