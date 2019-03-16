@@ -1,5 +1,7 @@
 package view.codingwolves;
 
+import java.io.IOException;
+
 import javax.naming.OperationNotSupportedException;
 
 import controller.codingwolves.FileIndex;
@@ -25,6 +27,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.codingwolves.FileModel;
+import model.codingwolves.IndexModel;
 
 /**
  * The purpose of this class is to make the interface for the main window of the Search Engine project. 
@@ -63,6 +66,17 @@ public class Main extends Application{
     public void start(Stage primaryStage) 
 	{
 		FileIndex.initializeIndex();
+		
+		// load the II
+		// NOTE: loadIndexFromStorage is not yet working.
+		// See comments in IndexModel.java
+		// try {
+		//	IndexModel.loadIndexFromStorage();
+		//} catch (IOException e2) {
+		//	// TODO Auto-generated catch block
+		//	e2.printStackTrace();
+		// }
+		
 		BorderPane border = new BorderPane();
 		HBox hboxT = addHBoxT();
 		VBox vboxT = addVBoxT(hboxT);

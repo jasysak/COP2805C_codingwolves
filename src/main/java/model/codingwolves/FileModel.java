@@ -71,6 +71,15 @@ public class FileModel {
 		String str = Integer.toString(numFiles);
 		Main.numOfFilesIndexed.setText(str);
 		MaintenanceWindow.numOfFilesIndexed.setText(str);
+		
+		// JAS Edit: call addToInvIndex
+		try {
+			IndexModel.addToInvIndex(fileName, fileId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	/**
 	 * This method will remove the specified file from the data list and
@@ -93,6 +102,10 @@ public class FileModel {
 		String str = Integer.toString(numFiles);
 		Main.numOfFilesIndexed.setText(str);
 		MaintenanceWindow.numOfFilesIndexed.setText(str);
+		
+		// JAS Edit: call removeFromInvIndex
+		// !!! method not yet working
+		// IndexModel.removeFromIndex(fileId);
 	}
 	
 	/**

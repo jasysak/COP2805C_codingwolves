@@ -25,6 +25,8 @@ import model.codingwolves.FileModel;
 import model.codingwolves.Files;
 import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
+// JAS added for updateIndex()
+import model.codingwolves.IndexModel;
 
 /**
  * This class is the controller and will implement the classes in the model class as well as
@@ -49,6 +51,8 @@ import view.codingwolves.MaintenanceWindow;
 public class FileIndex {
 	static FileModel model = new FileModel();
 	static String fileName;
+	// JAS added for indexUpdate()
+	static IndexModel index = new IndexModel();
 	
 	public static void andSearch() {
 		
@@ -83,6 +87,7 @@ public class FileIndex {
 		}
 		model.addFile(fileName);
 		model.saveIndexToFile();
+		
 	}
 	//Still a work in progress
 	public static void updateFilesInIndex()	{
@@ -107,6 +112,9 @@ public class FileIndex {
 						model.updateFileCheckSum(fileId);
 						//Just to test
 						System.out.println("CheckSum Updated");
+						// JAS Note
+						// will need to call Index.removeFromIndex and
+						// Index.addToIndex to remove old and add new
 					}
 					else if (selectedItem.getCheckSum().equals(fileCheckSum) 
 							&& currentFile.getFileName() == selectedItem.getFileName())
@@ -130,6 +138,7 @@ public class FileIndex {
 			}
 		}
 		model.saveIndexToFile();
+		
 	}
 	public static void removeFilesFromIndex() {
 		Files selectedItem = MaintenanceWindow.table.getSelectionModel().getSelectedItem();
@@ -151,6 +160,9 @@ public class FileIndex {
 			long fileId = selectedItem.getFileId();
 			MaintenanceWindow.table.getItems().remove(selectedItem);
 			model.removeFile(fileId);
+			// JAS Added - removeFromIndex
+			// commented out: method not yet complete
+			// index.removeFromIndex(fileId);
 		}
 		model.saveIndexToFile();
 	}
