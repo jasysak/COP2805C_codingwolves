@@ -1,0 +1,145 @@
+Data File JSON Specification
+----------------------------
+
+The purpose of this document is to describe the data files that will be used to store
+both the list of file that have been added to the index and the inverted index itself.
+Both files will be saved as plain-text files in a JSON format. 3rd party libraries
+including both GSON and Jackson will be used extensively for saving and loading of the
+data files. Two separate files were chosen to help facilitate team collaboration. The
+data files will be saved in the "user.home" directory, typically for a Windows based
+PC this would be "C:\Users\Your User Name".
+
+SearchEngine.json will store the List of files added by the user and the relevant 
+file information including file ID, full (canonical) file pathname, file MD5 checksum,
+file last modified date, and a file status.
+
+SearchEngine.json will also store, as the initial JSON object, the current number of
+files indexed (i.e. FileID of last file indexed).
+
+An example SearchEngine.json demonstrating a single file entry is as follows:
+
+{
+  "CurrentFileId": 17
+}[
+  {
+    "fileId": {
+      "name": "",
+      "value": 12,
+      "valid": true
+    },
+    "fileName": {
+      "name": "",
+      "value": "C:\\Users\\Jason\\Documents\\eclipse-workspace\\Search-Engine.git\\src\\main\\resources\\Test_Sample2.txt",
+      "valid": true
+    },
+    "fileLastModified": {
+      "name": "",
+      "value": 1552753370617,
+      "valid": true
+    },
+    "checkSum": {
+      "name": "",
+      "value": "bdeb1effe9cc3f6fe591f496f04081b2",
+      "valid": true
+    },
+    "fileStatus": {
+      "name": "",
+      "value": "Indexed",
+      "valid": true
+    }
+  }
+...file continues...
+
+InvIndex.json will store the inverted index Map object. The Map object has the format:
+
+Map<String, Set<FilePosition<FileID, Position>>>
+
+Where,
+String = the word indexed (key)
+FilePosition = Object defined with fields fileID, word position in fileID (value)
+
+A (value) set of FilePosition objects is built for each word found in the files indexed as
+the Map key.
+
+An example of the InvIndex.json file is as follows:
+
+{
+  "type": [
+    {
+      "fileID": 0,
+      "wordposition": 131
+    }
+  ],
+  "when": [
+    {
+      "fileID": 0,
+      "wordposition": 134
+    }
+  ],
+  "consist": [
+    {
+      "fileID": 0,
+      "wordposition": 66
+    }
+  ],
+  "preparation": [
+    {
+      "fileID": 0,
+      "wordposition": 205
+    }
+  ],
+  "excluded": [
+    {
+      "fileID": 0,
+      "wordposition": 216
+    }
+  ],
+  "these": [
+    {
+      "fileID": 0,
+      "wordposition": 249
+    }
+  ],
+  "number": [
+    {
+      "fileID": 0,
+      "wordposition": 75
+    }
+  ],
+  "farm": [
+    {
+      "fileID": 0,
+      "wordposition": 40
+    },
+    {
+      "fileID": 0,
+      "wordposition": 64
+    },
+    {
+      "fileID": 0,
+      "wordposition": 95
+    },
+    {
+      "fileID": 0,
+      "wordposition": 154
+    },
+    {
+      "fileID": 0,
+      "wordposition": 174
+    },
+    {
+      "fileID": 0,
+      "wordposition": 180
+    },
+    {
+      "fileID": 0,
+      "wordposition": 183
+    },
+    {
+      "fileID": 0,
+      "wordposition": 200
+    }
+  ]
+  
+  ...file continues...
+ 
