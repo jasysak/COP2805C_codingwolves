@@ -27,6 +27,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.codingwolves.FileModel;
+// JAS added for initial load of II JSON
 import model.codingwolves.IndexModel;
 
 /**
