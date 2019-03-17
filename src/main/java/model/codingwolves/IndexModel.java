@@ -146,20 +146,19 @@ public class IndexModel {
 	} // end removeFromInvIndex
 	
 	public static void updateIndex() throws FileNotFoundException, IOException {
-		// TODO stub method
+		// As written, this is a "hard" full reset of the II.
+		// Another, perhaps better way, would be to remove+(re)add only those
+		// files flagged as needing an update.
 		// called when "Update Index" button is pressed from Maintenance window
-		mainIndex.clear();	// dump all contents. *** N.B. if calling method has iterator
-							// make sure this clear() is not happening after each iteration!
-		
-		// code below may be incorrect. Not tested.
+		mainIndex.clear();	
+		// code below not working yet.
 		Iterator<Files> it = FileModel.files.iterator();
 		while (it.hasNext()) {
 			System.out.println("Placeholder");
 			addToInvIndex(((Files) FileModel.files).getFileName(), ((Files) FileModel.files).getFileId());
 		}
-		
-		// MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
-		
+		System.out.println("Reset Completed");
+		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 	} // end updateIndex
 	
 	

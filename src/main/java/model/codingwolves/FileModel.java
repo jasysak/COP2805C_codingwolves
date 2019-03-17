@@ -73,6 +73,8 @@ public class FileModel {
 		MaintenanceWindow.numOfFilesIndexed.setText(str);
 		
 		// JAS Edit: call addToInvIndex
+		// NOTE IDE complains about throws or try..catch here.
+		// I don't see exactly why, but I added it anyways.
 		try {
 			IndexModel.addToInvIndex(fileName, fileId);
 		} catch (IOException e) {
@@ -101,9 +103,8 @@ public class FileModel {
 		int numFiles = files.size();
 		String str = Integer.toString(numFiles);
 		Main.numOfFilesIndexed.setText(str);
-		MaintenanceWindow.numOfFilesIndexed.setText(str);
-		
-		// JAS Edit: call removeFromInvIndex
+		MaintenanceWindow.numOfFilesIndexed.setText(str);		
+		// JAS Edit: call removeFromInvIndex()
 		IndexModel.removeFromInvIndex(fileId);
 	}
 	

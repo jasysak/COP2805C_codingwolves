@@ -28,7 +28,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.codingwolves.FileModel;
 // JAS added for initial load of II JSON
-import model.codingwolves.IndexModel;
+// Not needed yet, until loadIndexFromStorage()
+// is functioning.
+// import model.codingwolves.IndexModel;
 
 /**
  * The purpose of this class is to make the interface for the main window of the Search Engine project. 
@@ -68,8 +70,8 @@ public class Main extends Application{
 	{
 		FileIndex.initializeIndex();
 		
-		// load the II
-		// NOTE: loadIndexFromStorage is not yet working.
+		// JAS added
+		// NOTE: loadIndexFromStorage() is not yet working.
 		// See comments in IndexModel.java
 		// try {
 		//	IndexModel.loadIndexFromStorage();
