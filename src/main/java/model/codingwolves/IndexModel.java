@@ -3,17 +3,15 @@ package model.codingwolves;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -21,14 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.io.IOUtils;
-
 import javafx.application.Platform;
-import view.codingwolves.Main;
 
 /**
  * @author Jason Sysak
@@ -59,7 +53,7 @@ public class IndexModel {
 //	final static String indexFilename = "invIndex.json";
 
 	// placeholder fileID
-	static long fileID = 0;
+	static long fileID;
 	
 	public static void addToInvIndex(String filename, long fileID) throws FileNotFoundException, IOException {
 	
@@ -133,31 +127,23 @@ public class IndexModel {
 	} // end saveIndexToStorage
 	
 	public static void removeFromInvIndex (long fileID) {
-		// TODO stub method
-		// called when document is to be entirely removed from mainIndex
-		// Note that it will remain in the saved index JSON file until 
-		// program exit or manual Update Index (see below) is selected
-		// Not working yet!
 
-		Iterator<Map.Entry<String, SortedSet<FilePosition>>> mapIterator = mainIndex.entrySet().iterator();
-		while (mapIterator.hasNext()) {
-			Map.Entry<String, SortedSet<FilePosition>> entry = mapIterator.next();
-			SortedSet<FilePosition> valueSet = entry.getValue();
-			Iterator<FilePosition> setIterator = valueSet.iterator();
-		    while(setIterator.hasNext()) {
-		        FilePosition removeCheck = setIterator.next();
-		    	if (removeCheck.fileID == fileID) {
-		    		System.out.println(setIterator.next() + " REMOVED");
-		    		 setIterator.remove();
-		    	}
-		    }
+		HashSet<String> keySet = new HashSet<String>(mainIndex.keySet());
+		for (String  word : keySet) {
+			SortedSet<FilePosition> valueSet = mainIndex.get(word);
+			Iterator<FilePosition> it = valueSet.iterator();
+			while (it.hasNext()) {
+				FilePosition fp = (FilePosition)it.next();
+				if (fp.fileID != fileID) continue;
+				it.remove();
+			}
+			// if valueSet is empty, also remove the word
+			if (valueSet.size() == 0) {
+				mainIndex.remove(word);
+			}
 		}
-
-
 	
-		
-		
-	} // end removeDocumentFromInvIndex
+	} // end removeFromInvIndex
 	
 	public static void updateIndex() throws FileNotFoundException, IOException {
 		// TODO stub method
@@ -203,11 +189,10 @@ public class IndexModel {
 		    // Next option is to write a low-level parser to individually assign elements of the JSON
 		    // file to their corresponding Map elements, i.e. <String, Set<FilePosition>>
 			
-			// Another try with Jackson's ObjectMapper
+			// Another try with Jackson ObjectMapper
 			ObjectMapper mapper = new ObjectMapper();
 			HashMap<String, SortedSet<FilePosition>> mainIndex = mapper.readValue(is, HashMap.class);
-			 
-			
+			 		
 			is.close();	
 			
 			
@@ -229,7 +214,7 @@ public class IndexModel {
 
 		// placeholder filename 
 		String filename = "C:\\Users\\Jason\\Documents\\eclipse-workspace\\Search-Engine.git\\src\\main\\resources\\Test_Sample2.txt";
-		
+		fileID = 0;
 		addToInvIndex(filename, fileID);
 		
 //		saveIndexToStorage();

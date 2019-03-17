@@ -104,8 +104,7 @@ public class FileModel {
 		MaintenanceWindow.numOfFilesIndexed.setText(str);
 		
 		// JAS Edit: call removeFromInvIndex
-		// !!! method not yet working
-		// IndexModel.removeFromIndex(fileId);
+		IndexModel.removeFromInvIndex(fileId);
 	}
 	
 	/**
