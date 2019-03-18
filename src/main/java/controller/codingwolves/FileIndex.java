@@ -51,7 +51,7 @@ public class FileIndex {
 	static String fileName;
 	
 	/**
-	 * This method will search through all the current list of files indexed and search for the two words in the files
+	 * This method will search through all the current list of files indexed and search if both words are in the files
 	 * and show which files contain those words.
 	 * 
 	 */
@@ -59,12 +59,16 @@ public class FileIndex {
 		
 	}
 	/**
+	 * This method will search through all the current list of files indexed and search for either of the two words in the files
+	 * and show which files contain either or.
 	 * 
 	 */
 	public static void orSearch() {
 		
 	}
 	/**
+	 * This method will search through all the current list of files indexed and search for the exact phrase or sentence in the files
+	 * and show which files contain it.
 	 * 
 	 */
 	public static void phraseSearch() {

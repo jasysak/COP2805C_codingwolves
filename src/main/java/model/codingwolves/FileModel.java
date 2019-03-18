@@ -27,7 +27,7 @@ import view.codingwolves.MaintenanceWindow;
  */
 public class FileModel {
 	static String fileStatus;
-	//Using an observable list to be able to monitor when elements change
+	//Using an observable list to be able to populate the tableview
 	public static final ObservableList<Files> files = FXCollections.observableArrayList();
 	
 	/**
