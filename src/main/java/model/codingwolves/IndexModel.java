@@ -1,5 +1,6 @@
 package model.codingwolves;
 
+import java.awt.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -215,26 +217,45 @@ public class IndexModel {
 		
 	} // end loadIndexFromStorage
   	
+	public void doAndSearch(ArrayList<String> searchTerms) {
+		// TODO Stub method
+		// Will contain any code necessary to implement AND search
+	}
+
+	public void doOrSearch(ArrayList<String> searchTerms) {
+		// TODO Stub method
+		// Will contain any code necessary to implement OR search
+	}
+	
+	public void doPhraseSearch(ArrayList<String> searchTerms ) {
+		// TODO Stub method
+		// Will contain any code necessary to implement PHRASE search
+	}
+	
 	// main method added for TEST ONLY (this will be removed after bugs etc. are gone)
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 		
-		
-
 		// placeholder filename 
 		String filename = "C:\\Users\\Jason\\Documents\\eclipse-workspace\\Search-Engine.git\\src\\main\\resources\\Test_Sample2.txt";
 		fileID = 0;
+		// TEST addToInvIndex
 		addToInvIndex(filename, fileID);
 		
-//		saveIndexToStorage();
+		// TEST saveIndexToStorage
+		saveIndexToStorage();
 		
 		// clear() is for testing of load
 //		mainIndex.clear();
-//		loadIndexFromStorage();
+		// TEST loadIndexFromStorage
+		loadIndexFromStorage();
+
+		// TEST updateIndex
 //		updateIndex();
 //		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		
+		// TEST removeFromInvIndex
 		removeFromInvIndex(fileID);
 		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
-		
 			
 	} // end TEST main method
 	
