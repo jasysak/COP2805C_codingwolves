@@ -39,10 +39,10 @@ import model.codingwolves.IndexModel;
  * 
  * codingwolves team
  * Members:
- * David A.
- * Reubin G.
- * Erin H.
- * Jason S.
+ * David Alvarez
+ * Reubin George
+ * Erin Hochstetler
+ * Jason Sysak
  *
  * WORK IN PROGRESS
  * 

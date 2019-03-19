@@ -46,10 +46,10 @@ import model.codingwolves.FileModel;
  * 
  * codingwolves team
  * Members:
- * David A.
- * Reubin G.
- * Erin H.
- * Jason S.
+ * David Alvarez
+ * Reubin George
+ * Erin Hochstetler
+ * Jason Sysak
  * 
  */
 

@@ -10,13 +10,15 @@ import javafx.beans.property.SimpleStringProperty;
  * 
  * codingwolves team
  * Members:
- * David A.
- * Reubin G.
- * Erin H.
- * Jason S.
+ * David Alvarez
+ * Reubin George
+ * Erin Hochstetler
+ * Jason Sysak
  *
  * WORK IN PROGRESS
  * 
+ * Object class to define Files objects contained in the List
+ * of files stored/that have been indexed in the inverted index.
  */
 
 public class Files {
