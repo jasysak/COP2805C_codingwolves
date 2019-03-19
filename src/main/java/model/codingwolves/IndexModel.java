@@ -1,12 +1,14 @@
 package model.codingwolves;
 
-import java.awt.List;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -168,52 +170,17 @@ public class IndexModel {
 		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 	} // end updateIndex
 	
-	
-	// loadIndexFromStorage is broken right now. Work in progress
-	// we may need to parse the file -- see my third comment below
-	
-	public static void loadIndexFromStorage () throws IOException {
-		// TODO stub method
+	public static Map<String, SortedSet<FilePosition>> loadIndexFromStorage () throws IOException {
+		
 		// called at startup to access disk storage of index and load it into memory/mainIndex Map
 		mainIndex.clear(); 	// cleanup just in case
-		// String jsonTxt = null;
-		
-		try (InputStream is = new FileInputStream(indexFilename))		
-		// (FileReader reader = new FileReader(indexFilename)) 
-		{
-			// I think the code below SHOULD WORK.
-			// Not yet fully tested (3/19/19)
-			String jsonString = IOUtils.toString(is, "UTF-8");
-			Gson gson = new Gson();
-			Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
-			Map<String, SortedSet<FilePosition>> mainIndex = gson.fromJson(jsonString, mapType);
-			
-			
-			// Next Try - doesn't seem to work. Still working on it...
-			// Map<String, SortedSet<FilePosition>> mainIndex = new HashMap<String, SortedSet<FilePosition>>();
-		    // mainIndex = (Map<String, SortedSet<FilePosition>>)gson.fromJson(jsonTxt, mainIndex.getClass());
-		    
-		    // Next option is to write a low-level parser to individually assign elements of the JSON
-		    // file to their corresponding Map elements, i.e. <String, Set<FilePosition>>
-			
-			// Another try with Jackson ObjectMapper
-			// ObjectMapper mapper = new ObjectMapper();
-			// HashMap<String, SortedSet<FilePosition>> mainIndex = mapper.readValue(is, HashMap.class);
-			
-			
-			
-			
-			is.close();	
-			
-			
-				
-		}
-		catch (Exception e)
-	    {
-	      e.printStackTrace();
-	      Platform.exit();
-	    }
-		
+		InputStream is = new FileInputStream(indexFilename);
+		JsonReader jsonString = new JsonReader(new InputStreamReader(is, "UTF-8"));
+		Gson gson = new Gson();
+		Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
+		Map<String, SortedSet<FilePosition>> mIndex = gson.fromJson(jsonString, mapType);
+		is.close();		
+		return mIndex;	
 		
 	} // end loadIndexFromStorage
   	
@@ -245,17 +212,17 @@ public class IndexModel {
 		saveIndexToStorage();
 		
 		// clear() is for testing of load
-//		mainIndex.clear();
+		// mainIndex.clear();
 		// TEST loadIndexFromStorage
-		loadIndexFromStorage();
-
+		mainIndex = loadIndexFromStorage();
+		MapUtils.debugPrint(System.out, "LOADED DEBUG Print", mainIndex);
 		// TEST updateIndex
 //		updateIndex();
 //		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 		
 		// TEST removeFromInvIndex
-		removeFromInvIndex(fileID);
-		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		// removeFromInvIndex(fileID);
+		// MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 			
 	} // end TEST main method
 	
