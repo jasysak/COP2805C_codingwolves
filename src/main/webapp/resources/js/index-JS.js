@@ -3,8 +3,17 @@ var parsedData = {
     FilesProcessed: 0,
     FilesParsed: 0,
     Data :[]
-};
+}; //Global Variable
 
+var persistantData={
+
+};
+function resetAjaxSender(ajaxSenderObject){
+    ajaxSenderObject["Code"]="OK";
+    ajaxSenderObject["FilesProcessed"] =0;
+    ajaxSenderObject["FilesParsed"] = 0;
+    ajaxSenderObject["Data"] = [];
+}
 $(document).ready(function () {
     $('.custom-select').change(function () {
         $('#width_tmp_option').html($('.custom-select option:selected').text());
@@ -81,8 +90,9 @@ $(document).on('click','#upload',function (event) {
         data: JSON.stringify(senderObject),
         dataType: 'json',
         success: function (data) {
-            console.log('hi',data);
+            console.log('Update',data);
             delete senderObject;
+            resetAjaxSender(parsedData);
         },
         error: function (e) {
             console.log('error');
