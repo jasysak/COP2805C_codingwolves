@@ -9,6 +9,12 @@ import javafx.beans.property.SimpleStringProperty;
 /**
  * @author David Alvarez, 2/24/19
  *
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
  */
 public class Files {
 	private SimpleLongProperty fileId;

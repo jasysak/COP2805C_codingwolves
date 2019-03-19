@@ -23,7 +23,13 @@ import view.codingwolves.MaintenanceWindow;
  * This class will be a model class with methods that will addFiles, removeFiles, and updateCheckSum
  * 
  * @author David Alvarez, 2/23/19
- *
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
  */
 public class FileModel {
 	static String fileStatus;

@@ -33,6 +33,12 @@ import java.lang.reflect.Type;
 /**
  * @author jay
  *
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
  */
 public class IndexModel {
 	

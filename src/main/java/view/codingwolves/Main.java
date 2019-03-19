@@ -37,6 +37,13 @@ import model.codingwolves.FileModel;
 /**
  * @author David Alvarez, 2/9/19
  * @version 1.0
+ * 
+ * codingwolves team
+ * Members:
+ * David A.
+ * Reubin G.
+ * Erin H.
+ * Jason S.
  */
 public class Main extends Application{
 	public static long nextFileID;
