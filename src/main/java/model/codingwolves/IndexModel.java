@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -19,9 +21,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.io.IOUtils;
+
 import javafx.application.Platform;
 
 /**
@@ -174,12 +179,13 @@ public class IndexModel {
 		try (InputStream is = new FileInputStream(indexFilename))		
 		// (FileReader reader = new FileReader(indexFilename)) 
 		{
-			// jsonTxt = IOUtils.toString(is, "UTF-8");
-			// Gson gson = new Gson();
+			// I think the code below SHOULD WORK.
+			// Not yet fully tested (3/19/19)
+			String jsonString = IOUtils.toString(is, "UTF-8");
+			Gson gson = new Gson();
+			Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
+			Map<String, SortedSet<FilePosition>> mainIndex = gson.fromJson(jsonString, mapType);
 			
-			// First Try - doesn't work because FilePosition is not a generic type (I think)
-			//Type mapType = new TypeToken<Map<String, SortedSet<FilePosition>>>(){}.getType();  
-			//mainIndex = gson.fromJson(indexFilename, mapType);
 			
 			// Next Try - doesn't seem to work. Still working on it...
 			// Map<String, SortedSet<FilePosition>> mainIndex = new HashMap<String, SortedSet<FilePosition>>();
@@ -189,9 +195,12 @@ public class IndexModel {
 		    // file to their corresponding Map elements, i.e. <String, Set<FilePosition>>
 			
 			// Another try with Jackson ObjectMapper
-			ObjectMapper mapper = new ObjectMapper();
-			HashMap<String, SortedSet<FilePosition>> mainIndex = mapper.readValue(is, HashMap.class);
-			 		
+			// ObjectMapper mapper = new ObjectMapper();
+			// HashMap<String, SortedSet<FilePosition>> mainIndex = mapper.readValue(is, HashMap.class);
+			
+			
+			
+			
 			is.close();	
 			
 			
