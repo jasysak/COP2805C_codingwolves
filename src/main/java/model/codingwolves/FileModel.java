@@ -39,7 +39,7 @@ import view.codingwolves.MaintenanceWindow;
 
 public class FileModel {
 	static String fileStatus;
-	//Using an observable list to be able to monitor when elements change
+	//Using an observable list to be able to populate the tableview
 	public static final ObservableList<Files> files = FXCollections.observableArrayList();
 	
 	/**
@@ -50,12 +50,14 @@ public class FileModel {
 	 */
 	public void addFile(String fileName) {
 		long fileId = Main.nextFileID;
+		//Making nextFileID add one every time so that the same file id isn't used again
 		Main.nextFileID += 1L;
 		File file = new File(fileName);
 		long fileLastModified = file.lastModified();
 		try 
 		{
 			MessageDigest md5Digest = MessageDigest.getInstance("MD5");
+			//Getting the file checksum so that we can tell when a file has changed
 			String checkSum = getFileChecksum(md5Digest, file);
 			fileStatus = "Indexed"; //This is just to test
 			files.add(new Files(fileId, fileName, fileLastModified, checkSum, fileStatus));
@@ -152,11 +154,12 @@ public class FileModel {
 		return false;
 	}
 	/**
-	 * This method will save the list of files to Json formatted file
+	 * This method will save the list of files currently indexed to a Json formatted file
 	 * 
 	 */
 	public void saveIndexToFile() {
 		String userDir = System.getProperty("user.home");
+		//File to save index to
 		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
 		if (!fileIndex.exists()) {
 			try {
@@ -169,6 +172,7 @@ public class FileModel {
 			try (Writer writer = new FileWriter(fileIndex)) {
 			    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			    JsonObject obj = new JsonObject();
+			    //convert nextFileId to Json object so that it can be written to the file
 			    obj.addProperty("CurrentFileId", Main.nextFileID);
 			    String json1 = gson.toJson(obj);
 			    String json2 = gson.toJson(files);

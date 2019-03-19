@@ -1,6 +1,6 @@
 package view.codingwolves;
 
-import java.io.IOException;
+import java.io.File;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -11,6 +11,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -126,11 +128,16 @@ public class Main extends Application{
 		aboutBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				try {
-					aboutInformation();
-				} catch (OperationNotSupportedException e1) {
-					System.out.println(e1);
-				}
+				File indexFile = new File(System.getProperty("user.home") + File.separator + "SearchEngine.json");
+				File wordIndexFile = new File(System.getProperty("user.home") + File.separator + "invIndex.json");
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("About");
+				alert.setHeaderText(null);
+				alert.setContentText("Search Engine 1.0\n\nWritten by David Alvarez, Jason Sysak, Reubin George, Erin Hochstetler, Tampa Florida USA\n"
+						+ "FileList Index file: " + indexFile + ",\nsize: " + indexFile.length() + " bytes\nWordList Index file: "
+						+ wordIndexFile + ",\nsize: " + wordIndexFile.length() + " bytes");
+				alert.initOwner(primaryStage);
+				alert.showAndWait();
 			}
 		});
 	}
@@ -261,14 +268,6 @@ public class Main extends Application{
 	 * @throws OperationNotSupportedException
 	 */
 	private void searchIndexedFiles() throws OperationNotSupportedException
-	{
-		throw new OperationNotSupportedException("Function not yet Implemented");
-	}
-	/**
-	 * Stub method to test about button EventHandler
-	 * @throws OperationNotSupportedException
-	 */
-	private void aboutInformation()	throws OperationNotSupportedException
 	{
 		throw new OperationNotSupportedException("Function not yet Implemented");
 	}
