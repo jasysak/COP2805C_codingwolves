@@ -30,12 +30,6 @@ import model.codingwolves.Files;
  * 
  * @author David Alvarez, 2/12/19
  *
- * codingwolves team
- * Members:
- * David A.
- * Reubin G.
- * Erin H.
- * Jason S.
  */
 public class MaintenanceWindow extends Application {
 	private final String iconPath = "/monitor.png";

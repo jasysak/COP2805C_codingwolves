@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model.codingwolves;
 
 import javafx.beans.property.SimpleLongProperty;
@@ -8,14 +5,13 @@ import javafx.beans.property.SimpleStringProperty;
 
 /**
  * @author David Alvarez, 2/24/19
- *
- * codingwolves team
- * Members:
- * David A.
- * Reubin G.
- * Erin H.
- * Jason S.
+ * 
+ * WORK IN PROGRESS
+ * 
+ * Object class to define Files objects contained in the List
+ * of files stored/that have been indexed in the inverted index.
  */
+
 public class Files {
 	private SimpleLongProperty fileId;
 	private SimpleStringProperty fileName;
