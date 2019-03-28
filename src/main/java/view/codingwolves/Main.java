@@ -1,8 +1,3 @@
-/**
- * The purpose of this class is to make the interface for the main window of the Search Engine project. This interface
- * will allow the user to search for files, go to an administrator window and look at information about the application
- * and who made it.
- */
 package view.codingwolves;
 
 import java.io.File;
@@ -34,11 +29,33 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.codingwolves.FileModel;
+// JAS added for initial load of II JSON
+// Not needed yet, until loadIndexFromStorage()
+// is functioning.
+// import model.codingwolves.IndexModel;
+
 /**
+ * The purpose of this class is to make the interface for the main window of the Search Engine project. 
+ * This interface will allow the user to search for files, go to an administrator window and look at
+ * information about the application and who made it.
+ * 
  * @author David Alvarez, 2/9/19
  * @version 1.0
  * 
+<<<<<<< HEAD
+=======
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David Alvarez
+ * Reubin George
+ * Erin Hochstetler
+ * Jason Sysak
+ * 
+>>>>>>> refs/heads/master
  */
+
 public class Main extends Application{
 	public static long nextFileID;
 	private final String iconPath = "/monitor.png";
@@ -57,6 +74,17 @@ public class Main extends Application{
     public void start(Stage primaryStage) 
 	{
 		FileIndex.initializeIndex();
+		
+		// JAS added
+		// NOTE: loadIndexFromStorage() is not yet working.
+		// See comments in IndexModel.java
+		// try {
+		//	IndexModel.loadIndexFromStorage();
+		//} catch (IOException e2) {
+		//	// TODO Auto-generated catch block
+		//	e2.printStackTrace();
+		// }
+		
 		BorderPane border = new BorderPane();
 		HBox hboxT = addHBoxT();
 		VBox vboxT = addVBoxT(hboxT);

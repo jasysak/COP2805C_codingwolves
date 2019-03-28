@@ -23,8 +23,23 @@ import view.codingwolves.MaintenanceWindow;
  * This class will be a model class with methods that will addFiles, removeFiles, and updateCheckSum
  * 
  * @author David Alvarez, 2/23/19
+<<<<<<< HEAD
+=======
+ *
+ * For COP2805C Group Project
+ * 
+ * codingwolves team
+ * Members:
+ * David Alvarez
+ * Reubin George
+ * Erin Hochstetler
+ * Jason Sysak
+ *
+ * WORK IN PROGRESS
+>>>>>>> refs/heads/master
  * 
  */
+
 public class FileModel {
 	static String fileStatus;
 	//Using an observable list to be able to populate the tableview
@@ -61,6 +76,17 @@ public class FileModel {
 		String str = Integer.toString(numFiles);
 		Main.numOfFilesIndexed.setText(str);
 		MaintenanceWindow.numOfFilesIndexed.setText(str);
+		
+		// JAS Edit: call addToInvIndex
+		// NOTE IDE complains about throws or try..catch here.
+		// I don't see exactly why, but I added it anyways.
+		try {
+			IndexModel.addToInvIndex(fileName, fileId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	/**
 	 * This method will remove the specified file from the data list and
@@ -82,7 +108,9 @@ public class FileModel {
 		int numFiles = files.size();
 		String str = Integer.toString(numFiles);
 		Main.numOfFilesIndexed.setText(str);
-		MaintenanceWindow.numOfFilesIndexed.setText(str);
+		MaintenanceWindow.numOfFilesIndexed.setText(str);		
+		// JAS Edit: call removeFromInvIndex()
+		IndexModel.removeFromInvIndex(fileId);
 	}
 	
 	/**

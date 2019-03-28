@@ -25,6 +25,8 @@ import model.codingwolves.FileModel;
 import model.codingwolves.Files;
 import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
+// JAS added for updateIndex() and removeFromInvIndex()
+import model.codingwolves.IndexModel;
 
 /**
  * This class is the controller and will implement the classes in the model class as well as
@@ -37,10 +39,10 @@ import view.codingwolves.MaintenanceWindow;
  * 
  * codingwolves team
  * Members:
- * David A.
- * Reubin G.
- * Erin H.
- * Jason S.
+ * David Alvarez
+ * Reubin George
+ * Erin Hochstetler
+ * Jason Sysak
  *
  * WORK IN PROGRESS
  * 
@@ -103,6 +105,8 @@ public class FileIndex {
 		}
 		model.addFile(fileName);
 		model.saveIndexToFile();
+		// JAS Note -- IndexModel.addTOInvIndex() gets called in
+		// FileModel.addFile(). Is not needed here.
 	}
 	/**
 	 * This method will update the current selected file from the GUI and compare the current checksum
@@ -129,6 +133,12 @@ public class FileIndex {
 					{
 						long fileId = currentFile.getFileId();
 						model.updateFileCheckSum(fileId);
+						//Just to test
+						System.out.println("CheckSum Updated");
+						// JAS added
+						IndexModel.removeFromInvIndex(fileId);
+						IndexModel.addToInvIndex(currentFile.getFileName(), fileId);
+
 					}
 					else if (selectedItem.getCheckSum().equals(fileCheckSum) 
 							&& currentFile.getFileName() == selectedItem.getFileName())
@@ -152,6 +162,7 @@ public class FileIndex {
 			}
 		}
 		model.saveIndexToFile();
+		
 	}
 	/**
 	 * This method will get the current selected file and remove the file from the tableview and the observable list of
@@ -178,6 +189,9 @@ public class FileIndex {
 			long fileId = selectedItem.getFileId();
 			MaintenanceWindow.table.getItems().remove(selectedItem);
 			model.removeFile(fileId);
+			// JAS Note
+			// IndexModel.removeFromInvIndex() gets called in 
+			// FileModel.removeFile()
 		}
 		model.saveIndexToFile();
 	}
