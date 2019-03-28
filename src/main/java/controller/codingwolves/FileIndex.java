@@ -5,7 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -22,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.codingwolves.FileModel;
+import model.codingwolves.FilePosition;
 import model.codingwolves.Files;
 import view.codingwolves.Main;
 import view.codingwolves.MaintenanceWindow;
@@ -57,7 +61,7 @@ public class FileIndex {
 	 * and show which files contain those words.
 	 * 
 	 */
-	public static void andSearch() {
+	public static void andSearch(String searchField) {
 		
 	}
 	/**
@@ -65,7 +69,7 @@ public class FileIndex {
 	 * and show which files contain either or.
 	 * 
 	 */
-	public static void orSearch() {
+	public static void orSearch(String searchField) {
 		
 	}
 	/**
@@ -73,8 +77,11 @@ public class FileIndex {
 	 * and show which files contain it.
 	 * 
 	 */
-	public static void phraseSearch() {
+	public static void phraseSearch(String searchField) {
+		Set<FilePosition> filesContainingPhrase = new TreeSet();
 		
+		String[] wordsToSearch = searchField.toLowerCase().split("[^a-z0-9-]+");
+		filesContainingPhrase.addAll((Collection)IndexModel.mainIndex.get(wordsToSearch[0]));
 	}
 	/**
 	 * This method will allow the user to choose a file using their operating systems file selector

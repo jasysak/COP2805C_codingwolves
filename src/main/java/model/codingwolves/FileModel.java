@@ -23,8 +23,6 @@ import view.codingwolves.MaintenanceWindow;
  * This class will be a model class with methods that will addFiles, removeFiles, and updateCheckSum
  * 
  * @author David Alvarez, 2/23/19
-<<<<<<< HEAD
-=======
  *
  * For COP2805C Group Project
  * 
@@ -36,7 +34,6 @@ import view.codingwolves.MaintenanceWindow;
  * Jason Sysak
  *
  * WORK IN PROGRESS
->>>>>>> refs/heads/master
  * 
  */
 
@@ -83,7 +80,6 @@ public class FileModel {
 		try {
 			IndexModel.addToInvIndex(fileName, fileId);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

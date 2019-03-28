@@ -29,6 +29,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.codingwolves.FileModel;
+import model.codingwolves.Searches;
 // JAS added for initial load of II JSON
 // Not needed yet, until loadIndexFromStorage()
 // is functioning.
@@ -42,8 +43,6 @@ import model.codingwolves.FileModel;
  * @author David Alvarez, 2/9/19
  * @version 1.0
  * 
-<<<<<<< HEAD
-=======
  * For COP2805C Group Project
  * 
  * codingwolves team
@@ -53,7 +52,6 @@ import model.codingwolves.FileModel;
  * Erin Hochstetler
  * Jason Sysak
  * 
->>>>>>> refs/heads/master
  */
 
 public class Main extends Application{
@@ -65,6 +63,10 @@ public class Main extends Application{
 	private TextField searchField;
 	static String result;
 	public static Label numOfFilesIndexed;
+	RadioButton andButton;
+	RadioButton orButton;
+	RadioButton phraseButton;
+	private Searches selectedSearch;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -110,10 +112,16 @@ public class Main extends Application{
 		searchBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			public void handle(ActionEvent e) {
-				try {
-					searchIndexedFiles();
-				} catch (OperationNotSupportedException e1) {
-					System.out.println(e1);
+				switch(selectedSearch) {
+				case AND:
+					FileIndex.andSearch(Main.this.searchField.getText());
+					break;
+				case OR:
+					FileIndex.orSearch(Main.this.searchField.getText());
+					break;
+				case PHRASE:
+					FileIndex.phraseSearch(Main.this.searchField.getText());
+					break;
 				}
 			}
 		});
@@ -143,6 +151,33 @@ public class Main extends Application{
 				alert.showAndWait();
 			}
 		});
+		andButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				RadioButton button = (RadioButton)e.getSource();
+		        button.setSelected(true);
+		        
+		        Main.this.selectedSearch = Searches.AND;
+			}
+		});
+		orButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				RadioButton button = (RadioButton)e.getSource();
+		        button.setSelected(true);
+		        
+		        Main.this.selectedSearch = Searches.OR;
+			}
+		});
+		phraseButton.setOnAction(new EventHandler<ActionEvent>()
+		{
+			public void handle(ActionEvent e) {
+				RadioButton button = (RadioButton)e.getSource();
+		        button.setSelected(true);
+		        
+		        Main.this.selectedSearch = Searches.PHRASE;
+			}
+		});
 	}
 	/**
 	 * Make the VBox layout for the top of interface and embed HBox into it
@@ -159,23 +194,20 @@ public class Main extends Application{
 		
 		final ToggleGroup searchTypes = new ToggleGroup();
 		
-		RadioButton andButton = new RadioButton("_All of the Search Terms");
+		this.andButton = new RadioButton("_All of the Search Terms");
 		andButton.setFont(Font.font("SansSerif", FontWeight.BLACK, 12));
 		andButton.setMnemonicParsing(true);
 		andButton.setToggleGroup(searchTypes);
-		andButton.setOnAction(onAction);
 		andButton.setSelected(true);
 		
-		RadioButton orButton = new RadioButton("Any _of the Search Terms");
+		this.orButton = new RadioButton("Any _of the Search Terms");
 		orButton.setFont(Font.font("SansSerif", FontWeight.BLACK, 12));
 		orButton.setMnemonicParsing(true);
-		orButton.setOnAction(onAction);
 		orButton.setToggleGroup(searchTypes);
 		
-		RadioButton phraseButton = new RadioButton("Exact _Phrase");
+		this.phraseButton = new RadioButton("Exact _Phrase");
 		phraseButton.setFont(Font.font("SansSerif", FontWeight.BLACK, 12));
 		phraseButton.setMnemonicParsing(true);
-		phraseButton.setOnAction(onAction);
 		phraseButton.setToggleGroup(searchTypes);
 		
 		hbL2.getChildren().addAll(andButton, orButton, phraseButton);
@@ -234,7 +266,6 @@ public class Main extends Application{
 		maintenanceBtn.setText("Maintenance");
 		maintenanceBtn.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
 		maintenanceBtn.setPrefSize(120, 20);
-		maintenanceBtn.setOnAction(onAction);
 		
 		Label numOfFiles = new Label("Number of Files Indexed:");
 		numOfFiles.setFont(Font.font("SansSerif", FontWeight.BOLD, 12));
@@ -255,23 +286,5 @@ public class Main extends Application{
 		hboxB.setSpacing(260);
 		hboxB.setPadding(new Insets(10, 0, 10, 0));
 		return hboxB;
-	}
-	//Will select the radio button that is chosen when using the Mnemonic key
-	EventHandler<ActionEvent> onAction = new EventHandler<ActionEvent>()
-	{
-	    @Override
-	    public void handle(ActionEvent e)
-	    {
-	        RadioButton button = (RadioButton)e.getSource();
-	        button.setSelected(true);
-	    }
-	};
-	/**
-	 * Stub method to test search button EventHandler
-	 * @throws OperationNotSupportedException
-	 */
-	private void searchIndexedFiles() throws OperationNotSupportedException
-	{
-		throw new OperationNotSupportedException("Function not yet Implemented");
 	}
 }
