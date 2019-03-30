@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -22,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.codingwolves.FileModel;
@@ -76,12 +78,68 @@ public class FileIndex {
 	 * This method will search through all the current list of files indexed and search for the exact phrase or sentence in the files
 	 * and show which files contain it.
 	 * 
+	 * @param searchField The phrase to be searched for
+	 * @param searchResult The Text to be set in the UI
 	 */
-	public static void phraseSearch(String searchField) {
+	public static void phraseSearch(String searchField, Text searchResult) {
+		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Phrase:\n");
 		Set<FilePosition> filesContainingPhrase = new TreeSet();
 		
 		String[] wordsToSearch = searchField.toLowerCase().split("[^a-z0-9-]+");
-		filesContainingPhrase.addAll((Collection)IndexModel.mainIndex.get(wordsToSearch[0]));
+		//This exception was thrown when the user entered a word that wasn't in the files
+		//so this try catch was made.
+		try {
+			filesContainingPhrase.addAll((Collection)IndexModel.mainIndex.get(wordsToSearch[0]));
+		}
+		catch (NullPointerException e) {
+			resultBuilder.append("No files Match the specified phrase");
+			searchResult.setText(resultBuilder.toString());
+			return;
+		}
+		//Copying array elements so that I can start at the second element in the array
+		wordsToSearch = Arrays.copyOfRange(wordsToSearch, 1, wordsToSearch.length);
+		
+		for (int i = 0; i < wordsToSearch.length ; i++)
+		{
+			String currentWord = wordsToSearch[i];
+			if (filesContainingPhrase.size() == 0) {
+				break;
+			}
+			Set<FilePosition> currentPositions = (Set)IndexModel.mainIndex.get(currentWord);
+			if (currentPositions == null) {
+				filesContainingPhrase.clear();
+				break;
+			}
+			Set<FilePosition> phrase = new TreeSet();
+			for (FilePosition currentWordInPhrase : filesContainingPhrase) {
+				FilePosition nextWordInPhrase = new FilePosition(currentWordInPhrase.fileID, 
+						currentWordInPhrase.wordposition + 1);
+				if (currentPositions.contains(nextWordInPhrase)) {
+					phrase.add(nextWordInPhrase);
+				}
+			}
+			filesContainingPhrase = phrase;
+		}
+		if(filesContainingPhrase.size() > 0) {
+			//Looping over the remaining files in the set for the file id so I know which files
+			//contain the phrase
+			for (FilePosition fp : filesContainingPhrase) {
+				long fileId = fp.fileID;
+				for (Files currentFile : FileModel.files)
+				{
+					if (currentFile.getFileId() == fileId)
+					{
+						String result = currentFile.getFileName();
+						resultBuilder.append(result + "\n");
+					}
+				}
+			}
+		}
+		else
+		{
+			resultBuilder.append("No files Match the specified phrase");
+		}
+		searchResult.setText(resultBuilder.toString());
 	}
 	/**
 	 * This method will allow the user to choose a file using their operating systems file selector

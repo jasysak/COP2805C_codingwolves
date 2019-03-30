@@ -61,11 +61,13 @@ public class Main extends Application{
 	private final Button maintenanceBtn = new Button();
 	private final Button aboutBtn = new Button();
 	private TextField searchField;
-	static String result;
+	public Text searchResult = new Text();
 	public static Label numOfFilesIndexed;
 	RadioButton andButton;
 	RadioButton orButton;
 	RadioButton phraseButton;
+	Stage maintStage = new Stage();
+	MaintenanceWindow maint = new MaintenanceWindow();
 	private Searches selectedSearch;
 	
 	public static void main(String[] args) {
@@ -90,7 +92,7 @@ public class Main extends Application{
 		BorderPane border = new BorderPane();
 		HBox hboxT = addHBoxT();
 		VBox vboxT = addVBoxT(hboxT);
-		TextFlow textFlow = addTextFlowC(result);
+		TextFlow textFlow = addTextFlowC();
 		HBox hboxB = addHBoxB();
 		border.setTop(vboxT);
 		border.setCenter(textFlow);
@@ -102,6 +104,7 @@ public class Main extends Application{
 		primaryStage.getIcons().add(new Image(iconPath));
 		primaryStage.show();
 		primaryStage.setResizable(false);
+		maint.start(maintStage);
 
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 	        @Override
@@ -120,7 +123,7 @@ public class Main extends Application{
 					FileIndex.orSearch(Main.this.searchField.getText());
 					break;
 				case PHRASE:
-					FileIndex.phraseSearch(Main.this.searchField.getText());
+					FileIndex.phraseSearch(Main.this.searchField.getText(), Main.this.searchResult);
 					break;
 				}
 			}
@@ -128,9 +131,6 @@ public class Main extends Application{
 		maintenanceBtn.setOnAction(new EventHandler<ActionEvent>()
 		{
 		    public void handle(ActionEvent e) {
-		    	Stage maintStage = new Stage();
-		    	MaintenanceWindow maint = new MaintenanceWindow();
-				maint.start(maintStage);
 				maintStage.show();
 				maintStage.isAlwaysOnTop();
 		    }
@@ -247,11 +247,14 @@ public class Main extends Application{
 	 * @param result The result of the search request
 	 * @return the TextFlow layout for the center of the interface
 	 */
-	private TextFlow addTextFlowC(String result)
+	private TextFlow addTextFlowC()
 	{
 		TextFlow textFlow = new TextFlow();
 		
-		Text searchResult = new Text(result);
+		searchResult.setFont(Font.font("SansSerif", FontWeight.BOLD, 14));
+		textFlow.getChildren().add(searchResult);
+		textFlow.setPadding(new Insets(10, 10, 10, 10));
+		
 		return textFlow;
 	}
 	/**

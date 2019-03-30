@@ -24,8 +24,8 @@ package model.codingwolves;
 
 public class FilePosition implements Comparable<FilePosition>{
 
-	final long fileID;
-	final int wordposition;
+	public final long fileID;
+	public final int wordposition;
 	
 	// Object constructor
 	
