@@ -1,10 +1,8 @@
 package model.codingwolves;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,17 +19,12 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.io.IOUtils;
-
-import javafx.application.Platform;
 
 /**
  * @author Jason Sysak
@@ -102,7 +95,7 @@ public class IndexModel {
 		
 		// Print map using Apache commons collection MapUtils
 		// MapUtils.verbosePrint(System.out, "Inverted Index", mainIndex);
-		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		MapUtils.debugPrint(System.out, "addToInvIndex DEBUG Print", mainIndex);
 		
 		// temporary save here until save on exit is implemented
 		saveIndexToStorage();
@@ -163,11 +156,11 @@ public class IndexModel {
 		// code below not working yet.
 		Iterator<Files> it = FileModel.files.iterator();
 		while (it.hasNext()) {
-			System.out.println("Placeholder");
+			System.out.println("Updating File: " + ((Files) FileModel.files).getFileName() + "\n");
 			addToInvIndex(((Files) FileModel.files).getFileName(), ((Files) FileModel.files).getFileId());
 		}
-		System.out.println("Reset Completed");
-		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		System.out.println("Reset Completed. Results:\n");
+		MapUtils.debugPrint(System.out, "updateIndex DEBUG Print", mainIndex);
 	} // end updateIndex
 	
 	public static void loadIndexFromStorage () throws IOException {
@@ -190,11 +183,14 @@ public class IndexModel {
 		Gson gson = new Gson();
 		Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
 		mainIndex = gson.fromJson(jsonString, mapType);
-		is.close();
+		is.close();		
+		MapUtils.debugPrint(System.out, "loadIndexFromStorage DEBUG Print", mainIndex);
+		return;
 		
 	} // end loadIndexFromStorage
 	
 	// main method added for TEST ONLY (this will be removed after bugs etc. are gone)
+/*
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 		
 		// placeholder filename 
@@ -212,13 +208,13 @@ public class IndexModel {
 		//mainIndex = loadIndexFromStorage();
 		MapUtils.debugPrint(System.out, "LOADED DEBUG Print", mainIndex);
 		// TEST updateIndex
-//		updateIndex();
-//		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		// updateIndex();
+		// MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 		
 		// TEST removeFromInvIndex
 		// removeFromInvIndex(fileID);
 		// MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 			
 	} // end TEST main method
-	
+*/
 } // end class

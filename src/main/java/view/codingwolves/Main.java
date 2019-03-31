@@ -81,6 +81,7 @@ public class Main extends Application{
 	{
 		FileIndex.initializeIndex();
 		// JAS added
+		// Why is throws IOException or a try..catch needed here?
 		try {
 			IndexModel.loadIndexFromStorage();
 		} catch (IOException e1) {
