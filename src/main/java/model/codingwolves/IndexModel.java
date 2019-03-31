@@ -170,7 +170,7 @@ public class IndexModel {
 		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
 	} // end updateIndex
 	
-	public static Map<String, SortedSet<FilePosition>> loadIndexFromStorage () throws IOException {
+	public static void loadIndexFromStorage () throws IOException {
 		
 		// called at startup to access disk storage of index and load it into memory/mainIndex Map
 		mainIndex.clear(); 	// cleanup just in case
@@ -189,26 +189,10 @@ public class IndexModel {
 		JsonReader jsonString = new JsonReader(new InputStreamReader(is, "UTF-8"));
 		Gson gson = new Gson();
 		Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
-		Map<String, SortedSet<FilePosition>> mIndex = gson.fromJson(jsonString, mapType);
-		is.close();		
-		return mIndex;	
+		mainIndex = gson.fromJson(jsonString, mapType);
+		is.close();
 		
 	} // end loadIndexFromStorage
-  	
-	public void doAndSearch(ArrayList<String> searchTerms) {
-		// TODO Stub method
-		// Will contain any code necessary to implement AND search
-	}
-
-	public void doOrSearch(ArrayList<String> searchTerms) {
-		// TODO Stub method
-		// Will contain any code necessary to implement OR search
-	}
-	
-	public void doPhraseSearch(ArrayList<String> searchTerms ) {
-		// TODO Stub method
-		// Will contain any code necessary to implement PHRASE search
-	}
 	
 	// main method added for TEST ONLY (this will be removed after bugs etc. are gone)
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
@@ -225,7 +209,7 @@ public class IndexModel {
 		// clear() is for testing of load
 		// mainIndex.clear();
 		// TEST loadIndexFromStorage
-		mainIndex = loadIndexFromStorage();
+		//mainIndex = loadIndexFromStorage();
 		MapUtils.debugPrint(System.out, "LOADED DEBUG Print", mainIndex);
 		// TEST updateIndex
 //		updateIndex();
