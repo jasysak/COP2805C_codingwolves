@@ -163,7 +163,7 @@ public class IndexModel {
 		MapUtils.debugPrint(System.out, "updateIndex DEBUG Print", mainIndex);
 	} // end updateIndex
 	
-	public static Map<String, SortedSet<FilePosition>> loadIndexFromStorage () throws IOException {
+	public static void loadIndexFromStorage () throws IOException {
 		
 		// called at startup to access disk storage of index and load it into memory/mainIndex Map
 		mainIndex.clear(); 	// cleanup just in case
@@ -182,10 +182,10 @@ public class IndexModel {
 		JsonReader jsonString = new JsonReader(new InputStreamReader(is, "UTF-8"));
 		Gson gson = new Gson();
 		Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
-		Map<String, SortedSet<FilePosition>> mIndex = gson.fromJson(jsonString, mapType);
+		mainIndex = gson.fromJson(jsonString, mapType);
 		is.close();		
-		MapUtils.debugPrint(System.out, "loadIndexFromStorage DEBUG Print", mIndex);
-		return mIndex;	
+		MapUtils.debugPrint(System.out, "loadIndexFromStorage DEBUG Print", mainIndex);
+		return;	
 		
 	} // end loadIndexFromStorage
 	
