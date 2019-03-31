@@ -102,7 +102,7 @@ public class IndexModel {
 		
 		// Print map using Apache commons collection MapUtils
 		// MapUtils.verbosePrint(System.out, "Inverted Index", mainIndex);
-		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		MapUtils.debugPrint(System.out, "addToInvIndex DEBUG Print", mainIndex);
 		
 		// temporary save here until save on exit is implemented
 		saveIndexToStorage();
@@ -163,11 +163,11 @@ public class IndexModel {
 		// code below not working yet.
 		Iterator<Files> it = FileModel.files.iterator();
 		while (it.hasNext()) {
-			System.out.println("Placeholder");
+			System.out.println("Updating File: " + ((Files) FileModel.files).getFileName() + "\n");
 			addToInvIndex(((Files) FileModel.files).getFileName(), ((Files) FileModel.files).getFileId());
 		}
-		System.out.println("Reset Completed");
-		MapUtils.debugPrint(System.out, "DEBUG Print", mainIndex);
+		System.out.println("Reset Completed. Results:\n");
+		MapUtils.debugPrint(System.out, "updateIndex DEBUG Print", mainIndex);
 	} // end updateIndex
 	
 	public static Map<String, SortedSet<FilePosition>> loadIndexFromStorage () throws IOException {
@@ -191,6 +191,7 @@ public class IndexModel {
 		Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
 		Map<String, SortedSet<FilePosition>> mIndex = gson.fromJson(jsonString, mapType);
 		is.close();		
+		MapUtils.debugPrint(System.out, "loadIndexFromStorage DEBUG Print", mIndex);
 		return mIndex;	
 		
 	} // end loadIndexFromStorage
