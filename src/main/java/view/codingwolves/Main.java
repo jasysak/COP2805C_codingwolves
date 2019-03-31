@@ -70,7 +70,7 @@ public class Main extends Application{
 	RadioButton phraseButton;
 	Stage maintStage = new Stage();
 	MaintenanceWindow maint = new MaintenanceWindow();
-	private Searches selectedSearch;
+	private Searches selectedSearch = Searches.AND;
 	
 	public static void main(String[] args) {
 		launch(args);
