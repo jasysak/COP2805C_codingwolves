@@ -316,18 +316,27 @@ public class FileIndex {
 	public static void initializeIndex() {
 		String userDir = System.getProperty("user.home");
 		File fileIndex = new File(userDir + File.separator + "SearchEngine.json");
+		if (!fileIndex.exists()) {
+			try {
+				fileIndex.createNewFile();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		try 
 		{
 			JsonReader jsonReader = new JsonReader(new FileReader(fileIndex));
 			Gson gson = new Gson();
-			JsonObject js = gson.fromJson(jsonReader, JsonObject.class);
-			Files[] indexFiles = gson.fromJson(jsonReader, Files[].class);
-			jsonReader.close();
-			long currentFileId = js.get("CurrentFileId").getAsLong();
-			//Read the currentFileId from the file and initialize it to nextFileID so that a file id won't be reused
-			Main.nextFileID = currentFileId;
-			FileModel.files.addAll(indexFiles);
-			
+			if (fileIndex.length() != 0L) {
+				JsonObject js = gson.fromJson(jsonReader, JsonObject.class);
+				Files[] indexFiles = gson.fromJson(jsonReader, Files[].class);
+				jsonReader.close();
+				long currentFileId = js.get("CurrentFileId").getAsLong();
+				//Read the currentFileId from the file and initialize it to nextFileID so that a file id won't be reused
+				Main.nextFileID = currentFileId;
+				FileModel.files.addAll(indexFiles);
+			}
 			//Add full path name to the fileName column
 			MaintenanceWindow.fileNameCol.setCellValueFactory(new PropertyValueFactory<Files, String>("fileName"));
 			//Add the status of the file to the status column

@@ -174,7 +174,18 @@ public class IndexModel {
 		
 		// called at startup to access disk storage of index and load it into memory/mainIndex Map
 		mainIndex.clear(); 	// cleanup just in case
-		InputStream is = new FileInputStream(indexFilename);
+		File indexFile = new File(indexFilename);
+		if (!indexFile.exists()) {
+		      try
+		      {
+		        indexFile.createNewFile();
+		      }
+		      catch (Exception e)
+		      {
+		        e.printStackTrace();
+		      }
+		}
+		InputStream is = new FileInputStream(indexFile);
 		JsonReader jsonString = new JsonReader(new InputStreamReader(is, "UTF-8"));
 		Gson gson = new Gson();
 		Type mapType = new TypeToken<Map<String, Set<FilePosition>>>(){}.getType();
