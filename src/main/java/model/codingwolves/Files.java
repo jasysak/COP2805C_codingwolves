@@ -5,13 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 
 /**
  * @author David Alvarez, 2/24/19
-<<<<<<< HEAD
- * 
- * WORK IN PROGRESS
- * 
- * Object class to define Files objects contained in the List
- * of files stored/that have been indexed in the inverted index.
-=======
  * 
  * For COP2805C Group Project
  * 
@@ -26,7 +19,7 @@ import javafx.beans.property.SimpleStringProperty;
  * 
  * Object class to define Files objects contained in the List
  * of files stored/that have been indexed in the inverted index.
->>>>>>> refs/heads/master
+ * 
  */
 
 public class Files {

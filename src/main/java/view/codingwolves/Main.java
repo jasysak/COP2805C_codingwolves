@@ -1,6 +1,7 @@
 package view.codingwolves;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -29,6 +30,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.codingwolves.FileModel;
+import model.codingwolves.IndexModel;
 import model.codingwolves.Searches;
 // JAS added for initial load of II JSON
 // Not needed yet, until loadIndexFromStorage()
@@ -78,16 +80,14 @@ public class Main extends Application{
     public void start(Stage primaryStage) 
 	{
 		FileIndex.initializeIndex();
-		
 		// JAS added
-		// NOTE: loadIndexFromStorage() is not yet working.
-		// See comments in IndexModel.java
-		// try {
-		//	IndexModel.loadIndexFromStorage();
-		//} catch (IOException e2) {
-		//	// TODO Auto-generated catch block
-		//	e2.printStackTrace();
-		// }
+		try {
+			IndexModel.loadIndexFromStorage();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		
 		BorderPane border = new BorderPane();
 		HBox hboxT = addHBoxT();
@@ -117,7 +117,7 @@ public class Main extends Application{
 			public void handle(ActionEvent e) {
 				switch(selectedSearch) {
 				case AND:
-					FileIndex.andSearch(Main.this.searchField.getText());
+					FileIndex.andSearch(Main.this.searchField.getText(), Main.this.searchResult);
 					break;
 				case OR:
 					FileIndex.orSearch(Main.this.searchField.getText());

@@ -63,7 +63,57 @@ public class FileIndex {
 	 * and show which files contain those words.
 	 * 
 	 */
-	public static void andSearch(String searchField) {
+	public static void andSearch(String searchField, Text searchResult) {
+		
+		//
+		// WORK IN PROGRESS.
+		// THIS IS NOT DONE YET.
+		// IT PROBABLY DOESN'T WORK YET
+		// 
+		Set<FilePosition> filesContainingWords = new TreeSet();
+		
+		// making a Set of all fileID contained in Files:
+		// then we can make this simpler by using the
+		// collections retainAll method
+		TreeSet<Long> fileIDSet = new TreeSet<Long>();
+		for (Files currentFile : FileModel.files) {
+			fileIDSet.add(currentFile.getFileId());
+		}
+		String[] words = searchField.toLowerCase().split("[^a-zA-Z0-9-]+");
+		int x = words.length;
+		int y = 0;
+		while (x < y) {
+			String word = words[y];
+			filesContainingWords = IndexModel.mainIndex.get(word.toLowerCase());
+			if (filesContainingWords == null) {
+				break;
+			}
+			// fileIDContainingWord is the set of fileID's that contain (matched) words
+			TreeSet<Long> fileIDContainingWord = new TreeSet<Long>();
+			for (FilePosition filepos : filesContainingWords) {
+				fileIDContainingWord.add(filepos.fileID);
+			}
+			// retain in fileIDSet only those fileID contained in fileIDContainingWord
+			fileIDSet.retainAll(fileIDContainingWord);
+			++y;
+		}
+		// Now output results (setText)
+		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
+		if (fileIDSet.size() > 0) {
+			for (Long fileID : fileIDSet) {
+				for (Files currentFile : FileModel.files) {
+					if (currentFile.getFileId() == fileID) {
+						String result = currentFile.getFileName();
+						resultBuilder.append(result + "\n");
+					}
+				}
+			}
+		}
+		
+		else {
+			resultBuilder.append("No matches found.");
+		}	
+		searchResult.setText(resultBuilder.toString());
 		
 	}
 	/**
