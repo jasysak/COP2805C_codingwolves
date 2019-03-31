@@ -62,6 +62,8 @@ public class FileIndex {
 	 * This method will search through all the current list of files indexed and search if both words are in the files
 	 * and show which files contain those words.
 	 * 
+	 * @param searchField The phrase to be searched for
+	 * @param searchResult The Text to be set in the UI
 	 */
 	public static void andSearch(String searchField, Text searchResult) {
 		
@@ -70,7 +72,7 @@ public class FileIndex {
 		// THIS IS NOT DONE YET.
 		// IT PROBABLY DOESN'T WORK YET
 		// 
-		Set<FilePosition> filesContainingWords = new TreeSet();
+		TreeSet<FilePosition> filesContainingWords = new TreeSet<FilePosition>();
 		
 		// making a Set of all fileID contained in Files:
 		// then we can make this simpler by using the
@@ -79,16 +81,18 @@ public class FileIndex {
 		for (Files currentFile : FileModel.files) {
 			fileIDSet.add(currentFile.getFileId());
 		}
+		// process user input to String[] array
 		String[] words = searchField.toLowerCase().split("[^a-zA-Z0-9-]+");
 		int x = words.length;
 		int y = 0;
-		while (x < y) {
-			String word = words[y];
-			filesContainingWords = IndexModel.mainIndex.get(word.toLowerCase());
+		while (y < x) {
+			// Load a TreeSet with all Sets from mainIndex matching words[y]
+			filesContainingWords = (TreeSet<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
 			if (filesContainingWords == null) {
 				break;
 			}
-			// fileIDContainingWord is the set of fileID's that contain (matched) words
+			// Another Set to contain just the fileID:
+			// fileIDContainingWord is the set of fileID's that contain each word in words[]
 			TreeSet<Long> fileIDContainingWord = new TreeSet<Long>();
 			for (FilePosition filepos : filesContainingWords) {
 				fileIDContainingWord.add(filepos.fileID);
@@ -97,13 +101,14 @@ public class FileIndex {
 			fileIDSet.retainAll(fileIDContainingWord);
 			++y;
 		}
+		
 		// Now output results (setText)
 		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
 		if (fileIDSet.size() > 0) {
 			for (Long fileID : fileIDSet) {
-				for (Files currentFile : FileModel.files) {
-					if (currentFile.getFileId() == fileID) {
-						String result = currentFile.getFileName();
+				for (Files currFile : FileModel.files) {
+					if (currFile.getFileId() == fileID) {
+						String result = currFile.getFileName();
 						resultBuilder.append(result + "\n");
 					}
 				}
