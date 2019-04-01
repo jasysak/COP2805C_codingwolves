@@ -125,8 +125,10 @@ public class FileIndex {
 	 * This method will search through all the current list of files indexed and search for either of the two words in the files
 	 * and show which files contain either or.
 	 * 
+	 * @param searchField The phrase to be searched for
+	 * @param searchResult The Text to be set in the UI
 	 */
-	public static void orSearch(String searchField) {
+	public static void orSearch(String searchField, Text searchResult) {
 		
 	}
 	/**
@@ -144,6 +146,7 @@ public class FileIndex {
 		//This exception was thrown when the user entered a word that wasn't in the files
 		//so this try catch was made.
 		try {
+			//Load treeset with all files containing the first word
 			filesContainingPhrase.addAll((Collection)IndexModel.mainIndex.get(wordsToSearch[0]));
 		}
 		catch (NullPointerException e) {
@@ -159,6 +162,7 @@ public class FileIndex {
 			if (filesContainingPhrase.size() == 0) {
 				break;
 			}
+			//New set that will have remaining files that contian the phrase
 			Set<FilePosition> currentPositions = new TreeSet();
 			//This exception was thrown when the user entered a word that wasn't in the files
 			//so this try catch was made.

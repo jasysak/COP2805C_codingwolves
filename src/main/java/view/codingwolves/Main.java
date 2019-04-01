@@ -121,7 +121,7 @@ public class Main extends Application{
 					FileIndex.andSearch(Main.this.searchField.getText(), Main.this.searchResult);
 					break;
 				case OR:
-					FileIndex.orSearch(Main.this.searchField.getText());
+					FileIndex.orSearch(Main.this.searchField.getText(), Main.this.searchResult);
 					break;
 				case PHRASE:
 					FileIndex.phraseSearch(Main.this.searchField.getText(), Main.this.searchResult);
