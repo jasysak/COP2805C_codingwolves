@@ -48,7 +48,7 @@ import org.apache.commons.collections4.MapUtils;
 
 public class IndexModel {
 	
-	public static Map<String, SortedSet<FilePosition>> mainIndex = new HashMap<String, SortedSet<FilePosition>>();
+	public static Map<String, Set<FilePosition>> mainIndex = new HashMap<String, Set<FilePosition>>();
 	static final String indexFilename = System.getProperty("user.home") + File.separator + "invIndex.json";
 //	static FileModel model = new FileModel();
 	
@@ -71,13 +71,13 @@ public class IndexModel {
 				continue;
 			FilePosition fp = new FilePosition(fileID, position);
 			if (!mainIndex.containsKey(word)) {
-				SortedSet<FilePosition> newWordPosition = new TreeSet<FilePosition>();
+				Set<FilePosition> newWordPosition = new HashSet<FilePosition>();
 				newWordPosition.add(fp);
 				mainIndex.put(word, newWordPosition);
 			}
 
 			else {
-				SortedSet<FilePosition> existingWordPosition = mainIndex.get(word);
+				Set<FilePosition> existingWordPosition = mainIndex.get(word);
 				existingWordPosition.add(fp);
 				
 				// some output to verify:
@@ -130,9 +130,9 @@ public class IndexModel {
 	
 	public static void removeFromInvIndex (long fileID) {
 
-		HashSet<String> keySet = new HashSet<String>(mainIndex.keySet());
+		Set<String> keySet = new HashSet<String>(mainIndex.keySet());
 		for (String  word : keySet) {
-			SortedSet<FilePosition> valueSet = mainIndex.get(word);
+			Set<FilePosition> valueSet = mainIndex.get(word);
 			Iterator<FilePosition> it = valueSet.iterator();
 			while (it.hasNext()) {
 				FilePosition fp = (FilePosition)it.next();

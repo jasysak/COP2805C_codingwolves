@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -72,12 +73,12 @@ public class FileIndex {
 		// THIS IS NOT DONE YET.
 		// IT PROBABLY DOESN'T WORK YET
 		// 
-		TreeSet<FilePosition> filesContainingWords = new TreeSet<FilePosition>();
+		Set<FilePosition> filesContainingWords = new TreeSet<FilePosition>();
 		
 		// making a Set of all fileID contained in Files:
 		// then we can make this simpler by using the
 		// collections retainAll method
-		TreeSet<Long> fileIDSet = new TreeSet<Long>();
+		Set<Long> fileIDSet = new HashSet<Long>();
 		for (Files currentFile : FileModel.files) {
 			fileIDSet.add(currentFile.getFileId());
 		}
@@ -87,13 +88,13 @@ public class FileIndex {
 		int y = 0;
 		while (y < x) {
 			// Load a TreeSet with all Sets from mainIndex matching words[y]
-			filesContainingWords = (TreeSet<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
+			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
 			if (filesContainingWords == null) {
 				break;
 			}
 			// Another Set to contain just the fileID:
 			// fileIDContainingWord is the set of fileID's that contain each word in words[]
-			TreeSet<Long> fileIDContainingWord = new TreeSet<Long>();
+			Set<Long> fileIDContainingWord = new HashSet<Long>();
 			for (FilePosition filepos : filesContainingWords) {
 				fileIDContainingWord.add(filepos.fileID);
 			}
