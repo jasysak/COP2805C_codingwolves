@@ -86,7 +86,6 @@ public class Main extends Application{
 		try {
 			IndexModel.loadIndexFromStorage();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			System.out.println("No Inverted Index JSON file found. Assuming first run of program.");
 			// e1.printStackTrace();
 		}
@@ -113,12 +112,13 @@ public class Main extends Application{
 	        @Override
 	        public void handle(WindowEvent event) {
 	        	// JAS added
-	        	// Save InvIndex.json file
+	        	// Save InvIndex.json file on close
 	        	System.out.println("Search Engine is closing");
 	    	    try {
 	    			IndexModel.saveIndexToStorage();
 	    		} catch (IOException e) {
-	    			// TODO Auto-generated catch block
+	    			// this should never happen
+	    			System.out.println("ERROR: InvIndex.json file not found!");
 	    			e.printStackTrace();
 	    		}	
 	            System.exit(0);

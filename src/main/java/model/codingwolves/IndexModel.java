@@ -153,7 +153,7 @@ public class IndexModel {
 		// files flagged as needing an update.
 		// called when "Update Index" button is pressed from Maintenance window
 		mainIndex.clear();	
-		// code below not working yet.
+		// code below not entirely working yet.
 		Iterator<Files> it = FileModel.files.iterator();
 		while (it.hasNext()) {
 			System.out.println("Updating File: " + ((Files) FileModel.files).getFileName() + "\n");

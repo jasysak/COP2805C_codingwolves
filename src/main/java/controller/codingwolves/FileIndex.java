@@ -70,7 +70,6 @@ public class FileIndex {
 		
 		//
 		// WORK IN PROGRESS.
-		// THIS IS NOT DONE YET.
 		// 
 		Set<FilePosition> filesContainingWords = new HashSet<FilePosition>();
 		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
@@ -101,7 +100,7 @@ public class FileIndex {
 			}
 			// Another Set to contain just the fileID:
 			// fileIDContainingWord is the set of fileID's that contain each word in words[]
-			// this will be used for retainAll in the original fileIDSet of all fileIDs
+			// this will be used for retainAll on the original fileIDSet of all fileIDs
 			Set<Long> fileIDContainingWord = new HashSet<Long>();
 			for (FilePosition filepos : filesContainingWords) {
 				fileIDContainingWord.add(filepos.fileID);
@@ -136,6 +135,7 @@ public class FileIndex {
 	 * 
 	 */
 	public static void orSearch(String searchField) {
+		
 		
 	}
 	/**
