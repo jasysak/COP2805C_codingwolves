@@ -77,6 +77,7 @@ public class FileIndex {
 		// making a Set of all fileID contained in Files:
 		// then we can make this simpler by using the
 		// collections retainAll method
+		// Note -- there may be other/better ways to make this Set...
 		Set<Long> fileIDSet = new HashSet<Long>();
 		for (Files currentFile : FileModel.files) {
 			fileIDSet.add(currentFile.getFileId());
@@ -91,7 +92,7 @@ public class FileIndex {
 			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
 			}
 			catch (NullPointerException e) {
-				resultBuilder.append("No files Match the specified phrase");
+				resultBuilder.append("No files Match the specified words.");
 				searchResult.setText(resultBuilder.toString());
 				return;
 			}
@@ -100,6 +101,7 @@ public class FileIndex {
 			}
 			// Another Set to contain just the fileID:
 			// fileIDContainingWord is the set of fileID's that contain each word in words[]
+			// this will be used for retainAll in the original fileIDSet of all fileIDs
 			Set<Long> fileIDContainingWord = new HashSet<Long>();
 			for (FilePosition filepos : filesContainingWords) {
 				fileIDContainingWord.add(filepos.fileID);
