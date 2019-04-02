@@ -66,18 +66,19 @@ public class FileIndex {
 	 * @param searchField The phrase to be searched for
 	 * @param searchResult The Text to be set in the UI
 	 */
-	public static void andSearch(String searchField, Text searchResult) {
-		
+	public static void andSearch(String searchField, Text searchResult) {	
 		//
 		// WORK IN PROGRESS.
 		// 
 		Set<FilePosition> filesContainingWords = new HashSet<FilePosition>();
+		filesContainingWords.clear(); // testing
 		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
 		// making a Set of all fileID contained in Files:
 		// then we can make this simpler by using the
 		// collections retainAll method
 		// Note -- there may be other/better ways to make this Set...
 		Set<Long> fileIDSet = new HashSet<Long>();
+		fileIDSet.clear(); // testing
 		for (Files currentFile : FileModel.files) {
 			fileIDSet.add(currentFile.getFileId());
 		}
@@ -110,8 +111,73 @@ public class FileIndex {
 			++y;
 		}
 		
-		// Now output results (setText)
-		
+		// Now output results	
+		if (fileIDSet.size() > 0) {
+			for (Long fileID : fileIDSet) {
+				for (Files currFile : FileModel.files) {
+					if (currFile.getFileId() == fileID) {
+						String result = currFile.getFileName();
+						resultBuilder.append(result + "\n");
+					}
+				}
+			}
+		}	
+		else {
+			resultBuilder.append("No matches found.");
+		}	
+		searchResult.setText(resultBuilder.toString());
+	}
+	
+	/**
+	 * This method will search through all the current list of files indexed and search for either of the two words in the files
+	 * and show which files contain either or.
+	 * 
+	 */
+	public static void orSearch(String searchField, Text searchResult) {
+		//
+		// PLACEHOLDER code. Not yet completed.
+		//
+		Set<FilePosition> filesContainingWords = new HashSet<FilePosition>();
+		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
+		Set<Long> fileIDSet = new HashSet<Long>();
+		// 
+		// FOR loop not needed for OR search
+		// for (Files currentFile : FileModel.files) {
+		//	fileIDSet.add(currentFile.getFileId());
+		// }
+		//
+		// process user input to String[] array
+		String[] words = searchField.toLowerCase().split("[^a-zA-Z0-9-]+");
+		int x = words.length;
+		int y = 0;
+		while (y < x) {
+			// Load a TreeSet with all Sets from mainIndex matching words[y]
+			try {
+			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
+			}
+			catch (NullPointerException e) {
+				resultBuilder.append("No files Match the specified words.");
+				searchResult.setText(resultBuilder.toString());
+				return;
+			}
+			if (filesContainingWords == null) {
+				break;
+			}
+			//
+			// INSERT OR SEARCH LOGIC HERE
+			//
+			// Another Set to contain just the fileID:
+			// fileIDContainingWord is the set of fileID's that contain each word in words[]
+			// this will be used for retainAll on the original fileIDSet of all fileIDs
+			// Set<Long> fileIDContainingWord = new HashSet<Long>();
+			// for (FilePosition filepos : filesContainingWords) {
+			//	 fileIDContainingWord.add(filepos.fileID);
+			// }
+			// retain in fileIDSet only those fileID contained in fileIDContainingWord
+			// fileIDSet.retainAll(fileIDContainingWord);
+			++y;
+		}
+		// Now output results
 		if (fileIDSet.size() > 0) {
 			for (Long fileID : fileIDSet) {
 				for (Files currFile : FileModel.files) {
@@ -122,22 +188,12 @@ public class FileIndex {
 				}
 			}
 		}
-		
 		else {
 			resultBuilder.append("No matches found.");
 		}	
 		searchResult.setText(resultBuilder.toString());
-		
 	}
-	/**
-	 * This method will search through all the current list of files indexed and search for either of the two words in the files
-	 * and show which files contain either or.
-	 * 
-	 */
-	public static void orSearch(String searchField) {
-		
-		
-	}
+	
 	/**
 	 * This method will search through all the current list of files indexed and search for the exact phrase or sentence in the files
 	 * and show which files contain it.

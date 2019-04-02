@@ -129,13 +129,17 @@ public class IndexModel {
 	} // end saveIndexToStorage
 	
 	public static void removeFromInvIndex (long fileID) {
-
-		Set<String> keySet = new HashSet<String>(mainIndex.keySet());
+		//
+		// NOTE work in progress
+		// This code currently throws ClassCastException
+		// the logic may also be flawed
+		//
+		Set<String> keySet = new TreeSet<String>(mainIndex.keySet());
 		for (String  word : keySet) {
-			Set<FilePosition> valueSet = mainIndex.get(word);
+			SortedSet<FilePosition> valueSet = mainIndex.get(word);
 			Iterator<FilePosition> it = valueSet.iterator();
-			while (it.hasNext()) {
-				FilePosition fp = (FilePosition)it.next();
+			FilePosition fp = (FilePosition)it.next();
+			while (fp != null) {	
 				if (fp.fileID != fileID) continue;
 				it.remove();
 			}
