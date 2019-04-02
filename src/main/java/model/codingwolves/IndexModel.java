@@ -66,7 +66,7 @@ public class IndexModel {
 	
 		while (s.hasNext()) {	
 			String word = s.next().toLowerCase();
-			word = word.replaceAll("[^a-zA-Z0-9-]+", "");
+			word = word.replaceAll("[^a-zA-Z0-9-]+", " ");
 			if (word.length() == 0)
 				continue;
 			FilePosition fp = new FilePosition(fileID, position);
@@ -77,7 +77,7 @@ public class IndexModel {
 			}
 
 			else {
-				SortedSet<FilePosition> existingWordPosition = mainIndex.get(word);
+				Set<FilePosition> existingWordPosition = mainIndex.get(word);
 				existingWordPosition.add(fp);
 				
 				// some output to verify:
@@ -134,12 +134,14 @@ public class IndexModel {
 		// This code currently throws ClassCastException
 		// the logic may also be flawed
 		//
-		Set<String> keySet = new TreeSet<String>(mainIndex.keySet());
+		// System.out.println("removeFromInvIndex method temporarily disabled.");
+		// return;
+		HashSet<String> keySet = new HashSet<String>(mainIndex.keySet());
 		for (String  word : keySet) {
-			SortedSet<FilePosition> valueSet = mainIndex.get(word);
+			Set<FilePosition> valueSet = mainIndex.get(word);
 			Iterator<FilePosition> it = valueSet.iterator();
-			FilePosition fp = (FilePosition)it.next();
-			while (fp != null) {	
+			while (it.hasNext()) {	
+				FilePosition fp = (FilePosition)it.next();
 				if (fp.fileID != fileID) continue;
 				it.remove();
 			}
