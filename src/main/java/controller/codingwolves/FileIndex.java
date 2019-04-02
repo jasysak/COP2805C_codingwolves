@@ -193,7 +193,7 @@ public class FileIndex {
 		}	
 		searchResult.setText(resultBuilder.toString());
 	}
-	
+
 	/**
 	 * This method will search through all the current list of files indexed and search for the exact phrase or sentence in the files
 	 * and show which files contain it.
@@ -205,10 +205,11 @@ public class FileIndex {
 		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Phrase:\n");
 		Set<FilePosition> filesContainingPhrase = new TreeSet();
 		
-		String[] wordsToSearch = searchField.toLowerCase().split("[^a-z0-9-]+");
+		String[] wordsToSearch = searchField.toLowerCase().replaceAll("[\\-,]", "").split("[^a-z0-9-]+");
 		//This exception was thrown when the user entered a word that wasn't in the files
 		//so this try catch was made.
 		try {
+			//Load treeset with all files containing the first word
 			filesContainingPhrase.addAll((Collection)IndexModel.mainIndex.get(wordsToSearch[0]));
 		}
 		catch (NullPointerException e) {
@@ -217,16 +218,21 @@ public class FileIndex {
 			return;
 		}
 		//Copying array elements so that I can start at the second element in the array
-		wordsToSearch = Arrays.copyOfRange(wordsToSearch, 1, wordsToSearch.length);
-		
+		wordsToSearch = (String[])Arrays.copyOfRange(wordsToSearch, 1, wordsToSearch.length);
 		for (int i = 0; i < wordsToSearch.length ; i++)
 		{
 			String currentWord = wordsToSearch[i];
 			if (filesContainingPhrase.size() == 0) {
 				break;
 			}
-			Set<FilePosition> currentPositions = (Set)IndexModel.mainIndex.get(currentWord);
-			if (currentPositions == null) {
+			//New set that will have remaining files that contian the phrase
+			Set<FilePosition> currentPositions = new TreeSet();
+			//This exception was thrown when the user entered a word that wasn't in the files
+			//so this try catch was made.
+			try {
+			currentPositions.addAll((Collection)IndexModel.mainIndex.get(currentWord));
+			}
+			catch (NullPointerException e) {
 				filesContainingPhrase.clear();
 				break;
 			}
@@ -250,7 +256,9 @@ public class FileIndex {
 					if (currentFile.getFileId() == fileId)
 					{
 						String result = currentFile.getFileName();
-						resultBuilder.append(result + "\n");
+						if(!resultBuilder.toString().contains(currentFile.getFileName())) {
+							resultBuilder.append(result + "\n");
+						}
 					}
 				}
 			}

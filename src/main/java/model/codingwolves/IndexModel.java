@@ -181,7 +181,7 @@ public class IndexModel {
 		mainIndex = gson.fromJson(jsonString, mapType);
 		is.close();		
 		MapUtils.debugPrint(System.out, "loadIndexFromStorage DEBUG Print", mainIndex);
-		return;	
+		return;
 		
 	} // end loadIndexFromStorage
 	
@@ -201,7 +201,7 @@ public class IndexModel {
 		// clear() is for testing of load
 		// mainIndex.clear();
 		// TEST loadIndexFromStorage
-		mainIndex = loadIndexFromStorage();
+		//mainIndex = loadIndexFromStorage();
 		MapUtils.debugPrint(System.out, "LOADED DEBUG Print", mainIndex);
 		// TEST updateIndex
 		// updateIndex();
