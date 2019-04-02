@@ -71,10 +71,9 @@ public class FileIndex {
 		//
 		// WORK IN PROGRESS.
 		// THIS IS NOT DONE YET.
-		// IT PROBABLY DOESN'T WORK YET
 		// 
-		Set<FilePosition> filesContainingWords = new TreeSet<FilePosition>();
-		
+		Set<FilePosition> filesContainingWords = new HashSet<FilePosition>();
+		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
 		// making a Set of all fileID contained in Files:
 		// then we can make this simpler by using the
 		// collections retainAll method
@@ -88,7 +87,14 @@ public class FileIndex {
 		int y = 0;
 		while (y < x) {
 			// Load a TreeSet with all Sets from mainIndex matching words[y]
+			try {
 			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
+			}
+			catch (NullPointerException e) {
+				resultBuilder.append("No files Match the specified phrase");
+				searchResult.setText(resultBuilder.toString());
+				return;
+			}
 			if (filesContainingWords == null) {
 				break;
 			}
@@ -104,7 +110,7 @@ public class FileIndex {
 		}
 		
 		// Now output results (setText)
-		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
+		
 		if (fileIDSet.size() > 0) {
 			for (Long fileID : fileIDSet) {
 				for (Files currFile : FileModel.files) {

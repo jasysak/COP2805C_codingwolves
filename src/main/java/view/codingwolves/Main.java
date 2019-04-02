@@ -7,6 +7,7 @@ import javax.naming.OperationNotSupportedException;
 
 import controller.codingwolves.FileIndex;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -86,7 +87,8 @@ public class Main extends Application{
 			IndexModel.loadIndexFromStorage();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println("No Inverted Index JSON file found. Assuming first run of program.");
+			// e1.printStackTrace();
 		}
 
 		
@@ -110,6 +112,15 @@ public class Main extends Application{
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 	        @Override
 	        public void handle(WindowEvent event) {
+	        	// JAS added
+	        	// Save InvIndex.json file
+	        	System.out.println("Search Engine is closing");
+	    	    try {
+	    			IndexModel.saveIndexToStorage();
+	    		} catch (IOException e) {
+	    			// TODO Auto-generated catch block
+	    			e.printStackTrace();
+	    		}	
 	            System.exit(0);
 	        }
 		});
@@ -180,6 +191,7 @@ public class Main extends Application{
 			}
 		});
 	}
+	
 	/**
 	 * Make the VBox layout for the top of interface and embed HBox into it
 	 * @param hbox

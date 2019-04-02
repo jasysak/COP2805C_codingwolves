@@ -48,14 +48,14 @@ import org.apache.commons.collections4.MapUtils;
 
 public class IndexModel {
 	
-	public static Map<String, Set<FilePosition>> mainIndex = new HashMap<String, Set<FilePosition>>();
+	public static Map<String, SortedSet<FilePosition>> mainIndex = new HashMap<String, SortedSet<FilePosition>>();
 	static final String indexFilename = System.getProperty("user.home") + File.separator + "invIndex.json";
 //	static FileModel model = new FileModel();
 	
 //	final static String indexFilename = "invIndex.json";
 
 	// placeholder fileID
-	static long fileID;
+	// static long fileID;
 	
 	public static void addToInvIndex(String filename, long fileID) throws FileNotFoundException, IOException {
 	
@@ -64,20 +64,20 @@ public class IndexModel {
 		// position will contain the current word position in the file as it's read
 		int position = 0;
 	
-		while (s.hasNext()){	
+		while (s.hasNext()) {	
 			String word = s.next().toLowerCase();
-			word = word.replaceAll("[^a-zA-Z0-9]", "");
+			word = word.replaceAll("[^a-zA-Z0-9-]+", "");
 			if (word.length() == 0)
 				continue;
 			FilePosition fp = new FilePosition(fileID, position);
 			if (!mainIndex.containsKey(word)) {
-				Set<FilePosition> newWordPosition = new HashSet<FilePosition>();
+				SortedSet<FilePosition> newWordPosition = new TreeSet<FilePosition>();
 				newWordPosition.add(fp);
 				mainIndex.put(word, newWordPosition);
 			}
 
 			else {
-				Set<FilePosition> existingWordPosition = mainIndex.get(word);
+				SortedSet<FilePosition> existingWordPosition = mainIndex.get(word);
 				existingWordPosition.add(fp);
 				
 				// some output to verify:
@@ -168,16 +168,6 @@ public class IndexModel {
 		// called at startup to access disk storage of index and load it into memory/mainIndex Map
 		mainIndex.clear(); 	// cleanup just in case
 		File indexFile = new File(indexFilename);
-		if (!indexFile.exists()) {
-		      try
-		      {
-		        indexFile.createNewFile();
-		      }
-		      catch (Exception e)
-		      {
-		        e.printStackTrace();
-		      }
-		}
 		InputStream is = new FileInputStream(indexFile);
 		JsonReader jsonString = new JsonReader(new InputStreamReader(is, "UTF-8"));
 		Gson gson = new Gson();
