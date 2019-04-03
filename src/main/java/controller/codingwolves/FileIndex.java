@@ -163,18 +163,9 @@ public class FileIndex {
 			if (filesContainingWords == null) {
 				break;
 			}
-			//
-			// INSERT OR SEARCH LOGIC HERE
-			//
-			// Another Set to contain just the fileID:
-			// fileIDContainingWord is the set of fileID's that contain each word in words[]
-			// this will be used for retainAll on the original fileIDSet of all fileIDs
-			// Set<Long> fileIDContainingWord = new HashSet<Long>();
-			// for (FilePosition filepos : filesContainingWords) {
-			//	 fileIDContainingWord.add(filepos.fileID);
-			// }
-			// retain in fileIDSet only those fileID contained in fileIDContainingWord
-			// fileIDSet.retainAll(fileIDContainingWord);
+			for (FilePosition filepos : filesContainingWords) {
+				fileIDSet.add(filepos.fileID);
+			}
 			++y;
 		}
 		// Now output results
