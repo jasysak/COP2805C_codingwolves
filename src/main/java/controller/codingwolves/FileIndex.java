@@ -84,19 +84,19 @@ public class FileIndex {
 		}
 		// process user input to String[] array
 		String[] words = searchField.toLowerCase().split("[^a-zA-Z0-9-]+");
-		int x = words.length;
-		int y = 0;
-		while (y < x) {
+		for (String word : words)	{
 			// Load a TreeSet with all Sets from mainIndex matching words[y]
 			try {
-			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
+			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(word.toLowerCase());
 			}
 			catch (NullPointerException e) {
+				fileIDSet.clear();
 				resultBuilder.append("No files Match the specified words.");
 				searchResult.setText(resultBuilder.toString());
 				return;
 			}
 			if (filesContainingWords == null) {
+				fileIDSet.clear();
 				break;
 			}
 			// Another Set to contain just the fileID:
@@ -108,7 +108,6 @@ public class FileIndex {
 			}
 			// retain in fileIDSet only those fileID contained in fileIDContainingWord
 			fileIDSet.retainAll(fileIDContainingWord);
-			++y;
 		}
 		
 		// Now output results	
@@ -148,12 +147,10 @@ public class FileIndex {
 		//
 		// process user input to String[] array
 		String[] words = searchField.toLowerCase().split("[^a-zA-Z0-9-]+");
-		int x = words.length;
-		int y = 0;
-		while (y < x) {
+		for (String word : words) {
 			// Load a TreeSet with all Sets from mainIndex matching words[y]
 			try {
-			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(words[y].toLowerCase());
+			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(word.toLowerCase());
 			}
 			catch (NullPointerException e) {
 				resultBuilder.append("No files Match the specified words.");
