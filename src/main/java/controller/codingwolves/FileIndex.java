@@ -163,7 +163,6 @@ public class FileIndex {
 			for (FilePosition filepos : filesContainingWords) {
 				fileIDSet.add(filepos.fileID);
 			}
-			++y;
 		}
 		// Now output results
 		if (fileIDSet.size() > 0) {
