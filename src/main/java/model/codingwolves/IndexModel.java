@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -106,18 +104,15 @@ public class IndexModel {
 	
 	public static void saveIndexToStorage () throws IOException {
 		// I left setPrettyPrinting so the JSON output is nicer to
-		// read. This can be removed whenever it's no longer needed.
-		
+		// read. This can be removed whenever it's no longer needed	
 		File file = new File(indexFilename);
 		if (!file.exists()) {
 			file.createNewFile();
 			}
-		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json_obj = gson.toJson(mainIndex);
 		// System.out.println("\nSaved JSON Data to " + indexFilename);
-		// System.out.println(json_obj);
-			
+		// System.out.println(json_obj);			
 		try {		
 			FileWriter writer = new FileWriter(indexFilename);
 			writer.write(json_obj);

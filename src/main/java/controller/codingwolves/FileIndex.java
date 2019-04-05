@@ -67,25 +67,22 @@ public class FileIndex {
 	 * @param searchResult The Text to be set in the UI
 	 */
 	public static void andSearch(String searchField, Text searchResult) {	
-		//
-		// WORK IN PROGRESS.
-		// 
+		// Create a new Set to hold set of FilePosition objects from mainIndex
 		Set<FilePosition> filesContainingWords = new HashSet<FilePosition>();
-		filesContainingWords.clear(); // testing
+		// new StringBuilder for output
 		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
 		// making a Set of all fileID contained in Files:
 		// then we can make this simpler by using the
 		// collections retainAll method
 		// Note -- there may be other/better ways to make this Set...
 		Set<Long> fileIDSet = new HashSet<Long>();
-		fileIDSet.clear(); // testing
 		for (Files currentFile : FileModel.files) {
 			fileIDSet.add(currentFile.getFileId());
 		}
 		// process user input to String[] array
 		String[] words = searchField.toLowerCase().split("[^a-zA-Z0-9-]+");
 		for (String word : words)	{
-			// Load a TreeSet with all Sets from mainIndex matching words[y]
+			// Load a TreeSet with all Sets from mainIndex matching word/words
 			try {
 			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(word.toLowerCase());
 			}
@@ -133,22 +130,16 @@ public class FileIndex {
 	 * 
 	 */
 	public static void orSearch(String searchField, Text searchResult) {
-		//
-		// PLACEHOLDER code. Not yet completed.
-		//
+		// Create a new Set to hold set of FilePosition objects from mainIndex
 		Set<FilePosition> filesContainingWords = new HashSet<FilePosition>();
+		// new StringBuilder for output
 		StringBuilder resultBuilder = new StringBuilder("Files that Contain the Words: " + searchField + ": \n");
+		// Create empty set to hold all fileID's that match user input
 		Set<Long> fileIDSet = new HashSet<Long>();
-		// 
-		// FOR loop not needed for OR search
-		// for (Files currentFile : FileModel.files) {
-		//	fileIDSet.add(currentFile.getFileId());
-		// }
-		//
 		// process user input to String[] array
 		String[] words = searchField.toLowerCase().split("[^a-zA-Z0-9-]+");
 		for (String word : words) {
-			// Load a TreeSet with all Sets from mainIndex matching words[y]
+			// Load a TreeSet with all Sets from mainIndex matching word/words
 			try {
 			filesContainingWords = (Set<FilePosition>) IndexModel.mainIndex.get(word.toLowerCase());
 			}
@@ -160,6 +151,7 @@ public class FileIndex {
 			if (filesContainingWords == null) {
 				break;
 			}
+			// load the fileIDSet with the fileID's from filesContainingWords
 			for (FilePosition filepos : filesContainingWords) {
 				fileIDSet.add(filepos.fileID);
 			}
