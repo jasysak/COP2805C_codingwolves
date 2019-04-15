@@ -3,14 +3,11 @@ package com.codingwolves.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
-import javax.sql.DataSource;
 
 
 @EnableWebMvc
@@ -26,8 +23,6 @@ public class SpringWebConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("/webjars/");
 
-
-
     }
 
     @Bean
@@ -38,15 +33,31 @@ public class SpringWebConfiguration implements WebMvcConfigurer {
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
-
-    @Bean
-    public DataSource mySqlDataSource(){
+/*
+   @Bean
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/INVERTED_INDEX?" +
+                "createDatabaseIfNotExist=true");
+        //dataSource.setUrl("jdbc:mysql://localhost:3306/INVERTED_INDEX/");
         dataSource.setUsername("root");
         dataSource.setPassword("");
         return dataSource;
     }
 
+    @Bean
+    public JdbcTemplate getJdbcTemplate(){
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(dataSource());
+        return jdbcTemplate;
+    }
+
+    @Bean
+    public ServiceDao serviceDao(){
+        ServiceImplementer serviceImplementer = new ServiceImplementer();
+        serviceImplementer.setJdbcTemplate(getJdbcTemplate());
+        return serviceImplementer;
+    }
+*/
 }

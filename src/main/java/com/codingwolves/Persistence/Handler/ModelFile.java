@@ -1,4 +1,4 @@
-package com.codingwolves.Persistance.Handler;
+package com.codingwolves.Persistence.Handler;
 
 public class ModelFile {
     private String fileName;

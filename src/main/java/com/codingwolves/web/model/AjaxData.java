@@ -6,7 +6,7 @@ public class AjaxData {
     int filesParsed;
     String[] fileName;
     String[] checkSum;
-    String [] path;
+    String[] path;
     String[] parsedData;
 
     /**
