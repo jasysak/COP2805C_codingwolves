@@ -3,15 +3,10 @@ package com.codingwolves.Persistence.Handler;
 
 import com.codingwolves.FileParser.FileTemplate;
 import com.codingwolves.InvertedIndex.PostingsList;
-import com.codingwolves.Persistence.MasterInformation;
-import org.springframework.dao.DataAccessException;
+import com.codingwolves.Persistence.Connector.DatabaseConnector;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import javax.sql.DataSource;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -19,20 +14,9 @@ import java.util.*;
  *
  */
 
-public class PersistentData implements ModelFileDao, MasterInformation {
-    /**
-     * This function
-     * @return
-     */
-    private DataSource getDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(JDBC_DRIVER);
-        dataSource.setUrl(DATABASE_ADDRESS);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-        return dataSource;
-    }
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
+public class PersistentData extends DatabaseConnector implements ModelFileDao {
+
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate(setDataSource());
     private String sqlStatement;
     private static final class ColumnMapper implements RowMapper <String>{
         @Override
@@ -88,6 +72,7 @@ public class PersistentData implements ModelFileDao, MasterInformation {
         sqlStatement = "ALTER TABLE " + POSTINGS_LIST_TABLE +
                 " DROP COLUMN `"+ fileName+"`";
         jdbcTemplate.execute(sqlStatement);
+        cleanDB();
         return fileName + " has been deleted!";
     }
 
@@ -160,6 +145,21 @@ public class PersistentData implements ModelFileDao, MasterInformation {
                 }
             }
         }
+    }
+
+    private void cleanDB(){
+        List columns = columnNamesList();
+        int columnCount = columns.size();
+        sqlStatement = "DELETE FROM "+POSTINGS_LIST_TABLE+" WHERE ";
+        for(int i =1; i<columnCount;i++){
+            if(i!=columnCount-1){
+                sqlStatement += "`"+columns.get(i)+"` IS NULL AND ";
+            }
+            else{
+                sqlStatement+= "`" +columns.get(i)+"` IS NULL";
+            }
+        }
+        jdbcTemplate.execute(sqlStatement);
     }
 
 }

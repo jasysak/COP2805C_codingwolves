@@ -1,22 +1,11 @@
 package com.codingwolves.Persistence.Service;
 
-import com.codingwolves.Persistence.MasterInformation;
+import com.codingwolves.Persistence.Connector.DatabaseConnector;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import javax.sql.DataSource;
+public class ServiceImplementer extends DatabaseConnector implements ServiceDao {
 
-public class ServiceImplementer implements ServiceDao, MasterInformation {
-    private DataSource getDataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(JDBC_DRIVER);
-        dataSource.setUrl(DATABASE_ADDRESS);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-
-        return dataSource;
-    }
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate(setDataSource());
     private String sqlStatement;
     @Override
     public void createMainTable() {
