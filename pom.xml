@@ -28,10 +28,9 @@
         <maveneclipse.version>2.10</maveneclipse.version>
         <mavenwar.version>3.2.2</mavenwar.version>
         <jetty.version>9.4.15.v20190215</jetty.version>
-        <springmongo.version>2.1.5.RELEASE</springmongo.version>
         <junit.version>5.4.0</junit.version>
-        <embeddedmongo.version>2.2.0</embeddedmongo.version>
-        <mongojavadriver.version>3.10.1</mongojavadriver.version>
+        <javadoc.version>3.0.0</javadoc.version>
+        <checker.version>2.8.0</checker.version>
     </properties>
 
     <dependencies>
@@ -75,6 +74,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--Logger -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
@@ -137,29 +137,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!---EMBEDDED MONGO
-        <dependency>
-            <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <version>${embeddedmongo.version}</version>
-            <scope>test</scope>
-        </dependency>
-        -->
-        <!--MongoDB JAVA DRIVER
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongojavadriver.version}</version>
-        </dependency>
-        -->
-        <!--SPRING DATA FOR MongoDB
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
-            <version>2.1.5.RELEASE</version>
-        </dependency>
-        -->
-
         <!--SPRING JDBC-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -189,6 +166,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--CHECKER FRAMEWORK-->
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker</artifactId>
+            <version>${checker.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -210,7 +194,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
-                    <scanIntervalSeconds>15</scanIntervalSeconds>
+                    <scanIntervalSeconds>60</scanIntervalSeconds>
                     <webApp>
                         <contextPath>/Wolfster</contextPath>
                     </webApp>
@@ -250,6 +234,15 @@
                     <name>spring4ajax.war</name>
                 </configuration>
             </plugin> -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${javadoc.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                </configuration>
+            </plugin>
 
         </plugins>
 

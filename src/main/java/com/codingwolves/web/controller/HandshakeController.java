@@ -4,8 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * This class essentially handles the get request from client and sends the page
+ * to the client
+ * @author Reubin George
+ * @since 04/19/2019
+ * @version 1.0
+ */
 @Controller
 public class HandshakeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)

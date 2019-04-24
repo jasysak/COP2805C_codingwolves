@@ -1,18 +1,23 @@
 package com.codingwolves.web.model;
 
+/**
+ * This class is used for direct injection of the client's data for usage by the classes
+ * on the server side. The injection happens using Jackson Framework's RequestBody
+ * annotation
+ * @author Reubin George
+ * @since 04/19/2019
+ * @version 1.0
+ */
 public class AjaxData {
-    String Code;
-    int filesProcessed;
-    int filesParsed;
-    String[] fileName;
-    String[] checkSum;
-    String[] path;
-    String[] parsedData;
+    private String Code;
+    private int filesProcessed;
+    private int filesParsed;
+    private String[] fileName;
+    private String[] checkSum;
+    private String[] path;
+    private String[] parsedData;
 
-    /**
-     *
-     * @return
-     */
+    /*
     public String getCode(){
         return this.Code;
     }
@@ -26,7 +31,7 @@ public class AjaxData {
     public void setFileProcessed(int filesProcessed){
         this.filesProcessed=filesProcessed;
     }
-
+    */
     public int getFilesParsed(){return  this.filesParsed;}
     public void  setFilesParsed(int filesParsed){this.filesParsed=filesParsed;}
 
