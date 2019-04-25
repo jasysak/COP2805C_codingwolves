@@ -10,7 +10,7 @@ import com.codingwolves.web.jsonview.Views;
 import com.codingwolves.FileParser.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.web.bind.annotation.*;
-import static com.codingwolves.Persistence.Service.ServiceImplementer.databaseInitializer;
+import static com.codingwolves.Persistence.Service.ServiceImplementer.*;
 import java.util.*;
 
 /**
@@ -81,6 +81,11 @@ public class AjaxController {
         return result;
     }
 
+    /**
+     * This method is used to delete a file from persistent storage
+     * @param fileName Client provides this string
+     * @return A message that displays the actions performed
+     */
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/delete")
     public AjaxReceiver deleteFile(@RequestBody String fileName){

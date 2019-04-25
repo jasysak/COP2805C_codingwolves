@@ -17,7 +17,6 @@ public class AjaxData {
     private String[] path;
     private String[] parsedData;
 
-    /*
     public String getCode(){
         return this.Code;
     }
@@ -31,7 +30,7 @@ public class AjaxData {
     public void setFileProcessed(int filesProcessed){
         this.filesProcessed=filesProcessed;
     }
-    */
+
     public int getFilesParsed(){return  this.filesParsed;}
     public void  setFilesParsed(int filesParsed){this.filesParsed=filesParsed;}
 
